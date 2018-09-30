@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FavoritosFragment">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:animateLayoutChanges="false"
+                android:background="@drawable/teste"
+                android:clickable="true"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/img_compra"
+                    android:layout_width="150dp"
+                    android:layout_height="match_parent"
+                    android:backgroundTint="@color/colorCinza2"
+                    android:src="@mipmap/ic_launcher_round" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:backgroundTint="@color/colorCinzaClaro"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/lbl_titulo_compra"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:gravity="center"
+                        android:paddingLeft="7dp"
+                        android:text="Calça"
+                        android:textAlignment="center"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/lbl_descricao_compra3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:paddingLeft="10dp"
+                        android:text="Estado"
+                        android:textAlignment="textStart"
+                        android:textSize="17sp" />
+
+                    <TextView
+                        android:id="@+id/lbl_descricao_compra2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingLeft="10dp"
+                        android:text="Lavando"
+                        android:textAlignment="center"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/lbl_descricao_compra"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:paddingLeft="10dp"
+                        android:text="Cor"
+                        android:textAlignment="textStart"
+                        android:textSize="17sp" />
+
+                    <android.support.design.widget.FloatingActionButton
+                        android:id="@+id/floatingActionButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="5dp"
+                        app:backgroundTint="@color/colorBlack" />
+
+                    <ImageView
+                        android:id="@+id/imageView3"
+                        android:layout_width="50dp"
+                        android:layout_height="35dp"
+                        android:layout_gravity="bottom|right"
+                        android:layout_marginTop="-30dp"
+                        android:src="@drawable/ic_favoritos" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="15dp"
+                android:animateLayoutChanges="false"
+                android:background="@drawable/teste"
+                android:clickable="true"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/img_compra"
+                    android:layout_width="150dp"
+                    android:layout_height="match_parent"
+                    android:backgroundTint="@color/colorCinza2"
+                    android:src="@mipmap/ic_launcher_round" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:backgroundTint="@color/colorCinzaClaro"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/lbl_titulo_compra"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:gravity="center"
+                        android:paddingLeft="7dp"
+                        android:text="Calça"
+                        android:textAlignment="center"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/lbl_descricao_compra3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:paddingLeft="10dp"
+                        android:text="Estado"
+                        android:textAlignment="textStart"
+                        android:textSize="17sp" />
+
+                    <TextView
+                        android:id="@+id/lbl_descricao_compra2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingLeft="10dp"
+                        android:text="Lavando"
+                        android:textAlignment="center"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/lbl_descricao_compra"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:paddingLeft="10dp"
+                        android:text="Cor"
+                        android:textAlignment="textStart"
+                        android:textSize="17sp" />
+
+                    <android.support.design.widget.FloatingActionButton
+                        android:id="@+id/floatingActionButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="5dp"
+                        app:backgroundTint="@color/colorBlack" />
+
+                    <ImageView
+                        android:id="@+id/imageView3"
+                        android:layout_width="50dp"
+                        android:layout_height="35dp"
+                        android:layout_gravity="bottom|right"
+                        android:layout_marginTop="-30dp"
+                        android:src="@drawable/ic_favoritos" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

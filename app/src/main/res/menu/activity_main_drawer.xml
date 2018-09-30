@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_sd_card_black_24dp"
+            android:title="Guarda-roupas"
+            android:checked="true"/>
+        <item
+            android:id="@+id/nav_minhas_compras"
+            android:icon="@drawable/ic_promocoes"
+            android:title="Minhas Compras" />
+        <item
+            android:id="@+id/nav_cadastro_roupa"
+            android:icon="@drawable/ic_add_roupa"
+            android:title="Cadastro Roupa" />
+        <item
+            android:id="@+id/nav_look_do_dia"
+            android:icon="@drawable/ic_look_do_dia"
+            android:title="Look do dia" />
+        <item
+            android:id="@+id/nav_tags"
+            android:icon="@drawable/ic_tags"
+            android:title="Tags" />
+        <item
+            android:id="@+id/nav_favoritos"
+            android:icon="@drawable/ic_favoritos"
+            android:title="Favoritos" />
+        <item
+            android:id="@+id/nav_notificações"
+            android:icon="@drawable/ic_notificacao"
+            android:title="Notificações" />
+        <item
+            android:id="@+id/nav_promocoes"
+            android:icon="@drawable/ic_promocoes"
+            android:title="Promoções" />
+    </group>
+
+    <item android:title="">
+        <menu>
+            <item
+                android:id="@+id/nav_sair"
+                android:icon="@drawable/ic_exit"
+                android:title="Sair" />
+        </menu>
+    </item>
+
+</menu>
