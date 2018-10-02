@@ -21,9 +21,10 @@
             <ImageView
                 android:id="@+id/imgLogin"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_marginTop="30dp"
-                app:srcCompat="@mipmap/ic_launcher" />
+                android:layout_height="120dp"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="@color/colorBlack"
+                app:srcCompat="@drawable/logo_brecho" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -43,7 +44,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:inputType="textEmailAddress" />
+                    android:backgroundTint="@color/colorBlack"
+                    android:inputType="textEmailAddress"
+                    android:textColor="@color/colorBlack"
+                    android:textColorHint="@color/colorBlack"
+                    android:textColorLink="@color/colorBlack"
+                    android:textCursorDrawable="@color/colorBlack" />
 
                 <TextView
                     android:id="@+id/lbl_senha"
@@ -59,8 +65,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
+                    android:backgroundTint="@color/colorBlack"
                     android:ems="10"
-                    android:inputType="textPassword" />
+                    android:inputType="textPassword"
+                    android:textColor="@color/colorBlack"
+                    android:textColorHint="@color/colorBlack"
+                    android:textColorLink="@color/colorBlack"
+                    android:textCursorDrawable="@color/colorBlack" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -83,8 +94,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:background="@color/colorBlack"
                         android:onClick="Login"
-                        android:text="Entrar" />
+                        android:text="Entrar"
+                        android:textColor="@color/cardview_light_background"
+                        android:textColorLink="@color/colorBlack" />
                 </LinearLayout>
 
             </LinearLayout>
