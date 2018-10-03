@@ -3,9 +3,12 @@ package br.com.senaijandira.brechobernadete;
 
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,9 +59,14 @@ public class CadastroRoupaFragment extends Fragment {
 
             }
 
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onOk(AmbilWarnaDialog dialog, int color) {
                 fb.setBackgroundTintList(ColorStateList.valueOf(color));
+                Color cor;
+                cor = Color.valueOf(color);
+                Log.d("onOk", cor+"");
+//                Toast.makeText(getActivity(), color, Toast.LENGTH_SHORT).show();
             }
         });
         colorDialog.show();
