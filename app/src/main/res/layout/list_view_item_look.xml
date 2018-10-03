@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:src="@mipmap/ic_launcher_round" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorCinzaClaro"
+        android:minHeight="100dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/lbl_titulo_look"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorCinzaClaro"
+            android:paddingLeft="10dp"
+            android:text="Blusa Listrada"
+            android:textAlignment="gravity"
+            android:textSize="22sp" />
+
+        <TextView
+            android:id="@+id/lbl_titulo_look2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="10dp"
+            android:text="Essa blusa é top, muito boa, confortavel"
+            android:textSize="17sp" />
+    </LinearLayout>
+
+</LinearLayout>

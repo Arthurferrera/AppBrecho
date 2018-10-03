@@ -75,6 +75,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
+                    android:backgroundTint="@color/colorBlack"
                     android:ems="10"
                     android:inputType="textPersonName" />
 
@@ -92,6 +93,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
+                    android:backgroundTint="@color/colorBlack"
                     android:ems="10"
                     android:inputType="textMultiLine" />
 
@@ -135,6 +137,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:backgroundTint="@color/colorBlack"
                         android:text="Medida" />
 
                     <RadioButton
@@ -142,6 +145,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:backgroundTint="@color/colorBlack"
                         android:text="Tamanho" />
 
                 </RadioGroup>
@@ -214,6 +218,7 @@
                     android:id="@+id/txt_marca"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="@color/colorBlack"
                     android:ems="10"
                     android:inputType="textPersonName" />
 
@@ -241,6 +246,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:backgroundTint="@color/colorBlack"
                         android:text="A" />
 
                     <RadioButton
@@ -248,6 +254,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:backgroundTint="@color/colorBlack"
                         android:text="B" />
 
                     <RadioButton
@@ -255,6 +262,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:backgroundTint="@color/colorBlack"
                         android:text="C" />
 
                 </RadioGroup>
@@ -266,8 +274,10 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="15dp"
                     android:layout_weight="1"
+                    android:background="@color/colorBlack"
                     android:minWidth="120dp"
-                    android:text="Salvar" />
+                    android:text="Salvar"
+                    android:textColor="@android:color/white" />
 
 
             </LinearLayout>
