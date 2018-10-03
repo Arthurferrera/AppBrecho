@@ -34,7 +34,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Produto adquirido em nossa lojas"
+                    android:text="Produto adquirido em nossa loja"
                     android:textAlignment="center" />
             </LinearLayout>
 
@@ -44,24 +44,12 @@
                 android:layout_marginTop="20dp"
                 android:orientation="horizontal">
 
-                <LinearLayout
+                <ImageView
+                    android:id="@+id/img_slide"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="20dp"
-                    android:orientation="horizontal">
-
-                    <android.support.v4.view.ViewPager
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <ImageView
-                            android:id="@+id/img_galeria_visualizar"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:src="@drawable/logo_brecho" />
-                    </android.support.v4.view.ViewPager>
-
-                </LinearLayout>
+                    android:layout_weight="1"
+                    android:src="@mipmap/ic_launcher_round" />
 
             </LinearLayout>
 
@@ -218,12 +206,73 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/lbl_tag_visualizar"
+                        android:id="@+id/lbl_status_visualizar"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginTop="10dp"
                         android:text="Em lavagem" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="left"
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:minWidth="110dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:maxWidth="130dp"
+                        android:text="Marca"
+                        android:textAlignment="gravity"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/lbl_marca_visualizar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:text="Calvin Klein" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:minWidth="110dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:maxWidth="130dp"
+                        android:text="Classificação"
+                        android:textAlignment="gravity"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/lbl_classificacao_visualizar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:text="B" />
                 </LinearLayout>
 
             </LinearLayout>
