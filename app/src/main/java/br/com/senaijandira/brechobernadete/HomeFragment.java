@@ -40,7 +40,7 @@ public class HomeFragment extends Fragment {
 
         list_view_categoria = viewHome.findViewById(R.id.list_categorias_home);
 
-        adapter = new CategoriaAdapter(getContext(), new ArrayList<Categoria>());
+        adapter = new CategoriaAdapter(getContext(),dao, new ArrayList<Categoria>());
         list_view_categoria.setAdapter(adapter);
         list_view_categoria.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -49,6 +49,7 @@ public class HomeFragment extends Fragment {
             }
         });
         return viewHome;
+
     }
 
     @Override

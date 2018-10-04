@@ -1,8 +1,7 @@
 package br.com.senaijandira.brechobernadete;
 
-import android.os.Bundle;
 import android.app.Activity;
-import android.widget.Toolbar;
+import android.os.Bundle;
 
 public class VisualizarActivity extends Activity {
 
@@ -12,7 +11,7 @@ public class VisualizarActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visualizar);
-//        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
 }

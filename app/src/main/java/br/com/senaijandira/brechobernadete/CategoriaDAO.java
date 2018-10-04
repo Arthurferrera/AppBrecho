@@ -22,10 +22,7 @@ public class CategoriaDAO {
 
         SQLiteDatabase db = new DbHelper(context).getReadableDatabase();
 
-        String sql = "SELECT c._id, c.nome, COUNT(*) " +
-                "FROM categoria c" +
-                "INNER JOIN roupa r" +
-                "ON r._id = c._idCategoria group by c.nome;";
+        String sql = "SELECT * FROM categoria;";
 
         Cursor cursor = db.rawQuery(sql, null);
 
@@ -33,17 +30,46 @@ public class CategoriaDAO {
             Categoria c = new Categoria();
             c.setId(cursor.getInt(0));
             c.setNome(cursor.getString(1));
-            c.setTotalPecas(cursor.getInt(2));
             retorno.add(c);
         }
         return retorno;
     }
 
-//    public ArrayList<Categoria> quantidadePecasPorCategoria(Context context){
-//        ArrayList<Categoria> retorno = new ArrayList<>();
-//
-//        SQLiteDatabase db = new DbHelper(context).getReadableDatabase();
-//
-//        String sql = "SELECT COUNT(_idCategoria) roupa GROUP BY "
-//    }
-//}
+
+    public int quantidadePecasPorIdCategoria(Context context, int id){
+
+        SQLiteDatabase db = new DbHelper(context).getReadableDatabase();
+
+        String sql = "SELECT COUNT(_idCategoria) FROM roupa WHERE _idCategoria = " +id+" GROUP BY _idCategoria ;" ;
+
+        Cursor cursor = db.rawQuery(sql,null);
+
+        if (cursor.moveToNext()){
+
+            int r = cursor.getInt(0);
+            cursor.close();
+
+           return r;
+
+        }
+
+        return 0;
+    }
+
+    public ArrayList<Categoria> quantidadePecasPorCategoria(Context context){
+        ArrayList<Categoria> retorno = new ArrayList<>();
+
+        SQLiteDatabase db = new DbHelper(context).getReadableDatabase();
+
+        String sql = "SELECT COUNT(_idCategoria) FROM roupa GROUP BY _idCategoria;";
+
+        Cursor cursor = db.rawQuery(sql, null);
+
+        while (cursor.moveToNext()){
+            Categoria c = new Categoria();
+            c.setTotalPecas(cursor.getInt(0));
+            retorno.add(c);
+        }
+        return retorno;
+    }
+}
