@@ -3,8 +3,8 @@ package br.com.senaijandira.brechobernadete;
 public class Promocao {
 
     private int id;
-    private Float precoNovo;
-    private  Float precoAntigo;
+    private int precoNovo;
+    private int precoAntigo;
     private String nomeProduto;
 
     public int getId() {
@@ -15,19 +15,19 @@ public class Promocao {
         this.id = id;
     }
 
-    public Float getPrecoNovo() {
+    public int getPrecoNovo() {
         return precoNovo;
     }
 
-    public void setPrecoNovo(Float precoNovo) {
+    public void setPrecoNovo(int precoNovo) {
         this.precoNovo = precoNovo;
     }
 
-    public Float getPrecoAntigo() {
+    public int getPrecoAntigo() {
         return precoAntigo;
     }
 
-    public void setPrecoAntigo(Float precoAntigo) {
+    public void setPrecoAntigo(int precoAntigo) {
         this.precoAntigo = precoAntigo;
     }
 

@@ -49,7 +49,6 @@ public class HomeFragment extends Fragment {
             }
         });
         return viewHome;
-
     }
 
     @Override
