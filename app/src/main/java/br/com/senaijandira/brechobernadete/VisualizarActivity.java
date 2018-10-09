@@ -5,7 +5,6 @@ import android.os.Bundle;
 
 public class VisualizarActivity extends Activity {
 
-//    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

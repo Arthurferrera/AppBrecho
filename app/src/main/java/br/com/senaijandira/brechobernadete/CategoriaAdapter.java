@@ -31,7 +31,7 @@ public class CategoriaAdapter extends ArrayAdapter<Categoria>{
         }
 
 //        pegando o item da categoria
-        Categoria caegoria = getItem(position);
+        Categoria categoria = getItem(position);
 
 //        int qtd = dao.quantidadePecasPorIdCategoria(getContext(), caegoria.getId());
 
@@ -40,8 +40,8 @@ public class CategoriaAdapter extends ArrayAdapter<Categoria>{
         TextView lbl_quantidade_categoria_item = v.findViewById(R.id.lbl_quantidade_roupa_categoria_item);
 
 //        setando os valores de cada elemento
-        lbl_categoria_item.setText(caegoria.getNome());
-//        lbl_quantidade_categoria_item.setText(qtd);
+        lbl_categoria_item.setText(categoria.getNome());
+//        lbl_quantidade_categoria_item.setText(categoria.getId());
 
 //        retornando a view
         return v;

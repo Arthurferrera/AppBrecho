@@ -30,10 +30,12 @@ public class PromocaoAdapter extends ArrayAdapter<Promocao> {
         //ViewHolder
         TextView lbl_valorAntigo_promo = v.findViewById(R.id.lbl_valorAntigo_promo);
         TextView lbl_valorNovo_promo = v.findViewById(R.id.lbl_valorNovoPromo);
+        TextView lbl_nome_produto = v.findViewById(R.id.lbl_titulo_promo);
 
         //Atualizando a UI
-        lbl_valorAntigo_promo.setText(item.getPrecoAntigo());
-        lbl_valorNovo_promo.setText(item.getPrecoNovo());
+        lbl_nome_produto.setText(item.getNomeProduto());
+        lbl_valorAntigo_promo.setText(String.valueOf(item.getPrecoAntigo()));
+        lbl_valorNovo_promo.setText(String.valueOf(item.getPrecoNovo()));
 
         return v;
     }

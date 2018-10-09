@@ -60,7 +60,7 @@ public class DbHelper extends SQLiteOpenHelper {
                 "descricao TEXT NOT NULL," +
                 "cor TEXT NOT NULL," +
                 "tamanho TEXT NOT NULL," +
-                "maeca TEXT NOT NULL," +
+                "marca TEXT NOT NULL," +
                 "classificacao TEXT NOT NULL," +
                 "_idStatus INTEGER NOT NULL," +
                 "_idCategoria INTEGER NOT NULL," +
@@ -89,7 +89,20 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO status (nome) VALUES ('Lavando');");
         db.execSQL("INSERT INTO status (nome) VALUES ('Emprestado');");
 
+//        INSERTS TABELA TAG
+        db.execSQL("INSERT INTO tag (nome) VALUES ('Verão');");
+        db.execSQL("INSERT INTO tag (nome) VALUES ('Inverno');");
+        db.execSQL("INSERT INTO tag (nome) VALUES ('Festa');");
 
+//        INSERTS DA TABELA ROUPA - TEMPORÁRIO
+        db.execSQL("INSERT INTO roupa (nome, descricao, cor, tamanho, marca, classificacao, _idStatus, _idCategoria) VALUES ('CAMISETA', 'muito bonita, novinha', '#021035', 'M', 'Riachuello', 'A', 1, 1);");
+        db.execSQL("INSERT INTO roupa (nome, descricao, cor, tamanho, marca, classificacao, _idStatus, _idCategoria) VALUES ('Calça', 'muito bonita, novinha', '#000000', 'M', 'TNG', 'C', 2, 2);");
+        db.execSQL("INSERT INTO roupa (nome, descricao, cor, tamanho, marca, classificacao, _idStatus, _idCategoria) VALUES ('Sapato', 'muito bonito, novinho', '#cccccc', 'M', 'Nike', 'B', 3, 5);");
+
+//        INSERTS TABELA DE RELACIONAMENTO TAG_ROUPA
+        db.execSQL("INSERT INTO tag_roupa (_idTag, _idRoupa) VALUES (1, 1);");
+        db.execSQL("INSERT INTO tag_roupa (_idTag, _idRoupa) VALUES (2, 2);");
+        db.execSQL("INSERT INTO tag_roupa (_idTag, _idRoupa) VALUES (3, 3);");
     }
 
 //    MÉTODO DE ATUALIZAÇÃO DO BANCO
