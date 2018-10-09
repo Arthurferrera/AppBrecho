@@ -80,17 +80,18 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/textView4"
+                        android:id="@+id/lbl_cadastre_se"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
+                        android:onClick="AbrirCadastroUsuario"
                         android:text="cadastre-se"
                         android:textAlignment="center"
                         android:textSize="18sp" />
 
                     <Button
-                        android:id="@+id/button"
+                        android:id="@+id/btn_entrar"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"

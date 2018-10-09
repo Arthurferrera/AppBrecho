@@ -17,6 +17,7 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private SharedPreferencesConfig preferencesConfig;
     Toolbar toolbar;
 
     @Override
@@ -34,6 +35,8 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        preferencesConfig = new SharedPreferencesConfig(getApplicationContext());
 
         if (savedInstanceState == null){
             getSupportFragmentManager().beginTransaction().replace(R.id.frame_content, new HomeFragment()).commit();
@@ -85,8 +88,10 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_visualizar) {
             startActivity(new Intent(this, VisualizarActivity.class));
         } else if (id == R.id.nav_sair) {
+            preferencesConfig.writeLoginStatus(false);
             Intent intencao = new Intent(this, LoginActivity.class);
             startActivity(intencao);
+            finish();
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

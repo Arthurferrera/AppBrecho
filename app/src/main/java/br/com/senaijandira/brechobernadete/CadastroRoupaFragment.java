@@ -1,7 +1,6 @@
 package br.com.senaijandira.brechobernadete;
 
 
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -62,10 +61,14 @@ public class CadastroRoupaFragment extends Fragment {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onOk(AmbilWarnaDialog dialog, int color) {
-                fb.setBackgroundTintList(ColorStateList.valueOf(color));
+                fb.setBackgroundColor(color);
                 Color cor;
                 cor = Color.valueOf(color);
+
+
                 Log.d("onOk", cor+"");
+
+                Log.d("onOk", cor.toArgb()+"");
 //                Toast.makeText(getActivity(), color, Toast.LENGTH_SHORT).show();
             }
         });
