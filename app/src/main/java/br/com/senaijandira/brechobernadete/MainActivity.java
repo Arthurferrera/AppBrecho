@@ -9,7 +9,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 //TODO: Sempre Importar o Fragment do pacote import android.support.v4.app.Fragment; quando criar um novo fragment
 //TODO: https://pt.stackoverflow.com/questions/137644/slideshow-de-imagens-com-android
@@ -81,7 +80,8 @@ public class MainActivity extends AppCompatActivity
             getSupportFragmentManager().beginTransaction().replace(R.id.frame_content, new PromocoesFragment()).commit();
             toolbar.setTitle("Promoções");
         } else if (id == R.id.nav_sobre) {
-            Toast.makeText(this, "Sobre", Toast.LENGTH_SHORT).show();
+            Intent intencao = new Intent(this, SobreActivity.class);
+            startActivity(intencao);
         } else if (id == R.id.nav_visualizar) {
             startActivity(new Intent(this, VisualizarActivity.class));
         } else if (id == R.id.nav_sair) {
