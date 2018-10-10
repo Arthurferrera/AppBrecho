@@ -22,11 +22,4 @@ public class Tag {
         this.nomeTag = nomeTag;
     }
 
-    public int getTotalPecasTag() {
-        return totalPecasTag;
-    }
-
-    public void setTotalPecasTag(int totalPecasTag) {
-        this.totalPecasTag = totalPecasTag;
-    }
 }
