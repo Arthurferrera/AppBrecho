@@ -18,8 +18,8 @@ public class RoupasDAO {
         return instance;
     }
 
-    public ArrayList<Categoria> selecionarTodos(Context context){
-        ArrayList<Categoria> retorno = new ArrayList<>();
+    public ArrayList<Roupas> selecionarTodos(Context context){
+        ArrayList<Roupas> retorno = new ArrayList<>();
 
         SQLiteDatabase db = new DbHelper(context).getReadableDatabase();
 
@@ -28,14 +28,14 @@ public class RoupasDAO {
         Cursor cursor = db.rawQuery(sql, null);
 
         while (cursor.moveToNext()){
-            Categoria c = new Categoria();
-            c.setId(cursor.getInt(0));
-            c.setNome(cursor.getString(1));
-            c.setTotalPecas(cursor.getCount());
+            Roupas r = new Roupas();
+            r.setId(cursor.getInt(0));
+            r.setNome(cursor.getString(1));
+            r.setIdStatus(cursor.getInt(2));
+            retorno.add(r);
         }
         return retorno;
     }
-
 
 
 }

@@ -50,6 +50,7 @@ public class LoginApi extends AsyncTask<Void, Void, String> {
                     preferencesConfig.writeLoginStatus(true);
 
                     activity.startActivity(new Intent(activity, MainActivity.class));
+                    activity.finish();
                 } else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(activity);
                     builder.setTitle("Erro!");

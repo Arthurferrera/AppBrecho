@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -65,6 +64,7 @@ public class HomeFragment extends Fragment {
     }
 
     public void ItemClick() {
-        Toast.makeText(getContext(), "funcionou", Toast.LENGTH_SHORT).show();
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frame_content, new RoupasFragment()).commit();
+        getActivity().setTitle("Roupas");
     }
 }

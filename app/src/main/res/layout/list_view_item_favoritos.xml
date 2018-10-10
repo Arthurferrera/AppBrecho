@@ -35,10 +35,10 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:layout_marginTop="10dp"
-            android:gravity="center"
+            android:gravity="left"
             android:paddingLeft="10dp"
             android:text="Estado"
-            android:textAlignment="textStart"
+            android:textAlignment="center"
             android:textSize="17sp" />
 
         <TextView
@@ -56,10 +56,10 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:layout_marginTop="10dp"
-            android:gravity="center"
+            android:gravity="left"
             android:paddingLeft="10dp"
             android:text="Cor"
-            android:textAlignment="textStart"
+            android:textAlignment="center"
             android:textSize="17sp" />
 
         <android.support.design.widget.FloatingActionButton

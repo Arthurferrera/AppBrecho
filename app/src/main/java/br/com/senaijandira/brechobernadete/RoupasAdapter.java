@@ -1,18 +1,19 @@
 package br.com.senaijandira.brechobernadete;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class RoupasAdapter extends ArrayAdapter<Roupas> {
 
 
-    public RoupasAdapter(@NonNull Context context, int resource) {
-        super(context, resource);
+    public RoupasAdapter(Context context, ArrayList<Roupas> lstRoupas) {
+        super(context,0, lstRoupas);
     }
 
     @Override
@@ -28,7 +29,7 @@ public class RoupasAdapter extends ArrayAdapter<Roupas> {
         TextView lbl_status_roupas_favorito = v.findViewById(R.id.lbl_status_roupa_favorito);
 
         lbl_titulo_favorito.setText(item.getNome());
-        lbl_status_roupas_favorito.setText(item.getIdStatus());
+        lbl_status_roupas_favorito.setText(item.getNome());
 
         return v;
     }
