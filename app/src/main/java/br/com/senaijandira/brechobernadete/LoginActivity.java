@@ -44,12 +44,12 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        txt_senha.setText("");
-    }
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//
+//        txt_senha.setText("");
+//    }
 
     public boolean ValidatInputs(){
         EditText campoComFoco = null;

@@ -41,7 +41,7 @@ public class LoginApi extends AsyncTask<Void, Void, String> {
                 boolean login = jsonObject.getBoolean("login");
                 if (login){
                     JSONObject usuarioJson = jsonObject.getJSONObject("usuario");
-                    String nomeUsuario = usuarioJson.getString("nomeCliente");
+                    String nomeUsuario = usuarioJson.getString("nome");
                     String email = usuarioJson.getString("email");
 
 
