@@ -1,6 +1,7 @@
 package br.com.senaijandira.brechobernadete;
 
 
+import android.app.ListActivity;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Build;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 
 import yuku.ambilwarna.AmbilWarnaDialog;
@@ -41,6 +43,8 @@ public class CadastroRoupaFragment extends Fragment {
         fb = view.findViewById(R.id.fb_cor);
         btn_salvar_roupa = view.findViewById(R.id.btn_salvar_roupa);
 
+//android.R.layout.simple_dropdown_item_1line
+
 
         fb.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,6 +55,21 @@ public class CadastroRoupaFragment extends Fragment {
 
         return view;
     }
+
+    public class AppListActivity extends ListActivity {
+
+        String[] mApps = {"Instagram","Pinterest","Pocket","Twitter" };
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, mApps);
+
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.fragment_cadastro_roupa);
+        }
+    }
+
+
 
     public void abrirCor(){
         final AmbilWarnaDialog colorDialog = new AmbilWarnaDialog(getActivity(), Color.WHITE, new AmbilWarnaDialog.OnAmbilWarnaListener() {
@@ -72,6 +91,7 @@ public class CadastroRoupaFragment extends Fragment {
 //                Log.d("onOk", cor.toArgb()+"");
 //                Toast.makeText(getActivity(), color, Toast.LENGTH_SHORT).show();
             }
+
         });
         colorDialog.show();
     }
