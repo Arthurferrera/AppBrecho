@@ -20,4 +20,7 @@ public class PromocaoDAO {
 
         return retorno;
     }
+
+
+
 }

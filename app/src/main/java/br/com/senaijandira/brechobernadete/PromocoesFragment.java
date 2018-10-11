@@ -102,4 +102,5 @@ public class PromocoesFragment extends Fragment {
         Toast.makeText(getContext(), "funcionou", Toast.LENGTH_SHORT).show();
     }
 
+
 }
