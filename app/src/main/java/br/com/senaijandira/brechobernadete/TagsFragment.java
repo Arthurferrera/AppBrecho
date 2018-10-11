@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -55,15 +54,13 @@ public class TagsFragment extends Fragment {
         super.onResume();
 
         ArrayList<Tag> tags;
-
         tags = dao.selecionatTodas(getContext());
-
         adapter.clear();
-
         adapter.addAll(tags);
     }
 
     public void ItemTagClick(){
-        Toast.makeText(getContext(), "funcionou", Toast.LENGTH_SHORT).show();
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frame_content, new RoupasFragment()).commit();
+        getActivity().setTitle("Roupas");
     }
 }

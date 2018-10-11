@@ -37,10 +37,6 @@
             android:id="@+id/nav_minhas_compras"
             android:icon="@drawable/ic_compras"
             android:title="Minhas Compras" />
-        <item
-            android:id="@+id/nav_visualizar"
-            android:icon="@drawable/ic_compras"
-            android:title="Visualizar" />
     </group>
 
     <item android:title="Informações">

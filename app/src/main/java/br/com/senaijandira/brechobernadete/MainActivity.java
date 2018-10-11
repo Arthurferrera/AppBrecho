@@ -85,8 +85,6 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_sobre) {
             Intent intencao = new Intent(this, SobreActivity.class);
             startActivity(intencao);
-        } else if (id == R.id.nav_visualizar) {
-            startActivity(new Intent(this, VisualizarActivity.class));
         } else if (id == R.id.nav_sair) {
             preferencesConfig.writeLoginStatus(false);
             Intent intencao = new Intent(this, LoginActivity.class);

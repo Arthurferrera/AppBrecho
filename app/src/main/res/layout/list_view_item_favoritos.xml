@@ -15,7 +15,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="165dp"
         android:backgroundTint="@color/colorCinzaClaro"
         android:orientation="vertical">
 
@@ -28,7 +28,7 @@
             android:paddingLeft="7dp"
             android:text="Calça"
             android:textAlignment="center"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -38,8 +38,8 @@
             android:gravity="left"
             android:paddingLeft="10dp"
             android:text="Estado"
-            android:textAlignment="center"
-            android:textSize="17sp" />
+            android:textAlignment="gravity"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/lbl_status_roupa_favorito"
@@ -56,25 +56,27 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:layout_marginTop="10dp"
-            android:gravity="left"
+            android:gravity="bottom|left"
             android:paddingLeft="10dp"
             android:text="Cor"
-            android:textAlignment="center"
+            android:textAlignment="gravity"
             android:textSize="17sp" />
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab_favorito"
-            android:backgroundTint="@color/colorBlack"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="5dp" />
+        <!--<android.support.design.widget.FloatingActionButton-->
+            <!--android:id="@+id/fab_favorito"-->
+            <!--android:layout_width="35dp"-->
+            <!--android:layout_height="35dp"-->
+            <!--android:layout_gravity="center_horizontal"-->
+            <!--android:backgroundTint="@color/colorBlack"-->
+            <!--android:focusable="false"-->
+            <!--android:focusableInTouchMode="false"/>-->
 
         <ImageView
             android:id="@+id/img_favorito_like"
-            android:layout_width="45dp"
-            android:layout_height="46dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_gravity="bottom|right"
+            android:layout_marginBottom="50dp"
             android:layout_marginTop="-30dp"
             android:src="@drawable/ic_favoritos" />
 

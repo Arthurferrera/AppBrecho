@@ -37,6 +37,25 @@ public class RoupasDAO {
         return retorno;
     }
 
+    public ArrayList<Roupas> selecionarFavoritos(Context context){
+        ArrayList<Roupas> retorno = new ArrayList<>();
+
+        SQLiteDatabase db = new DbHelper(context).getReadableDatabase();
+
+        String sql = "SELECT * FROM roupa WHERE favorito = 1";
+
+        Cursor cursor = db.rawQuery(sql, null);
+
+        while (cursor.moveToNext()){
+            Roupas r = new Roupas();
+            r.setId(cursor.getInt(0));
+            r.setNome(cursor.getString(1));
+            r.setIdStatus(cursor.getInt(2));
+            retorno.add(r);
+        }
+        return retorno;
+    }
+
 
 }
 

@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -44,13 +43,13 @@ public class RoupasFragment extends Fragment {
 
         listView_roupas = roupaView.findViewById(R.id.list_view_roupas);
 
-        adapter = new RoupasAdapter(getActivity(), new ArrayList<Roupas>());
+        adapter = new RoupasAdapter(getContext(), new ArrayList<Roupas>());
         listView_roupas.setAdapter(adapter);
         listView_roupas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getContext(),"funcionou", Toast.LENGTH_LONG);
-//                RoupaClick();
+//                Toast.makeText(getContext(),"funcionou", Toast.LENGTH_LONG);
+                RoupaClick();
             }
         });
 
