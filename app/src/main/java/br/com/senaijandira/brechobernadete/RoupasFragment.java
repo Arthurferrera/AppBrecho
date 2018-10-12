@@ -22,6 +22,8 @@ public class RoupasFragment extends Fragment {
     ListView listView_roupas;
     RoupasAdapter adapter;
     RoupasDAO dao;
+    String modo;
+    int id;
 
 
     public RoupasFragment() {
@@ -35,6 +37,12 @@ public class RoupasFragment extends Fragment {
         // Inflate the layout for this fragment
 
         View roupaView = inflater.inflate(R.layout.fragment_roupas, container, false);
+
+        Bundle bundle = this.getArguments();
+        if (bundle != null){
+            id = bundle.getInt("id");
+            modo = bundle.getString("modo");
+        }
 
 
         dao = RoupasDAO.getInstance();
@@ -62,7 +70,11 @@ public class RoupasFragment extends Fragment {
         super.onResume();
 
         ArrayList<Roupas> listaRoupas = new ArrayList<Roupas>();
-        listaRoupas = dao.selecionarTodos(getContext());
+        if (modo.equals("categoria")){
+            listaRoupas = dao.selecionarPorCategoria(getContext(), id);
+        } else if (modo.equals("tag")){
+            listaRoupas = dao.selecionatPorTag(getContext(), id);
+        }
         adapter.clear();
         adapter.addAll(listaRoupas);
     }

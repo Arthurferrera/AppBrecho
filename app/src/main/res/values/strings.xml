@@ -10,8 +10,8 @@
     <string name="title_activity_visualizar">VisualizarActivity</string>
     <string name="title_activity_visualizar_roupa">VisualizarRoupaActivity</string>
 
-    <string name="API_URL">http://10.107.144.80/INF4T20182/ProCode/VersaoServerSide/apiBrecho/</string>
-    <!--<string name="API_URL">http://192.168.1.32/aulas/apiBrecho/</string>-->
+    <!--<string name="API_URL">http://10.107.144.80/INF4T20182/ProCode/VersaoServerSide/apiBrecho/</string>-->
+    <string name="API_URL">http://192.168.1.35/aulas/apiBrecho/</string>
 
     <!--Strings de sharedPreferences-->
     <string name="login_preferences">br.com.senaijandira.brechobernadete_login_preferences</string>

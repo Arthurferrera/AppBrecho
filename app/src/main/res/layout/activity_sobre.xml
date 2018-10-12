@@ -10,10 +10,10 @@
 
     <ImageView
         android:id="@+id/imageView3"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_marginTop="20dp"
-        app:srcCompat="@drawable/logo_empresa"
+        app:srcCompat="@drawable/logo_brecho"
         tools:layout_editor_absoluteX="39dp"
         tools:layout_editor_absoluteY="33dp" />
 

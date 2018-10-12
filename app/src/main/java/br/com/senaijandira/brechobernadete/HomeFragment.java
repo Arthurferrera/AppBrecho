@@ -3,6 +3,7 @@ package br.com.senaijandira.brechobernadete;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,8 +44,19 @@ public class HomeFragment extends Fragment {
         list_view_categoria.setAdapter(adapter);
         list_view_categoria.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                ItemClick();
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                FragmentManager fm = getActivity().getSupportFragmentManager();
+
+                Categoria categoria = adapter.getItem(position);
+
+                Fragment fragment = new RoupasFragment();
+                Bundle bundle = new Bundle();
+                bundle.putInt("id", categoria.getId());
+                bundle.putString("modo", "categoria");
+                fragment.setArguments(bundle);
+
+                fm.beginTransaction().replace(R.id.frame_content, fragment).commit();
+                getActivity().setTitle("Roupas");
             }
         });
         return viewHome;
@@ -64,7 +76,7 @@ public class HomeFragment extends Fragment {
     }
 
     public void ItemClick() {
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frame_content, new RoupasFragment()).commit();
-        getActivity().setTitle("Roupas");
+
+
     }
 }

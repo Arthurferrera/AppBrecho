@@ -3,6 +3,7 @@ package br.com.senaijandira.brechobernadete;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,7 +43,18 @@ public class TagsFragment extends Fragment {
         listView_tag.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ItemTagClick();
+                FragmentManager fm = getActivity().getSupportFragmentManager();
+
+                Tag tag = adapter.getItem(position);
+
+                Fragment fragment = new RoupasFragment();
+                Bundle bundle = new Bundle();
+                bundle.putInt("id", tag.getId());
+                bundle.putString("modo", "tag");
+                fragment.setArguments(bundle);
+
+                fm.beginTransaction().replace(R.id.frame_content, fragment).commit();
+                getActivity().setTitle("Roupas");
             }
         });
 
@@ -59,8 +71,5 @@ public class TagsFragment extends Fragment {
         adapter.addAll(tags);
     }
 
-    public void ItemTagClick(){
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.frame_content, new RoupasFragment()).commit();
-        getActivity().setTitle("Roupas");
-    }
+
 }
