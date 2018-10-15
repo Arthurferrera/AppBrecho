@@ -85,8 +85,8 @@ public class PromocoesFragment extends Fragment {
                             Promocao promo = new Promocao();
                             promo.setId(promocaoJson.getInt("idPromocao"));
                             promo.setNomeProduto(promocaoJson.getString("nomeProduto"));
-                            promo.setPrecoAntigo((int) promocaoJson.getDouble("preco"));
-                            promo.setPrecoNovo((int) promocaoJson.getDouble("valorNovo"));
+                            promo.setPrecoAntigo(promocaoJson.getDouble("preco"));
+                            promo.setPrecoNovo(promocaoJson.getDouble("valorNovo"));
                             promocoes.add(promo);
                         }
                     } catch (JSONException e) {

@@ -1,8 +1,6 @@
 package br.com.senaijandira.brechobernadete;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -13,9 +11,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 
 //TODO: Sempre Importar o Fragment do pacote import android.support.v4.app.Fragment; quando criar um novo fragment
 //TODO: https://pt.stackoverflow.com/questions/137644/slideshow-de-imagens-com-android
@@ -84,17 +79,15 @@ public class MainActivity extends AppCompatActivity
             getSupportFragmentManager().beginTransaction().replace(R.id.frame_content, new TagsFragment()).commit();
             toolbar.setTitle("#Tags");
         } else if (id == R.id.nav_favoritos) {
-//
-//            FragmentManager fm = this.getSupportFragmentManager();
-//            Fragment fragment = new RoupasFragment();
-//            Bundle bundle = new Bundle();
-//            bundle.putInt("id",  0);
-//            bundle.putString("modo", "favoritos");
-//            fragment.setArguments(bundle);
-//
-//            fm.beginTransaction().replace(R.id.frame_content, fragment).commit();
-//            toolbar.setTitle("Favoritos");
-            getSupportFragmentManager().beginTransaction().replace(R.id.frame_content, new FavoritosFragment()).commit();
+            FragmentManager fm = this.getSupportFragmentManager();
+            Fragment fragment = new RoupasFragment();
+
+            Bundle bundle = new Bundle();
+            bundle.putInt("id",  0);
+            bundle.putString("modo", "favoritos");
+            fragment.setArguments(bundle);
+
+            fm.beginTransaction().replace(R.id.frame_content, fragment).commit();
             toolbar.setTitle("Favoritos");
         } else if (id == R.id.nav_notificações) {
             getSupportFragmentManager().beginTransaction().replace(R.id.frame_content, new NotificacoesFragment()).commit();

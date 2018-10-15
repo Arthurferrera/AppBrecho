@@ -150,13 +150,11 @@
                         android:text="Cor"
                         android:textStyle="bold" />
 
-                    <android.support.design.widget.FloatingActionButton
-                        android:id="@+id/fab_cor_visualizar"
-                        android:layout_width="wrap_content"
-                        android:layout_height="27dp"
-                        android:layout_gravity="center_vertical|center_horizontal"
-                        android:clickable="false"
-                        app:rippleColor="@color/cardview_shadow_end_color" />
+                    <TextView
+                        android:id="@+id/lbl_cor_visualizar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
 
                 </LinearLayout>
 

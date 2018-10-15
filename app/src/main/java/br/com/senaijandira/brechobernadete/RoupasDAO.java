@@ -65,7 +65,10 @@ public class RoupasDAO {
 
         SQLiteDatabase db = new DbHelper(context).getReadableDatabase();
 
-        String sql = "SELECT * FROM roupa WHERE favorito = 1";
+        String sql = "SELECT * FROM roupa r " +
+                "INNER JOIN status s " +
+                "ON s._id = r._idStatus " +
+                "WHERE r.favorito = 1";
 
         Cursor cursor = db.rawQuery(sql, null);
 
@@ -73,7 +76,7 @@ public class RoupasDAO {
             Roupas r = new Roupas();
             r.setId(cursor.getInt(0));
             r.setNome(cursor.getString(1));
-            r.setIdStatus(cursor.getInt(8));
+            r.setStatus(cursor.getString(11));
             retorno.add(r);
         }
         return retorno;
@@ -109,7 +112,16 @@ public class RoupasDAO {
 
         SQLiteDatabase db = new DbHelper(context).getReadableDatabase();
 
-        String sql = "SELECT * roupa WHERE _id = "+id;
+        String sql = "SELECT * FROM roupa r " +
+                "INNER JOIN status s " +
+                "ON s._id = r._idStatus " +
+                "INNER JOIN tag_roupa tr " +
+                "ON tr._idRoupa = r._id " +
+                "INNER JOIN tag t " +
+                "ON t._id = tr._idTag " +
+                "INNER JOIN categoria c " +
+                "ON c._id = r._idCategoria " +
+                "WHERE r._id = "+id;
 
         Cursor cursor = db.rawQuery(sql, null);
 
@@ -124,10 +136,12 @@ public class RoupasDAO {
 //            roupa.setFavorito(cursor.getInt(7));
             roupa.setIdStatus(cursor.getInt(8));
             roupa.setIdCategoria(cursor.getInt(9));
+            roupa.setStatus(cursor.getString(11));
+            roupa.setTag(cursor.getString(16));
+            roupa.setCategoria(cursor.getString(18));
 
         }
         return roupa;
-
     }
 }
 

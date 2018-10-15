@@ -18,7 +18,6 @@ import java.util.ArrayList;
  */
 public class RoupasFragment extends Fragment {
 
-
     ListView listView_roupas;
     RoupasAdapter adapter;
     RoupasDAO dao;
@@ -44,7 +43,6 @@ public class RoupasFragment extends Fragment {
             modo = bundle.getString("modo");
         }
 
-
         dao = RoupasDAO.getInstance();
         Roupas r = new Roupas();
         r.setId(0);
@@ -56,13 +54,12 @@ public class RoupasFragment extends Fragment {
         listView_roupas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intencao = new Intent(getContext(), VisualizarActivity.class);
                 Roupas roupa =  adapter.getItem(position);
+                Intent intencao = new Intent(getContext(), VisualizarActivity.class);
                 intencao.putExtra("id", roupa.getId());
                 startActivity(intencao);
             }
         });
-
 
         return roupaView;
     }
@@ -76,6 +73,8 @@ public class RoupasFragment extends Fragment {
             listaRoupas = dao.selecionarPorCategoria(getContext(), id);
         } else if (modo.equals("tag")){
             listaRoupas = dao.selecionatPorTag(getContext(), id);
+        } else if (modo.equals("favoritos")){
+            listaRoupas = dao.selecionarFavoritos(getContext());
         }
         adapter.clear();
         adapter.addAll(listaRoupas);

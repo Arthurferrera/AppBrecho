@@ -10,10 +10,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class PromocaoAdapter extends ArrayAdapter<Promocao> {
 
+    NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "br"));
 
     public PromocaoAdapter(Context ctx) {
         super(ctx, 0, new ArrayList<Promocao>());
@@ -38,8 +41,8 @@ public class PromocaoAdapter extends ArrayAdapter<Promocao> {
 
         //Atualizando a UI
         lbl_nome_produto.setText(item.getNomeProduto());
-        lbl_valorAntigo_promo.setText(String.valueOf(item.getPrecoAntigo()));
-        lbl_valorNovo_promo.setText(String.valueOf(item.getPrecoNovo()));
+        lbl_valorAntigo_promo.setText(nf.format(item.getPrecoAntigo()));
+        lbl_valorNovo_promo.setText(nf.format(item.getPrecoNovo()));
         btn_conferir_promo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

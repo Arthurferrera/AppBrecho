@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -21,8 +20,6 @@ public class FavoritosFragment extends Fragment {
     ListView listView_favoritos;
     RoupasAdapter adapter;
     RoupasDAO dao;
-
-
 
     public FavoritosFragment() {
         // Required empty public constructor
@@ -45,9 +42,11 @@ public class FavoritosFragment extends Fragment {
         listView_favoritos.setAdapter(adapter);
         listView_favoritos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Toast.makeText(getContext(), "Funcionou", Toast.LENGTH_SHORT).show();
-                FavoritoClick();
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Roupas roupa =  adapter.getItem(position);
+                Intent intencao = new Intent(getContext(), VisualizarActivity.class);
+                intencao.putExtra("id", roupa.getId());
+                startActivity(intencao);
             }
         });
         return favoritosView;
@@ -63,8 +62,5 @@ public class FavoritosFragment extends Fragment {
         adapter.addAll(listaRoupas);
     }
 
-    public void FavoritoClick(){
-        startActivity(new Intent(getContext(), VisualizarActivity.class));
-    }
 
 }

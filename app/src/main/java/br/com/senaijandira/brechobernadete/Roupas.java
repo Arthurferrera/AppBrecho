@@ -12,6 +12,9 @@ public class Roupas {
     private int idStatus;
     private int idCategoria;
     private Boolean favorito;
+    private String categoria;
+    private String status;
+    private String tag;
 
     public int getId() { return id;}
 
@@ -52,5 +55,17 @@ public class Roupas {
     public Boolean getFavorito() { return favorito; }
 
     public void setFavorito(Boolean favorito) { this.favorito = favorito; }
+
+    public String getCategoria() { return categoria; }
+
+    public void setCategoria(String categoria) { this.categoria = categoria; }
+
+    public String getStatus() { return status; }
+
+    public void setStatus(String status) { this.status = status; }
+
+    public String getTag() { return tag; }
+
+    public void setTag(String tag) { this.tag = tag; }
 
 }

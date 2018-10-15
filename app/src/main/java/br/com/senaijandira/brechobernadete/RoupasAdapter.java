@@ -29,7 +29,7 @@ public class RoupasAdapter extends ArrayAdapter<Roupas> {
         TextView lbl_status_roupas_favorito = v.findViewById(R.id.lbl_status_roupa_favorito);
 
         lbl_titulo_favorito.setText(item.getNome());
-        lbl_status_roupas_favorito.setText(item.getNome());
+        lbl_status_roupas_favorito.setText(item.getStatus());
 
         return v;
     }
