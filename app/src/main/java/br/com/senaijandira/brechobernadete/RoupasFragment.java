@@ -56,8 +56,10 @@ public class RoupasFragment extends Fragment {
         listView_roupas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Toast.makeText(getContext(),"funcionou", Toast.LENGTH_LONG);
-                RoupaClick();
+                Intent intencao = new Intent(getContext(), VisualizarActivity.class);
+                Roupas roupa =  adapter.getItem(position);
+                intencao.putExtra("id", roupa.getId());
+                startActivity(intencao);
             }
         });
 
@@ -78,9 +80,4 @@ public class RoupasFragment extends Fragment {
         adapter.clear();
         adapter.addAll(listaRoupas);
     }
-
-    public void RoupaClick(){
-        startActivity(new Intent(getContext(), VisualizarActivity.class));
-    }
-
 }

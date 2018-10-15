@@ -65,7 +65,7 @@ public class RoupasDAO {
 
         SQLiteDatabase db = new DbHelper(context).getReadableDatabase();
 
-        String sql = "SELECT * FROM roupa WHERE favorito = 1;";
+        String sql = "SELECT * FROM roupa WHERE favorito = 1";
 
         Cursor cursor = db.rawQuery(sql, null);
 
@@ -73,7 +73,7 @@ public class RoupasDAO {
             Roupas r = new Roupas();
             r.setId(cursor.getInt(0));
             r.setNome(cursor.getString(1));
-            r.setIdStatus(cursor.getInt(2));
+            r.setIdStatus(cursor.getInt(8));
             retorno.add(r);
         }
         return retorno;
@@ -102,6 +102,32 @@ public class RoupasDAO {
             retorno.add(r);
         }
         return retorno;
+    }
+
+    public Roupas selecionarUmaRoupa(Context context, int id){
+        Roupas roupa = new Roupas();
+
+        SQLiteDatabase db = new DbHelper(context).getReadableDatabase();
+
+        String sql = "SELECT * roupa WHERE _id = "+id;
+
+        Cursor cursor = db.rawQuery(sql, null);
+
+        while (cursor.moveToNext()){
+            roupa.setId(cursor.getInt(0));
+            roupa.setNome(cursor.getString(1));
+            roupa.setDescricao(cursor.getString(2));
+            roupa.setCor(cursor.getString(3));
+            roupa.setTamanho(cursor.getString(4));
+            roupa.setMarca(cursor.getString(5));
+            roupa.setClassificacao(cursor.getString(6));
+//            roupa.setFavorito(cursor.getInt(7));
+            roupa.setIdStatus(cursor.getInt(8));
+            roupa.setIdCategoria(cursor.getInt(9));
+
+        }
+        return roupa;
+
     }
 }
 

@@ -11,6 +11,7 @@ public class Roupas {
     private String classificacao;
     private int idStatus;
     private int idCategoria;
+    private Boolean favorito;
 
     public int getId() { return id;}
 
@@ -48,6 +49,8 @@ public class Roupas {
 
     public void setIdCategoria(int idCategoria) {this.idCategoria = idCategoria;}
 
+    public Boolean getFavorito() { return favorito; }
+
+    public void setFavorito(Boolean favorito) { this.favorito = favorito; }
+
 }
-
-

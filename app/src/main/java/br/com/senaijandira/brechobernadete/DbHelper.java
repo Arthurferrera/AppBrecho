@@ -62,9 +62,9 @@ public class DbHelper extends SQLiteOpenHelper {
                 "tamanho TEXT NOT NULL," +
                 "marca TEXT NOT NULL," +
                 "classificacao TEXT NOT NULL," +
+                "favorito BOOLEAN NOT NULL," +
                 "_idStatus INTEGER NOT NULL," +
                 "_idCategoria INTEGER NOT NULL," +
-                "favorito BOOLEAN NOT NULL," +
                 "CONSTRAINT fk_status_roupa" +
                 "   FOREIGN KEY (_idStatus)" +
                 "   REFERENCES status(_id)," +
@@ -96,9 +96,9 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO tag (nome) VALUES ('Festa');");
 
 //        INSERTS DA TABELA ROUPA - TEMPORÁRIO
-        db.execSQL("INSERT INTO roupa (nome, descricao, cor, tamanho, marca, classificacao, _idStatus, _idCategoria, favorito) VALUES ('CAMISETA', 'muito bonita, novinha', '#021035', 'M', 'Riachuello', 'A', 1, 1, 0);");
-        db.execSQL("INSERT INTO roupa (nome, descricao, cor, tamanho, marca, classificacao, _idStatus, _idCategoria, favorito) VALUES ('Calça', 'muito bonita, novinha', '#000000', 'M', 'TNG', 'C', 2, 2, 1);");
-        db.execSQL("INSERT INTO roupa (nome, descricao, cor, tamanho, marca, classificacao, _idStatus, _idCategoria, favorito) VALUES ('Sapato', 'muito bonito, novinho', '#cccccc', 'M', 'Nike', 'B', 3, 5, 0);");
+        db.execSQL("INSERT INTO roupa (nome, descricao, cor, tamanho, marca, classificacao, favorito, _idStatus, _idCategoria) VALUES ('CAMISETA', 'muito bonita, novinha', '#021035', 'M', 'Riachuello', 'A', 1, 1, 1);");
+        db.execSQL("INSERT INTO roupa (nome, descricao, cor, tamanho, marca, classificacao, favorito, _idStatus, _idCategoria) VALUES ('Calça', 'muito bonita, novinha', '#000000', 'M', 'TNG', 'C', 0, 2, 2);");
+        db.execSQL("INSERT INTO roupa (nome, descricao, cor, tamanho, marca, classificacao, favorito, _idStatus, _idCategoria) VALUES ('Sapato', 'muito bonito, novinho', '#cccccc', 'M', 'Nike', 'B', 1, 5, 3);");
 
 //        INSERTS TABELA DE RELACIONAMENTO TAG_ROUPA
         db.execSQL("INSERT INTO tag_roupa (_idTag, _idRoupa) VALUES (1, 1);");

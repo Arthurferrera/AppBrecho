@@ -74,9 +74,4 @@ public class HomeFragment extends Fragment {
 //        adicionando a lista ao adapter
         adapter.addAll(categorias);
     }
-
-    public void ItemClick() {
-
-
-    }
 }
