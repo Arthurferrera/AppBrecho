@@ -61,20 +61,26 @@
             android:textSize="17sp" />
 
         <!--<android.support.design.widget.FloatingActionButton-->
-            <!--android:id="@+id/fab_favorito"-->
-            <!--android:layout_width="35dp"-->
-            <!--android:layout_height="35dp"-->
-            <!--android:layout_gravity="center_horizontal"-->
-            <!--android:backgroundTint="@color/colorBlack"-->
-            <!--android:focusable="false"-->
-            <!--android:focusableInTouchMode="false"/>-->
+        <!--android:id="@+id/fab_favorito"-->
+        <!--android:layout_width="35dp"-->
+        <!--android:layout_height="35dp"-->
+        <!--android:layout_gravity="center_horizontal"-->
+        <!--android:backgroundTint="@color/colorBlack"-->
+        <!--android:focusable="false"-->
+        <!--android:focusableInTouchMode="false"/>-->
+
+        <TextView
+            android:id="@+id/lbl_cor_favorito"
+            android:layout_width="38dp"
+            android:layout_height="39dp"
+            android:layout_marginLeft="70dp"
+            android:background="@drawable/bg_cor" />
 
         <ImageView
             android:id="@+id/img_favorito_like"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_gravity="bottom|right"
-            android:layout_marginBottom="50dp"
             android:layout_marginTop="-30dp"
             android:src="@drawable/ic_favoritos" />
 

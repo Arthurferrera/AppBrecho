@@ -5,7 +5,7 @@ public class Roupas {
     private int id;
     private String nome;
     private String descricao;
-    private String cor;
+    private int cor;
     private String tamanho;
     private String marca;
     private String classificacao;
@@ -28,9 +28,9 @@ public class Roupas {
 
     public void setDescricao(String descricao) {this.descricao = descricao;}
 
-    public String getCor() {return cor;}
+    public int getCor() {return cor;}
 
-    public void setCor(String cor) {this.cor = cor;}
+    public void setCor(int cor) {this.cor = cor;}
 
     public String getTamanho() {return tamanho;}
 

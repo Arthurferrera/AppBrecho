@@ -98,7 +98,7 @@ public class DbHelper extends SQLiteOpenHelper {
 //        INSERTS DA TABELA ROUPA - TEMPORÁRIO
         db.execSQL("INSERT INTO roupa (nome, descricao, cor, tamanho, marca, classificacao, favorito, _idStatus, _idCategoria) VALUES ('CAMISETA', 'muito bonita, novinha', '#021035', 'M', 'Riachuello', 'A', 1, 1, 1);");
         db.execSQL("INSERT INTO roupa (nome, descricao, cor, tamanho, marca, classificacao, favorito, _idStatus, _idCategoria) VALUES ('Calça', 'muito bonita, novinha', '#000000', 'M', 'TNG', 'C', 1, 2, 2);");
-        db.execSQL("INSERT INTO roupa (nome, descricao, cor, tamanho, marca, classificacao, favorito, _idStatus, _idCategoria) VALUES ('Sapato', 'muito bonito, novinho', '#cccccc', 'M', 'Nike', 'B', 1, 5, 3);");
+        db.execSQL("INSERT INTO roupa (nome, descricao, cor, tamanho, marca, classificacao, favorito, _idStatus, _idCategoria) VALUES ('Sapato', 'muito bonito, novinho', '#cccccc', 'M', 'Nike', 'B', 1, 3, 5);");
 
 //        INSERTS TABELA DE RELACIONAMENTO TAG_ROUPA
         db.execSQL("INSERT INTO tag_roupa (_idTag, _idRoupa) VALUES (1, 1);");

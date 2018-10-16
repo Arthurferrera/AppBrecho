@@ -46,6 +46,8 @@ public class RoupasDAO {
                 "FROM roupa r " +
                 "INNER JOIN categoria c " +
                 "ON r._idCategoria = c._id " +
+                "INNER JOIN status s " +
+                "ON s._id = r._idStatus " +
                 "WHERE c._id = "+id;
 
         Cursor cursor = db.rawQuery(sql, null);
@@ -54,7 +56,7 @@ public class RoupasDAO {
             Roupas r = new Roupas();
             r.setId(cursor.getInt(0));
             r.setNome(cursor.getString(1));
-            r.setIdStatus(cursor.getInt(2));
+            r.setStatus(cursor.getString(13));
             retorno.add(r);
         }
         return retorno;
@@ -129,7 +131,7 @@ public class RoupasDAO {
             roupa.setId(cursor.getInt(0));
             roupa.setNome(cursor.getString(1));
             roupa.setDescricao(cursor.getString(2));
-            roupa.setCor(cursor.getString(3));
+            roupa.setCor(cursor.getInt(3));
             roupa.setTamanho(cursor.getString(4));
             roupa.setMarca(cursor.getString(5));
             roupa.setClassificacao(cursor.getString(6));

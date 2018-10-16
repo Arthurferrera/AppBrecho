@@ -42,7 +42,7 @@ public class VisualizarActivity extends AppCompatActivity {
         lbl_descricao.setText(r.getDescricao());
         lbl_categoria.setText(r.getCategoria());
         lbl_tamanho.setText(r.getTamanho());
-        lbl_cor.setText(r.getCor());
+        lbl_cor.setBackgroundColor(r.getCor());
         lbl_tags.setText(r.getTag());
         lbl_status.setText(r.getStatus());
         lbl_marca.setText(r.getMarca());

@@ -1,7 +1,6 @@
 package br.com.senaijandira.brechobernadete;
 
 
-import android.app.ListActivity;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Build;
@@ -13,8 +12,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 
 import yuku.ambilwarna.AmbilWarnaDialog;
 
@@ -26,6 +25,9 @@ public class CadastroRoupaFragment extends Fragment {
 
     FloatingActionButton fb;
     Button btn_salvar_roupa;
+    Spinner sp_status;
+    TagDAO daoTag;
+    CategoriaDAO daoCategoria;
 
 
     public CadastroRoupaFragment() {
@@ -42,8 +44,13 @@ public class CadastroRoupaFragment extends Fragment {
 //        find's dos elementos
         fb = view.findViewById(R.id.fb_cor);
         btn_salvar_roupa = view.findViewById(R.id.btn_salvar_roupa);
+        sp_status = view.findViewById(R.id.sp_status);
 
-//android.R.layout.simple_dropdown_item_1line
+        //a        ArrayList<Tag> status = daoTag.selecionatTodas(getContext());
+        ////        ArrayAdapter adapter = new ArrayAdapter<>(getContext(), R.layout.support_simple_spinner_dropdown_item, status);
+        ////        adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        ////        sp_status.setAdapter(adapter);ndroid.R.layout.simple_dropdown_item_1line
+//
 
 
         fb.setOnClickListener(new View.OnClickListener() {
@@ -55,21 +62,6 @@ public class CadastroRoupaFragment extends Fragment {
 
         return view;
     }
-
-    public class AppListActivity extends ListActivity {
-
-        String[] mApps = {"Instagram","Pinterest","Pocket","Twitter" };
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, mApps);
-
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.fragment_cadastro_roupa);
-        }
-    }
-
-
 
     public void abrirCor(){
         final AmbilWarnaDialog colorDialog = new AmbilWarnaDialog(getActivity(), Color.WHITE, new AmbilWarnaDialog.OnAmbilWarnaListener() {
