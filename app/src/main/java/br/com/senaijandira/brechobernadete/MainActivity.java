@@ -18,9 +18,9 @@ import android.view.MenuItem;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+//    declarando as variaveis, elementos...
     private SharedPreferencesConfig preferencesConfig;
     Toolbar toolbar;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +29,9 @@ public class MainActivity extends AppCompatActivity
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+//        find's dos elementos
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -38,13 +40,16 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+//        instância do SharedPreferencesConfig
         preferencesConfig = new SharedPreferencesConfig(getApplicationContext());
 
+//        adicionando um fragment
         if (savedInstanceState == null){
             getSupportFragmentManager().beginTransaction().replace(R.id.frame_content, new HomeFragment()).commit();
         }
     }
 
+//    ação do botão voltar do android, neste caso, fecha o menu lateral
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -57,6 +62,7 @@ public class MainActivity extends AppCompatActivity
 
 
 
+//    método que define e executa a ação de cada item do menu lateral
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -79,9 +85,11 @@ public class MainActivity extends AppCompatActivity
             getSupportFragmentManager().beginTransaction().replace(R.id.frame_content, new TagsFragment()).commit();
             toolbar.setTitle("#Tags");
         } else if (id == R.id.nav_favoritos) {
+//            cria o FragmentManager
             FragmentManager fm = this.getSupportFragmentManager();
+//            cria o fragment
             Fragment fragment = new RoupasFragment();
-
+//            chama outro fragment passando parametros
             Bundle bundle = new Bundle();
             bundle.putInt("id",  0);
             bundle.putString("modo", "favoritos");

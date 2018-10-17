@@ -4,13 +4,11 @@ package br.com.senaijandira.brechobernadete;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,6 +22,7 @@ import java.util.ArrayList;
  */
 public class PromocoesFragment extends Fragment {
 
+//    declarando as variaveis, elementos...
     ListView listView_promocao;
     PromocaoAdapter adapter;
     String API_URL;
@@ -40,16 +39,19 @@ public class PromocoesFragment extends Fragment {
         // Inflate the layout for this fragment
         View promoView = inflater.inflate(R.layout.fragment_promocoes, container, false);
 
+//        String do caminho padrão da api
         API_URL = getString(R.string.API_URL);
 
+//        instância do SharedPreferencesConfig
         listView_promocao = promoView.findViewById(R.id.list_view_promocoes);
 
+//        criando o adapter, setando na lista e setando click do item da lista
         adapter = new PromocaoAdapter(getActivity());
         listView_promocao.setAdapter(adapter);
         listView_promocao.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                ItemClickPromo();
+//                ItemClickPromo();
             }
         });
         return promoView;
@@ -59,26 +61,36 @@ public class PromocoesFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
+//        LIMPANDO O ADAPTER PARA NÃO DUPLICAR OS REGISTROS
         adapter.clear();
 
         new AsyncTask<Void, Void, String>(){
             @Override
             protected String doInBackground(Void... voids) {
+//                criando a string que vai pegar o retorno da api
                 String json = "";
+//                setando a url da api
                 final String url = API_URL + "promocoes.php";
+//                chamando a api
                 json = HttpConnection.get(url);
+//                retornando o retorno da api
                 return json;
             }
 
             @Override
             protected void onPostExecute(String json) {
                 super.onPostExecute(json);
+//                verificando se o json está vazio
                 if (json == null) json = "Sem Dados";
-                Log.d("onPostExecute", json);
+//                Log.d("onPostExecute", json);
+
+//                criando a lista que vai armazenar todos os registros
                 ArrayList<Promocao> promocoes = new ArrayList<>();
                 if (json != null){
                     try {
+//                        pegando o array que retornou da api
                         JSONArray listaPromocoes = new JSONArray(json);
+//                        percorrendo o array, pegando informação de cada registro
                         for (int i = 0; i < listaPromocoes.length(); i++){
                             JSONObject promocaoJson = listaPromocoes.getJSONObject(i);
 
@@ -92,15 +104,16 @@ public class PromocoesFragment extends Fragment {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+//                    adicionando no adapter
                     adapter.addAll(promocoes);
                 }
             }
         }.execute();
     }
 
-    public void ItemClickPromo(){
-        Toast.makeText(getContext(), "funcionou", Toast.LENGTH_SHORT).show();
-    }
+//    public void ItemClickPromo(){
+//        Toast.makeText(getContext(), "funcionou", Toast.LENGTH_SHORT).show();
+//    }
 
 
 }

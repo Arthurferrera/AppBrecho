@@ -17,6 +17,7 @@ import java.util.ArrayList;
  */
 public class HomeFragment extends Fragment {
 
+//    declarando as variaveis, elementos...
     ListView list_view_categoria;
     CategoriaDAO dao;
     CategoriaAdapter adapter;
@@ -26,7 +27,6 @@ public class HomeFragment extends Fragment {
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -34,29 +34,34 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         View viewHome =  inflater.inflate(R.layout.fragment_home, container, false);
 
+//        instancia das classes necessárias
         dao = CategoriaDAO.getInstance();
         Categoria cat = new Categoria();
         cat.setId(0);
 
+//        finds dos elementos
         list_view_categoria = viewHome.findViewById(R.id.list_categorias_home);
 
+//        criando o adapter, setando na lista e setando o click de item da lista
         adapter = new CategoriaAdapter(getContext(),dao, new ArrayList<Categoria>());
         list_view_categoria.setAdapter(adapter);
         list_view_categoria.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+//                cria o FragmentManager
                 FragmentManager fm = getActivity().getSupportFragmentManager();
-
+//                cria uma categoria pegando sua posição
                 Categoria categoria = adapter.getItem(position);
-
+//                cria o fragment
+//                chama outro fragment passando parametros
                 Fragment fragment = new RoupasFragment();
                 Bundle bundle = new Bundle();
                 bundle.putInt("id", categoria.getId());
                 bundle.putString("modo", "categoria");
                 fragment.setArguments(bundle);
-
-                fm.beginTransaction().replace(R.id.frame_content, fragment).commit();
-                getActivity().setTitle("Roupas");
+//                substitui o fragment atual pelo solicitado
+                fm.beginTransaction().replace(R.id.frame_content, fragment).addToBackStack(null).commit();
+                getActivity().setTitle(categoria.getNome());
             }
         });
         return viewHome;
@@ -73,5 +78,7 @@ public class HomeFragment extends Fragment {
         adapter.clear();
 //        adicionando a lista ao adapter
         adapter.addAll(categorias);
+
+        getActivity().setTitle("Guarda-roupas");
     }
 }

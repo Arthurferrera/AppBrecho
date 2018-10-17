@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 public class VisualizarActivity extends AppCompatActivity {
 
+//    declarando as variaveis, elementos...
     //TODO: IMAGEM DA ROUPA
     TextView lbl_titulo, lbl_descricao, lbl_categoria, lbl_tamanho, lbl_tags, lbl_status, lbl_marca, lbl_classificacao, lbl_cor;
     //TODO: cor da roupa
@@ -20,12 +21,14 @@ public class VisualizarActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visualizar);
 
+//        pegando os parametros passado pelo intent na chamada da tela
         Intent intent = getIntent();
         id = intent.getIntExtra("id", 1);
 
+//        pegando a instancia da classe dao
         dao = RoupasDAO.getInstance();
-//        r.setId(0);
 
+//        find's dos elementos
         lbl_titulo = findViewById(R.id.lbl_titulo_visualizar);
         lbl_descricao = findViewById(R.id.lbl_descricao_visualizar);
         lbl_categoria = findViewById(R.id.lbl_categoria_visualizar);
@@ -36,8 +39,10 @@ public class VisualizarActivity extends AppCompatActivity {
         lbl_classificacao = findViewById(R.id.lbl_classificacao_visualizar);
         lbl_cor = findViewById(R.id.lbl_cor_visualizar);
 
+//        chamando o método que traz todas as informações da roupa
         r = dao.selecionarUmaRoupa(this, id);
 
+//        setando os valores dos elementos com as informações vindas do banco
         lbl_titulo.setText(r.getNome());
         lbl_descricao.setText(r.getDescricao());
         lbl_categoria.setText(r.getCategoria());

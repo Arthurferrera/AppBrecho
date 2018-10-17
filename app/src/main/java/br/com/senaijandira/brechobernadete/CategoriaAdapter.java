@@ -13,8 +13,10 @@ import java.util.ArrayList;
 
 public class CategoriaAdapter extends ArrayAdapter<Categoria>{
 
+//    declarando as variaveis, elementos...
     CategoriaDAO dao;
 
+//    construtor do adapter
     public CategoriaAdapter(Context ctx,CategoriaDAO dao, ArrayList<Categoria> lstCategorias) {
         super(ctx, 0, lstCategorias);
         this.dao = dao;

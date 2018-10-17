@@ -4,13 +4,14 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class TagDAO {
 
     private static TagDAO instance;
 
+//    método que pega a instância da classe
+//    caso não exista, ele cria uma nova
     public static TagDAO getInstance() {
         if (instance == null){
             instance = new TagDAO();
@@ -18,6 +19,7 @@ public class TagDAO {
         return instance;
     }
 
+//    método que retorna todas as tags
     public ArrayList<Tag> selecionatTodas(Context context){
         ArrayList<Tag> retorno = new ArrayList<>();
 

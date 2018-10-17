@@ -10,6 +10,8 @@ public class CategoriaDAO {
 
     private static CategoriaDAO instance;
 
+//    método que pega a instância da classe
+//    caso não exista, ele cria uma nova
     public static CategoriaDAO getInstance(){
         if (instance == null){
             instance = new CategoriaDAO();
@@ -17,6 +19,7 @@ public class CategoriaDAO {
         return instance;
     }
 
+//    método seleciona todas as categorias
     public ArrayList<Categoria> selecioanrTodos(Context context) {
         ArrayList<Categoria> retorno = new ArrayList<>();
 
@@ -35,27 +38,7 @@ public class CategoriaDAO {
         return retorno;
     }
 
-
-    public int quantidadePecasPorIdCategoria(Context context, int id){
-
-        SQLiteDatabase db = new DbHelper(context).getReadableDatabase();
-
-        String sql = "SELECT COUNT(_idCategoria) FROM roupa WHERE _idCategoria = " +id+" GROUP BY _idCategoria ;" ;
-
-        Cursor cursor = db.rawQuery(sql,null);
-
-        if (cursor.moveToNext()){
-
-            int r = cursor.getInt(0);
-            cursor.close();
-
-           return r;
-
-        }
-
-        return 0;
-    }
-
+//    método que retorna a quantidade de peças que cada categoria possui
     public ArrayList<Categoria> quantidadePecasPorCategoria(Context context){
         ArrayList<Categoria> retorno = new ArrayList<>();
 

@@ -2,6 +2,7 @@ package br.com.senaijandira.brechobernadete;
 
 public class Roupas {
 
+//    DECLARANDO OS ATRIBUTOS DA CLASSES
     private int id;
     private String nome;
     private String descricao;
@@ -16,6 +17,7 @@ public class Roupas {
     private String status;
     private String tag;
 
+//    MÉTODOS GETTERS E SETTERS
     public int getId() { return id;}
 
     public void setId(int id) {this.id = id;}

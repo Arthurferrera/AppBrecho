@@ -10,6 +10,8 @@ public class RoupasDAO {
 
     private static RoupasDAO instance;
 
+//    método que pega a instância da classe
+//    caso não exista, ele cria uma nova
     public static RoupasDAO getInstance(){
         if (instance == null){
             instance = new RoupasDAO();
@@ -18,6 +20,7 @@ public class RoupasDAO {
         return instance;
     }
 
+//    MÉTODO QUE RETORNA TODAS AS ROUPAS
     public ArrayList<Roupas> selecionarTodos(Context context){
         ArrayList<Roupas> retorno = new ArrayList<>();
 
@@ -37,6 +40,7 @@ public class RoupasDAO {
         return retorno;
     }
 
+//    MÉTODO QUE RETORNA AS ROUPAS PELA CATEGORIA
     public ArrayList<Roupas> selecionarPorCategoria(Context context, int id){
         ArrayList<Roupas> retorno = new ArrayList<>();
 
@@ -62,6 +66,7 @@ public class RoupasDAO {
         return retorno;
     }
 
+//    MÉTODO QUE RETORNA AS ROUPAS FAVORITAS
     public ArrayList<Roupas> selecionarFavoritos(Context context){
         ArrayList<Roupas> retorno = new ArrayList<>();
 
@@ -84,6 +89,7 @@ public class RoupasDAO {
         return retorno;
     }
 
+//    MÉTODOS QUE RETORNA A ROUPA POR TAG
     public ArrayList<Roupas> selecionatPorTag(Context context, int id){
         ArrayList<Roupas> retorno = new ArrayList<>();
 
@@ -109,6 +115,7 @@ public class RoupasDAO {
         return retorno;
     }
 
+//    MÉTODO QUE TRAZ TUDO SOBRE UMA ROUPA ESPECIFICA
     public Roupas selecionarUmaRoupa(Context context, int id){
         Roupas roupa = new Roupas();
 
@@ -142,9 +149,11 @@ public class RoupasDAO {
             roupa.setTag(cursor.getString(16));
             roupa.setCategoria(cursor.getString(18));
 
+
+
         }
+
         return roupa;
     }
-}
 
-//Terminar a RoupasDAO
+}

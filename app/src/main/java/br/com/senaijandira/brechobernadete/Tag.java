@@ -2,10 +2,12 @@ package br.com.senaijandira.brechobernadete;
 
 public class Tag {
 
+//    DECLARANDO ATRIBUTOS DA CLASSE
     private int id;
     private String nomeTag;
     private int totalPecasTag;
 
+//    MÉTODOS GETTERS E SETTERS
     public int getId() {
         return id;
     }

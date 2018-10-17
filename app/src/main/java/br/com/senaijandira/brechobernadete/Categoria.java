@@ -2,11 +2,13 @@ package br.com.senaijandira.brechobernadete;
 
 public class Categoria {
 
+//    declarando os atributos da classe
     private int id;
     private String nome;
     private int totalPecas;
 
 
+//    MÉTODOS GETTERS E SETTERS
     public int getId() {
         return id;
     }

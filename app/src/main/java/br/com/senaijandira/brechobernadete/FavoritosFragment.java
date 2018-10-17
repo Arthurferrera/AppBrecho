@@ -17,6 +17,7 @@ import java.util.ArrayList;
  */
 public class FavoritosFragment extends Fragment {
 
+//    declarando as variaveis, elementos...
     ListView listView_favoritos;
     RoupasAdapter adapter;
     RoupasDAO dao;
@@ -32,18 +33,23 @@ public class FavoritosFragment extends Fragment {
         // Inflate the layout for this fragment
         View favoritosView = inflater.inflate(R.layout.fragment_favoritos, container, false);
 
+//        intancia das classes necessárias
         dao = RoupasDAO.getInstance();
         Roupas r = new Roupas();
         r.setId(0);;
 
+//        find's dos elementos
         listView_favoritos = favoritosView.findViewById(R.id.list_view_favoritos);
 
+//        criando o adapter, setando na lista e setando click do item da lista
         adapter = new RoupasAdapter(getContext(), new ArrayList<Roupas>());
         listView_favoritos.setAdapter(adapter);
         listView_favoritos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+//                criando um objeto roupa e pegando a posição
                 Roupas roupa =  adapter.getItem(position);
+//                chamando a tela requerida
                 Intent intencao = new Intent(getContext(), VisualizarActivity.class);
                 intencao.putExtra("id", roupa.getId());
                 startActivity(intencao);
@@ -55,12 +61,13 @@ public class FavoritosFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-
+//        limpando o adapter, para não uplicar os registros
         adapter.clear();
+//        criando a lista de roupa
         ArrayList<Roupas> listaRoupas = new ArrayList<Roupas>();
+//        chamando o método que retorna as roupas requerids, e guarda na lista
         listaRoupas = dao.selecionarFavoritos(getContext());
+//        adicionando a lista ao adapter
         adapter.addAll(listaRoupas);
     }
-
-
 }

@@ -2,11 +2,14 @@ package br.com.senaijandira.brechobernadete;
 
 public class Promocao {
 
+//    declarando os atributos da classe
     private int id;
     private Double precoNovo;
     private Double precoAntigo;
     private String nomeProduto;
 
+
+//    Métodos getters e setters
     public int getId() {
         return id;
     }
