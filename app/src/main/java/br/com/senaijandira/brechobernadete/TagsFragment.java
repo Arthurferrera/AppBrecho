@@ -59,7 +59,7 @@ public class TagsFragment extends Fragment {
                 bundle.putString("modo", "tag");
                 fragment.setArguments(bundle);
                 fm.beginTransaction().replace(R.id.frame_content, fragment).addToBackStack(null).commit();
-                getActivity().setTitle("Roupas");
+                getActivity().setTitle(tag.getNomeTag());
             }
         });
         return tagView;
@@ -77,6 +77,8 @@ public class TagsFragment extends Fragment {
         tags = dao.selecionatTodas(getContext());
 //        adicionando a lista ao adapter
         adapter.addAll(tags);
+        getActivity().setTitle("#tags");
+
     }
 
 

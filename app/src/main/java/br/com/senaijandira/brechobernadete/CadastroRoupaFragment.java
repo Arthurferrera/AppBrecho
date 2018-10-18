@@ -12,8 +12,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import yuku.ambilwarna.AmbilWarnaDialog;
 
@@ -27,8 +31,10 @@ public class CadastroRoupaFragment extends Fragment {
     FloatingActionButton fb;
     Button btn_salvar_roupa;
     Spinner sp_status;
+    Spinner sp_categoria;
     TagDAO daoTag;
     CategoriaDAO daoCategoria;
+    StatusDAO daoStatus;
 
 
     public CadastroRoupaFragment() {
@@ -46,12 +52,22 @@ public class CadastroRoupaFragment extends Fragment {
         fb = view.findViewById(R.id.fb_cor);
         btn_salvar_roupa = view.findViewById(R.id.btn_salvar_roupa);
         sp_status = view.findViewById(R.id.sp_status);
+        sp_categoria = view.findViewById(R.id.sp_categoria);
 
 //        ArrayList<Tag> status = daoTag.selecionatTodas(getContext());
 //        ArrayAdapter adapter = new ArrayAdapter<>(getContext(), R.layout.support_simple_spinner_dropdown_item, status);
 //        adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
 //        sp_status.setAdapter(adapter);
 //        android.R.layout.simple_dropdown_item_1line
+
+        //puxar status do banco
+        daoStatus = StatusDAO.getInstance();
+        List<Status> lstStatus = daoStatus.selecioanrTodos(getContext());
+
+        ArrayAdapter<Status> adapterStatus = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, lstStatus );
+        adapterStatus.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sp_status.setAdapter(adapterStatus);
+
 
 //        ação de clique do botão
         fb.setOnClickListener(new View.OnClickListener() {
@@ -62,8 +78,22 @@ public class CadastroRoupaFragment extends Fragment {
             }
         });
 
+
+        //puxar status do banco
+        daoCategoria = CategoriaDAO.getInstance();
+        ArrayList<Categoria> categoriaList = new ArrayList<>();
+        categoriaList = daoCategoria.selecioanrTodos(getContext());
+
+        ArrayAdapter<Categoria> categoriaArrayAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, categoriaList );
+        adapterStatus.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sp_categoria.setAdapter(categoriaArrayAdapter);
+        categoriaArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
         return view;
     }
+
+
+
 
 //    método que abre o dialog da cor
     public void abrirCor(){

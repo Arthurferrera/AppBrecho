@@ -36,4 +36,9 @@ public class Categoria {
     public void setTotalPecas(int totalPecas) {
         this.totalPecas = totalPecas;
     }
+
+    @Override
+    public String toString() {
+        return this.nome;
+    }
 }

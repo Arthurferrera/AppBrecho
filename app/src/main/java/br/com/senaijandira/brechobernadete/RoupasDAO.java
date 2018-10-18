@@ -60,7 +60,7 @@ public class RoupasDAO {
             Roupas r = new Roupas();
             r.setId(cursor.getInt(0));
             r.setNome(cursor.getString(1));
-            r.setStatus(cursor.getString(13));
+            r.setStatus(cursor.getString(11));
             retorno.add(r);
         }
         return retorno;
@@ -147,7 +147,7 @@ public class RoupasDAO {
             roupa.setIdCategoria(cursor.getInt(9));
             roupa.setStatus(cursor.getString(11));
             roupa.setTag(cursor.getString(16));
-            roupa.setCategoria(cursor.getString(18));
+            roupa.setCategoria(cursor.getString(11));
 
 
 
