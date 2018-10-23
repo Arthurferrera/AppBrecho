@@ -60,15 +60,6 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="15dp"
                 android:orientation="vertical">
-
-                <!--<TextView-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_alignParentStart="true"-->
-                    <!--android:layout_alignParentTop="true"-->
-                    <!--android:layout_marginTop="10dp"-->
-                    <!--android:text="Nome"-->
-                    <!--android:textSize="18sp" />-->
                 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
@@ -85,15 +76,6 @@
                         android:hint="Nome da roupa"/>
 
                 </android.support.design.widget.TextInputLayout>
-
-                <!--<TextView-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_alignParentStart="true"-->
-                    <!--android:layout_alignParentTop="true"-->
-                    <!--android:layout_marginTop="10dp"-->
-                    <!--android:text="Descrição"-->
-                    <!--android:textSize="18sp" />-->
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
@@ -153,7 +135,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:backgroundTint="@color/colorBlack"
-                        android:text="Medida" />
+                        android:text="Medida"
+                        android:checked="true"/>
 
                     <RadioButton
                         android:id="@+id/rd_tamanho"
@@ -161,7 +144,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:backgroundTint="@color/colorBlack"
-                        android:text="Tamanho" />
+                        android:text="Tamanho"/>
 
                 </RadioGroup>
 

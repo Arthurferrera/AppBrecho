@@ -10,7 +10,6 @@
     <string name="title_activity_visualizar">Detalhes da roupa</string>
     <string name="title_activity_visualizar_roupa">VisualizarRoupaActivity</string>
 
-    <!--<string name="API_URL">http://10.0.2.2/INF4T20182/ProCode/VersaoServerSide/apiBrecho/</string>-->
     <!--<string name="API_URL">http://192.168.1.35/aulas/apiBrecho/</string>-->
     <string name="API_URL">http://10.0.2.2/INF4T20182/ProCode/apiBrecho/</string>
 

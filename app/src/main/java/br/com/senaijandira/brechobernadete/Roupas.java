@@ -70,4 +70,8 @@ public class Roupas {
 
     public void setTag(String tag) { this.tag = tag; }
 
+    @Override
+    public String toString() {
+        return this.tamanho;
+    }
 }
