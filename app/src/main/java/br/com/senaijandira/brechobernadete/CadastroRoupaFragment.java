@@ -18,7 +18,6 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -43,6 +42,7 @@ public class CadastroRoupaFragment extends Fragment {
     RadioButton rd_medida, rd_tamanho, rd_class_a, rd_class_b, rd_class_c;
     Button btn_salvar;
     TagDAO daoTag;
+    RoupasDAO daoRoupa;
     CategoriaDAO daoCategoria;
     StatusDAO daoStatus;
     String API_URL, nome, descricao, tamanho, marca, classificacao;
@@ -194,18 +194,20 @@ public class CadastroRoupaFragment extends Fragment {
     }
 
     public void SalvarRoupa(){
-        nome = txt_nome.getText().toString();
-        descricao = txt_descricao.getText().toString();
+
+        Roupas r = new Roupas();
+        r.setNome(txt_nome.getText().toString());
+        r.setDescricao(txt_descricao.getText().toString());
 
         Categoria catSelecionada = adapterCategoria.getItem(sp_categoria.getSelectedItemPosition());
         idCategoria = catSelecionada.getId();
-        Status stSelecionado = adapterStatus.getItem(sp_tamanho.getSelectedItemPosition());
+        r.setIdCategoria(idCategoria);
+        Status stSelecionado = adapterStatus.getItem(sp_status.getSelectedItemPosition());
         idStatus = stSelecionado.getId();
-        //TODO: pegar o id certo do status
-
-        tamanho = String.valueOf(sp_tamanho.getSelectedItem());
+        r.setIdStatus(idStatus);
+        r.setTamanho(String.valueOf(sp_tamanho.getSelectedItem()));
         //TODO: GRAVAR COR
-        marca = txt_marca.getText().toString();
+        r.setMarca(txt_marca.getText().toString());
         if (rd_class_a.isChecked()){
             classificacao = "A";
         } else if (rd_class_b.isChecked()){
@@ -213,7 +215,10 @@ public class CadastroRoupaFragment extends Fragment {
         } else if (rd_class_c.isChecked()){
             classificacao = "C";
         }
+        r.setClassificacao(classificacao);
+        //TODO: tags
 
-        Toast.makeText(getContext(), idStatus+" - "+idCategoria, Toast.LENGTH_SHORT).show();
+        daoRoupa = RoupasDAO.getInstance();
+        daoRoupa.cadastrarRoupa(getContext(), r);
     }
 }
