@@ -4,6 +4,7 @@ package br.com.senaijandira.brechobernadete;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -85,6 +86,7 @@ public class RoupasFragment extends Fragment {
         adapter.clear();
 //        ADICIONANDO A LISTA AO ADAPTER
         adapter.addAll(listaRoupas);
+        Log.d("onResume", String.valueOf(listaRoupas));
     }
 
 

@@ -40,11 +40,11 @@ public class RoupasAdapter extends ArrayAdapter<Roupas> {
 //        setando os valores de cada elemento
         lbl_titulo_favorito.setText(item.getNome());
         lbl_status_roupas_favorito.setText(item.getStatus());
-        if (item.getFavorito()){
-            fav.setImageDrawable(R.drawable.ic_favoritos);
-        } else {
-            fav.setImageDrawable(R.drawable.ic_no_favorito);
-        }
+//        if (item.getFavorito()){
+//            fav.setImageDrawable(R.drawable.ic_favoritos);
+//        } else {
+//            fav.setImageDrawable(R.drawable.ic_no_favorito);
+//        }
 //        todo: revisar a imagem do favorito
 //        lbl_cor.setBackgroundColor();
 

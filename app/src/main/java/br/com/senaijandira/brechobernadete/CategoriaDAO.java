@@ -35,6 +35,8 @@ public class CategoriaDAO {
             c.setNome(cursor.getString(1));
             retorno.add(c);
         }
+        cursor.close();
+        db.close();
         return retorno;
     }
 
@@ -53,6 +55,8 @@ public class CategoriaDAO {
             c.setTotalPecas(cursor.getInt(0));
             retorno.add(c);
         }
+        cursor.close();
+        db.close();
         return retorno;
     }
 }

@@ -1,5 +1,6 @@
 package br.com.senaijandira.brechobernadete;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -35,6 +36,25 @@ public class TagDAO {
             tg.setNomeTag(cursor.getString(1));
             retorno.add(tg);
         }
+        cursor.close();
+        db.close();
         return retorno;
+    }
+
+    public Long inserirTag(Context context, String tag) {
+        SQLiteDatabase db = new DbHelper(context).getWritableDatabase();
+
+        ContentValues valores = new ContentValues();
+        valores.put("nome", tag);
+
+//        TODO: GRAVAR A ROUPA S/ FOTO E COR E TAG
+
+        Long idTag = db.insert("tag", null, valores);
+
+        if (idTag != -1){
+            return idTag;
+        } else {
+            return idTag;
+        }
     }
 }

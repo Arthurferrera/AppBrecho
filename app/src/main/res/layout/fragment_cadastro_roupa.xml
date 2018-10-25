@@ -205,8 +205,7 @@
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp">
+                    android:layout_height="wrap_content">
 
                     <EditText
                         android:id="@+id/txt_marca"
@@ -214,8 +213,8 @@
                         android:layout_height="wrap_content"
                         android:backgroundTint="@color/colorBlack"
                         android:ems="10"
-                        android:inputType="textPersonName"
-                        android:hint="Marca"/>
+                        android:hint="Marca"
+                        android:inputType="textPersonName" />
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -265,9 +264,24 @@
 
                 </RadioGroup>
 
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp">
+
+                    <EditText
+                        android:id="@+id/txt_tag1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:backgroundTint="@color/colorAccent"
+                        android:hint="Tags" />
+
+                </android.support.design.widget.TextInputLayout>
+
                 <Button
                     android:id="@+id/btn_salvar_roupa"
-                    android:layout_width="150dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="15dp"

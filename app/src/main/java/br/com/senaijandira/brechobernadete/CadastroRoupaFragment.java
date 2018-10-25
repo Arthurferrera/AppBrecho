@@ -20,7 +20,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,8 +40,9 @@ public class CadastroRoupaFragment extends Fragment {
     FloatingActionButton fb;
     Button btn_salvar_roupa;
     Spinner sp_status, sp_categoria, sp_tamanho;
-    EditText txt_nome, txt_descricao, txt_marca;
+    EditText txt_nome, txt_descricao, txt_marca, txt_tag1, txt_tag2;
     RadioButton rd_medida, rd_tamanho, rd_class_a, rd_class_b, rd_class_c;
+//    AutoCompleteTextView autoCompleteTags;
     Button btn_salvar;
     TagDAO daoTag;
     RoupasDAO daoRoupa;
@@ -53,6 +53,7 @@ public class CadastroRoupaFragment extends Fragment {
 
     ArrayAdapter<Status> adapterStatus;
     ArrayAdapter<Categoria> adapterCategoria;
+    ArrayAdapter<Tag> adapterTag;
 
     public CadastroRoupaFragment() {
         // Required empty public constructor
@@ -84,6 +85,8 @@ public class CadastroRoupaFragment extends Fragment {
         rd_class_a = view.findViewById(R.id.rd_a);
         rd_class_b = view.findViewById(R.id.rd_b);
         rd_class_c = view.findViewById(R.id.rd_c);
+//        autoCompleteTags = view.findViewById(R.id.autoCompleteTags);
+        txt_tag1 = view.findViewById(R.id.txt_tag1);
 
 //        setando o click dos elementos
         rd_medida.setOnClickListener(new View.OnClickListener() {
@@ -124,6 +127,15 @@ public class CadastroRoupaFragment extends Fragment {
         adapterCategoria = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, categoriaList );
         adapterCategoria.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sp_categoria.setAdapter(adapterCategoria);
+
+        //puxar categoria do banco, e carregando as no spinner
+//        ArrayList<Tag> tagList = new ArrayList<>();
+//        tagList = daoTag.selecionatTodas(getContext());
+//        adapterTag = new ArrayAdapter<>(getContext(), android.R.layout.simple_dropdown_item_1line, tagList );
+//        adapterTag.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+//        autoCompleteTags.setThreshold(3);
+//        autoCompleteTags.setAdapter(adapterTag);
+
 
         API_URL = getString(R.string.API_URL);
         BuscarTamanho(1);
@@ -205,7 +217,7 @@ public class CadastroRoupaFragment extends Fragment {
             r.setTamanho(String.valueOf(sp_tamanho.getSelectedItem()));
             //TODO: GRAVAR COR
             r.setMarca(txt_marca.getText().toString());
-            r.setClassificacao(classificacao);
+            r.setTag(txt_tag1.getTag().toString());
 
 //        PEGANDO O ID DO ITEM SELECIONADO
             Categoria catSelecionada = adapterCategoria.getItem(sp_categoria.getSelectedItemPosition());
@@ -223,15 +235,20 @@ public class CadastroRoupaFragment extends Fragment {
             } else if (rd_class_c.isChecked()){
                 classificacao = "C";
             }
+            r.setClassificacao(classificacao);
 
             //TODO: tags
 
 //        CHAMANDO O MÉTODO DE SALVAR NO DAO, E CASO RETORNE TRUE(SALVOU)
 //        MOSTRA UMA MENSAGEM
-            Boolean sucesso = daoRoupa.cadastrarRoupa(getContext(), r);
-            if (sucesso){
+            Long idRoupa = daoRoupa.cadastrarRoupa(getContext(), r);
+            Long idTag = daoTag.inserirTag(getContext(), r.getTag());
+
+
+            if (idRoupa != -1 ){
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
                 alertDialog.setTitle("Sucesso !");
+                alertDialog.setIcon(R.drawable.ic_check);
                 alertDialog.setMessage("Roupa adicionada ao seu guarda-roupas.");
                 alertDialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
@@ -244,6 +261,7 @@ public class CadastroRoupaFragment extends Fragment {
             } else {
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
                 alertDialog.setTitle("Erro !");
+                alertDialog.setIcon(R.drawable.ic_report);
                 alertDialog.setMessage("Erro ao tentar adicionar uma roupa ao seu guarda-roupas.");
                 alertDialog.setPositiveButton("Ok", null);
                 AlertDialog alert = alertDialog.create();
@@ -256,12 +274,13 @@ public class CadastroRoupaFragment extends Fragment {
     public void ZerarTela(){
         txt_nome.setText("");
         txt_descricao.setText("");
-        txt_descricao.setText("");
+        txt_marca.setText("");
         sp_categoria.setSelection(0);
         sp_status.setSelection(0);
         sp_tamanho.setSelection(0);
         rd_medida.setChecked(true);
         rd_class_a.setChecked(true);
+        txt_tag1.setText("");
         //TODO: ZERAR COR DO BOTAO DE COR
     }
 

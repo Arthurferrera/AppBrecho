@@ -4,8 +4,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
-import java.sql.PreparedStatement;
 import java.util.ArrayList;
 
 public class RoupasDAO {
@@ -39,6 +39,8 @@ public class RoupasDAO {
             r.setIdStatus(cursor.getInt(2));
             retorno.add(r);
         }
+        cursor.close();
+        db.close();
         return retorno;
     }
 
@@ -62,9 +64,12 @@ public class RoupasDAO {
             Roupas r = new Roupas();
             r.setId(cursor.getInt(0));
             r.setNome(cursor.getString(1));
-            r.setStatus(cursor.getString(11));
+            r.setStatus(cursor.getString(13));
+            Log.d("selecionarPorCategoria", cursor.getInt(0)+"");
             retorno.add(r);
         }
+        cursor.close();
+        db.close();
         return retorno;
     }
 
@@ -88,6 +93,8 @@ public class RoupasDAO {
             r.setStatus(cursor.getString(11));
             retorno.add(r);
         }
+        cursor.close();
+        db.close();
         return retorno;
     }
 
@@ -103,6 +110,8 @@ public class RoupasDAO {
                 "ON r._id = tr._idRoupa " +
                 "INNER JOIN tag t " +
                 "ON t._id = tr._idTag " +
+                "INNER JOIN status s " +
+                "ON r._idStatus = s._id " +
                 "WHERE t._id = "+id;
 
         Cursor cursor = db.rawQuery(sql, null);
@@ -111,9 +120,11 @@ public class RoupasDAO {
             Roupas r = new Roupas();
             r.setId(cursor.getInt(0));
             r.setNome(cursor.getString(1));
-            r.setIdStatus(cursor.getInt(2));
+            r.setStatus(cursor.getString(16));
             retorno.add(r);
         }
+        cursor.close();
+        db.close();
         return retorno;
     }
 
@@ -126,13 +137,24 @@ public class RoupasDAO {
         String sql = "SELECT * FROM roupa r " +
                 "INNER JOIN status s " +
                 "ON s._id = r._idStatus " +
-                "INNER JOIN tag_roupa tr " +
-                "ON tr._idRoupa = r._id " +
-                "INNER JOIN tag t " +
-                "ON t._id = tr._idTag " +
+//                "INNER JOIN tag_roupa tr " +
+//                "ON tr._idRoupa = r._id " +
+//                "INNER JOIN tag t " +
+//                "ON t._id = tr._idTag " +
                 "INNER JOIN categoria c " +
                 "ON c._id = r._idCategoria " +
                 "WHERE r._id = "+id;
+
+//        String sql = "SELECT * FROM roupa r " +
+//                "INNER JOIN status s " +
+//                "ON s._id = r._idStatus " +
+//                "INNER JOIN tag_roupa tr " +
+//                "ON tr._idRoupa = r._id " +
+//                "INNER JOIN tag t " +
+//                "ON t._id = tr._idTag " +
+//                "INNER JOIN categoria c " +
+//                "ON c._id = r._idCategoria " +
+//                "WHERE r._id = "+id;
 
         Cursor cursor = db.rawQuery(sql, null);
 
@@ -148,37 +170,37 @@ public class RoupasDAO {
             roupa.setIdStatus(cursor.getInt(8));
             roupa.setIdCategoria(cursor.getInt(9));
             roupa.setStatus(cursor.getString(11));
-            roupa.setTag(cursor.getString(16));
+//            roupa.setTag(cursor.getString(16));
             roupa.setCategoria(cursor.getString(11));
-
-
-
         }
-
+        cursor.close();
+        db.close();
+        Log.d("roupaInfo", roupa.getId()+"");
         return roupa;
     }
 
-    public Boolean cadastrarRoupa(Context context, Roupas r) {
+    public Long cadastrarRoupa(Context context, Roupas r) {
 
         SQLiteDatabase db = new DbHelper(context).getWritableDatabase();
 
         ContentValues valores = new ContentValues();
         valores.put("nome", r.getNome());
         valores.put("descricao", r.getDescricao());
-        valores.put("cor", r.getCor());
+        valores.put("cor", "#000000");
         valores.put("tamanho", r.getTamanho());
         valores.put("marca", r.getMarca());
         valores.put("classificacao", r.getClassificacao());
-        valores.put("favorito", 0);
+        valores.put("favorito", false);
         valores.put("_idStatus", r.getIdStatus());
         valores.put("_idCategoria", r.getIdCategoria());
 //        TODO: GRAVAR A ROUPA S/ FOTO E COR E TAG
 
         Long id = db.insert("roupa", null, valores);
+
         if (id != -1){
-            return true;
+            return id;
         } else {
-            return false;
+            return id;
         }
     }
 }
