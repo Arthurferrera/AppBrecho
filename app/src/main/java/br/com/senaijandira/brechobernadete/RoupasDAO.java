@@ -1,5 +1,6 @@
 package br.com.senaijandira.brechobernadete;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -157,20 +158,27 @@ public class RoupasDAO {
         return roupa;
     }
 
-    public void cadastrarRoupa(Context context, Roupas r) {
+    public Boolean cadastrarRoupa(Context context, Roupas r) {
 
-        SQLiteDatabase db = new DbHelper(context).getReadableDatabase();
+        SQLiteDatabase db = new DbHelper(context).getWritableDatabase();
 
-        PreparedStatement stm;
-        String sql =  "INSERT INTO roupa (nome, descricao, cor, tamanho, marca, classificacao, favorito, _idStatus, _idCategoria) VALUES ('?', '?', '?', '?', '?', '?', 0, ?, ?);";
-        stm.setString(1, r.getNome());
-        stm.setString(2, r.getDescricao());
-        stm.setString(3, r.getCor());
-        stm.setString(4, r.getTamanho());
-        stm.setString(5, r.getMarca());
-        stm.setString(6, r.getClassificacao());
-        stm.setString(8, r.getIdStatus());
-        stm.setString(9, r.getIdCategoria());
+        ContentValues valores = new ContentValues();
+        valores.put("nome", r.getNome());
+        valores.put("descricao", r.getDescricao());
+        valores.put("cor", r.getCor());
+        valores.put("tamanho", r.getTamanho());
+        valores.put("marca", r.getMarca());
+        valores.put("classificacao", r.getClassificacao());
+        valores.put("favorito", 0);
+        valores.put("_idStatus", r.getIdStatus());
+        valores.put("_idCategoria", r.getIdCategoria());
 //        TODO: GRAVAR A ROUPA S/ FOTO E COR E TAG
+
+        Long id = db.insert("roupa", null, valores);
+        if (id != -1){
+            return true;
+        } else {
+            return false;
+        }
     }
 }

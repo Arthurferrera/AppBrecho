@@ -2,6 +2,7 @@ package br.com.senaijandira.brechobernadete;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
@@ -14,12 +15,18 @@ public class VisualizarActivity extends AppCompatActivity {
     RoupasDAO dao;
     Roupas r = new Roupas();
     int id;
+    ViewPager viewPager;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visualizar);
+
+        viewPager = findViewById(R.id.viewPager);
+
+        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(this);
+        viewPager.setAdapter(viewPagerAdapter);
 
 //        pegando os parametros passado pelo intent na chamada da tela
         Intent intent = getIntent();
