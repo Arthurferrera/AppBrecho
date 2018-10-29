@@ -50,6 +50,7 @@ public class CadastroRoupaFragment extends Fragment {
     StatusDAO daoStatus;
     String API_URL, nome, descricao, tamanho, marca, classificacao;
     int idCategoria, idStatus;
+    Long idTag, idTagRoupa, idRoupa;
 
     ArrayAdapter<Status> adapterStatus;
     ArrayAdapter<Categoria> adapterCategoria;
@@ -67,6 +68,7 @@ public class CadastroRoupaFragment extends Fragment {
         daoStatus = StatusDAO.getInstance();
         daoCategoria = CategoriaDAO.getInstance();
         daoRoupa = RoupasDAO.getInstance();
+        daoTag = TagDAO.getInstance();
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_cadastro_roupa, container, false);
@@ -210,6 +212,8 @@ public class CadastroRoupaFragment extends Fragment {
 //    MÉTODO QUE RESGATA AS INFORMAÇÕES DOS CAMPOS PARA SALVAR A ROUPA NO BANCO
     public void SalvarRoupa(){
 
+//        Toast.makeText(getContext(), ""+txt_tag1.getText(), Toast.LENGTH_SHORT).show();
+
         if (ValidarCampos()){
             Roupas r = new Roupas();
             r.setNome(txt_nome.getText().toString());
@@ -217,7 +221,13 @@ public class CadastroRoupaFragment extends Fragment {
             r.setTamanho(String.valueOf(sp_tamanho.getSelectedItem()));
             //TODO: GRAVAR COR
             r.setMarca(txt_marca.getText().toString());
-            r.setTag(txt_tag1.getTag().toString());
+
+//            Tag tag = new Tag();
+//            tag.setNomeTag(txt_tag1.getText().toString());
+
+//            Resgatando as tags do editText
+            String tags = txt_tag1.getText().toString();
+            String[] listaTags = tags.split(" ");
 
 //        PEGANDO O ID DO ITEM SELECIONADO
             Categoria catSelecionada = adapterCategoria.getItem(sp_categoria.getSelectedItemPosition());
@@ -239,13 +249,32 @@ public class CadastroRoupaFragment extends Fragment {
 
             //TODO: tags
 
-//        CHAMANDO O MÉTODO DE SALVAR NO DAO, E CASO RETORNE TRUE(SALVOU)
-//        MOSTRA UMA MENSAGEM
-            Long idRoupa = daoRoupa.cadastrarRoupa(getContext(), r);
-            Long idTag = daoTag.inserirTag(getContext(), r.getTag());
+//        CHAMANDO O MÉTODO DE SALVAR NO DAO, E CASO SALVE, mostra-se uma mensagem
+            idRoupa = daoRoupa.cadastrarRoupa(getContext(), r);
 
+            if (idRoupa != -1){
+                for(int i = 0; i < listaTags.length; i++){
+                    int idTagE = daoTag.verificarTag(getContext(), listaTags[i]);
+                    if (idTagE != 0){
+                        idTag = Long.valueOf(idTagE);
+                    } else {
+                        idTag = daoTag.inserirTag(getContext(), listaTags[i]);
+                    }
+                    if (idTag != -1){
+                        idTagRoupa = daoTag.inserirTagRoupa(getContext(), idTag, idRoupa);
+                    }
+                }
+            } else {
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
+                alertDialog.setTitle("Erro !");
+                alertDialog.setIcon(R.drawable.ic_report);
+                alertDialog.setMessage("Erro ao tentar adicionar uma roupa ao seu guarda-roupas.");
+                alertDialog.setPositiveButton("Ok", null);
+                AlertDialog alert = alertDialog.create();
+                alert.show();
+            }
 
-            if (idRoupa != -1 ){
+            if (idTagRoupa != -1){
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
                 alertDialog.setTitle("Sucesso !");
                 alertDialog.setIcon(R.drawable.ic_check);
@@ -306,6 +335,14 @@ public class CadastroRoupaFragment extends Fragment {
                 campoComFoco = txt_marca;
             }
             txt_marca.setError("Marca obrigatória");
+            isValid = false;
+        }
+
+        if (txt_tag1.getText().toString().length() == 0){
+            if (campoComFoco == null){
+                campoComFoco = txt_tag1;
+            }
+            txt_tag1.setError("Tag obrigatória");
             isValid = false;
         }
 

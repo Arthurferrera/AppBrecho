@@ -51,10 +51,35 @@ public class TagDAO {
 
         Long idTag = db.insert("tag", null, valores);
 
-        if (idTag != -1){
-            return idTag;
-        } else {
-            return idTag;
+        return idTag;
+    }
+
+    public Long inserirTagRoupa(Context context, Long idTag, Long idRoupa){
+
+        SQLiteDatabase db = new DbHelper(context).getWritableDatabase();
+
+        ContentValues valores = new ContentValues();
+        valores.put("_idTag", idTag);
+        valores.put("_idRoupa", idRoupa);
+
+        Long idTagRoupa = db.insert("tag_roupa", null, valores);
+
+        return idTagRoupa;
+    }
+
+    public int verificarTag(Context context, String tag){
+
+        SQLiteDatabase db = new DbHelper(context).getWritableDatabase();
+
+        String sql = "SELECT * FROM tag WHERE nome = '"+tag+"'";
+
+        Cursor cursor = db.rawQuery(sql, null);
+
+        int idTag = 0;
+        if (cursor.moveToFirst()){
+            idTag = cursor.getInt(0);
         }
+
+        return idTag;
     }
 }
