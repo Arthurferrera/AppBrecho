@@ -3,7 +3,10 @@ package br.com.senaijandira.brechobernadete;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -18,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 
@@ -25,6 +29,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,7 +47,6 @@ public class CadastroRoupaFragment extends Fragment {
     Spinner sp_status, sp_categoria, sp_tamanho;
     EditText txt_nome, txt_descricao, txt_marca, txt_tag1, txt_tag2;
     RadioButton rd_medida, rd_tamanho, rd_class_a, rd_class_b, rd_class_c;
-//    AutoCompleteTextView autoCompleteTags;
     Button btn_salvar;
     TagDAO daoTag;
     RoupasDAO daoRoupa;
@@ -51,10 +55,13 @@ public class CadastroRoupaFragment extends Fragment {
     String API_URL, nome, descricao, tamanho, marca, classificacao;
     int idCategoria, idStatus;
     Long idTag, idTagRoupa, idRoupa;
-
+    int COD_GALERIA = 1;
+    ImageView img_foto1, img_foto2, img_foto3, img_foto4, img_foto5;
+    Bitmap foto1, foto2, foto3, foto4, foto5;
     ArrayAdapter<Status> adapterStatus;
     ArrayAdapter<Categoria> adapterCategoria;
     ArrayAdapter<Tag> adapterTag;
+    StringBuffer nomeFoto;
 
     public CadastroRoupaFragment() {
         // Required empty public constructor
@@ -87,8 +94,12 @@ public class CadastroRoupaFragment extends Fragment {
         rd_class_a = view.findViewById(R.id.rd_a);
         rd_class_b = view.findViewById(R.id.rd_b);
         rd_class_c = view.findViewById(R.id.rd_c);
-//        autoCompleteTags = view.findViewById(R.id.autoCompleteTags);
         txt_tag1 = view.findViewById(R.id.txt_tag1);
+        img_foto1 = view.findViewById(R.id.foto1);
+        img_foto2 = view.findViewById(R.id.foto2);
+        img_foto3 = view.findViewById(R.id.foto3);
+        img_foto4 = view.findViewById(R.id.foto4);
+        img_foto5 = view.findViewById(R.id.foto5);
 
 //        setando o click dos elementos
         rd_medida.setOnClickListener(new View.OnClickListener() {
@@ -114,6 +125,36 @@ public class CadastroRoupaFragment extends Fragment {
             public void onClick(View v) {
 //                chama método que abre o dialog da cor
                 abrirCor();
+            }
+        });
+        img_foto1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AbrirGaleria1();
+            }
+        });
+        img_foto2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AbrirGaleria2();
+            }
+        });
+        img_foto3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AbrirGaleria3();
+            }
+        });
+        img_foto4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AbrirGaleria4();
+            }
+        });
+        img_foto5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AbrirGaleria5();
             }
         });
 
@@ -209,96 +250,6 @@ public class CadastroRoupaFragment extends Fragment {
         colorDialog.show();
     }
 
-//    MÉTODO QUE RESGATA AS INFORMAÇÕES DOS CAMPOS PARA SALVAR A ROUPA NO BANCO
-    public void SalvarRoupa(){
-
-//        Toast.makeText(getContext(), ""+txt_tag1.getText(), Toast.LENGTH_SHORT).show();
-
-        if (ValidarCampos()){
-            Roupas r = new Roupas();
-            r.setNome(txt_nome.getText().toString());
-            r.setDescricao(txt_descricao.getText().toString());
-            r.setTamanho(String.valueOf(sp_tamanho.getSelectedItem()));
-            //TODO: GRAVAR COR
-            r.setMarca(txt_marca.getText().toString());
-
-//            Tag tag = new Tag();
-//            tag.setNomeTag(txt_tag1.getText().toString());
-
-//            Resgatando as tags do editText
-            String tags = txt_tag1.getText().toString();
-            String[] listaTags = tags.split(" ");
-
-//        PEGANDO O ID DO ITEM SELECIONADO
-            Categoria catSelecionada = adapterCategoria.getItem(sp_categoria.getSelectedItemPosition());
-            idCategoria = catSelecionada.getId();
-            r.setIdCategoria(idCategoria);
-//        PEGANDO O ID DO ITEM SELECIONADO
-            Status stSelecionado = adapterStatus.getItem(sp_status.getSelectedItemPosition());
-            idStatus = stSelecionado.getId();
-            r.setIdStatus(idStatus);
-
-            if (rd_class_a.isChecked()){
-                classificacao = "A";
-            } else if (rd_class_b.isChecked()){
-                classificacao = "B";
-            } else if (rd_class_c.isChecked()){
-                classificacao = "C";
-            }
-            r.setClassificacao(classificacao);
-
-            //TODO: tags
-
-//        CHAMANDO O MÉTODO DE SALVAR NO DAO, E CASO SALVE, mostra-se uma mensagem
-            idRoupa = daoRoupa.cadastrarRoupa(getContext(), r);
-
-            if (idRoupa != -1){
-                for(int i = 0; i < listaTags.length; i++){
-                    int idTagE = daoTag.verificarTag(getContext(), listaTags[i]);
-                    if (idTagE != 0){
-                        idTag = Long.valueOf(idTagE);
-                    } else {
-                        idTag = daoTag.inserirTag(getContext(), listaTags[i]);
-                    }
-                    if (idTag != -1){
-                        idTagRoupa = daoTag.inserirTagRoupa(getContext(), idTag, idRoupa);
-                    }
-                }
-            } else {
-                AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
-                alertDialog.setTitle("Erro !");
-                alertDialog.setIcon(R.drawable.ic_report);
-                alertDialog.setMessage("Erro ao tentar adicionar uma roupa ao seu guarda-roupas.");
-                alertDialog.setPositiveButton("Ok", null);
-                AlertDialog alert = alertDialog.create();
-                alert.show();
-            }
-
-            if (idTagRoupa != -1){
-                AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
-                alertDialog.setTitle("Sucesso !");
-                alertDialog.setIcon(R.drawable.ic_check);
-                alertDialog.setMessage("Roupa adicionada ao seu guarda-roupas.");
-                alertDialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        ZerarTela();
-                    }
-                });
-                AlertDialog alert = alertDialog.create();
-                alert.show();
-            } else {
-                AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
-                alertDialog.setTitle("Erro !");
-                alertDialog.setIcon(R.drawable.ic_report);
-                alertDialog.setMessage("Erro ao tentar adicionar uma roupa ao seu guarda-roupas.");
-                alertDialog.setPositiveButton("Ok", null);
-                AlertDialog alert = alertDialog.create();
-                alert.show();
-            }
-        }
-    }
-
 //    MÉTODO QUE LIMPA TODOS OS CAMPOS AO SALVAR A ROUPA
     public void ZerarTela(){
         txt_nome.setText("");
@@ -351,5 +302,200 @@ public class CadastroRoupaFragment extends Fragment {
         }
 
         return isValid;
+    }
+
+    public void AbrirGaleria1(){
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+
+        startActivityForResult(intent, COD_GALERIA);
+    }
+
+    public void AbrirGaleria2(){
+        COD_GALERIA = 2;
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+
+        startActivityForResult(intent, COD_GALERIA);
+    }
+
+    public void AbrirGaleria3(){
+        COD_GALERIA = 3;
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+
+        startActivityForResult(intent, COD_GALERIA);
+    }
+
+    public void AbrirGaleria4(){
+        COD_GALERIA = 4;
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+
+        startActivityForResult(intent, COD_GALERIA);
+    }
+
+    public void AbrirGaleria5(){
+        COD_GALERIA = 5;
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+
+        startActivityForResult(intent, COD_GALERIA);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (COD_GALERIA){
+            case 1:
+                if (resultCode == getActivity().RESULT_OK){
+                    try {
+                        InputStream inp = getContext().getContentResolver().openInputStream(data.getData());
+
+                        foto1 = BitmapFactory.decodeStream(inp);
+
+                        img_foto1.setImageBitmap(foto1);
+                    } catch (Exception ex){
+                        ex.printStackTrace();
+                    }
+                }
+                break;
+            case 2:
+                if (resultCode == getActivity().RESULT_OK){
+                    try {
+                        InputStream inp = getContext().getContentResolver().openInputStream(data.getData());
+
+                        foto2 = BitmapFactory.decodeStream(inp);
+
+                        img_foto2.setImageBitmap(foto2);
+                    } catch (Exception ex){
+                        ex.printStackTrace();
+                    }
+                }
+                break;
+            case 3:
+                if (resultCode == getActivity().RESULT_OK){
+                    try {
+                        InputStream inp = getContext().getContentResolver().openInputStream(data.getData());
+
+                        foto3 = BitmapFactory.decodeStream(inp);
+
+                        img_foto3.setImageBitmap(foto3);
+                    } catch (Exception ex){
+                        ex.printStackTrace();
+                    }
+                }
+                break;
+            case 4:
+                if (resultCode == getActivity().RESULT_OK){
+                    try {
+                        InputStream inp = getContext().getContentResolver().openInputStream(data.getData());
+
+                        foto4 = BitmapFactory.decodeStream(inp);
+
+                        img_foto4.setImageBitmap(foto4);
+                    } catch (Exception ex){
+                        ex.printStackTrace();
+                    }
+                }
+                break;
+            case 5:
+                if (resultCode == getActivity().RESULT_OK){
+                    try {
+                        InputStream inp = getContext().getContentResolver().openInputStream(data.getData());
+
+                        foto5 = BitmapFactory.decodeStream(inp);
+
+                        img_foto5.setImageBitmap(foto5);
+                    } catch (Exception ex){
+                        ex.printStackTrace();
+                    }
+                }
+                break;
+        }
+    }
+
+    //    MÉTODO QUE RESGATA AS INFORMAÇÕES DOS CAMPOS PARA SALVAR A ROUPA NO BANCO
+    public void SalvarRoupa(){
+
+        if (ValidarCampos()){
+            Roupas r = new Roupas();
+            r.setNome(txt_nome.getText().toString());
+            r.setDescricao(txt_descricao.getText().toString());
+            r.setTamanho(String.valueOf(sp_tamanho.getSelectedItem()));
+            //TODO: GRAVAR COR
+            r.setMarca(txt_marca.getText().toString());
+
+//            Resgatando as tags do editText
+            String tags = txt_tag1.getText().toString();
+            String[] listaTags = tags.split(" ");
+
+//        PEGANDO O ID DO ITEM SELECIONADO
+            Categoria catSelecionada = adapterCategoria.getItem(sp_categoria.getSelectedItemPosition());
+            idCategoria = catSelecionada.getId();
+            r.setIdCategoria(idCategoria);
+//        PEGANDO O ID DO ITEM SELECIONADO
+            Status stSelecionado = adapterStatus.getItem(sp_status.getSelectedItemPosition());
+            idStatus = stSelecionado.getId();
+            r.setIdStatus(idStatus);
+
+            if (rd_class_a.isChecked()){
+                classificacao = "A";
+            } else if (rd_class_b.isChecked()){
+                classificacao = "B";
+            } else if (rd_class_c.isChecked()){
+                classificacao = "C";
+            }
+            r.setClassificacao(classificacao);
+//            TODO: SALVAR A FOTO
+
+//        CHAMANDO O MÉTODO DE SALVAR NO DAO, E CASO SALVE, mostra-se uma mensagem
+            idRoupa = daoRoupa.cadastrarRoupa(getContext(), r);
+            if (idRoupa != -1){
+                for(int i = 0; i < listaTags.length; i++){
+                    int idTagE = daoTag.verificarTag(getContext(), listaTags[i]);
+                    if (idTagE != 0){
+                        idTag = Long.valueOf(idTagE);
+                    } else {
+                        idTag = daoTag.inserirTag(getContext(), listaTags[i]);
+                    }
+                    if (idTag != -1){
+                        idTagRoupa = daoTag.inserirTagRoupa(getContext(), idTag, idRoupa);
+                    }
+                }
+            } else {
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
+                alertDialog.setTitle("Erro !");
+                alertDialog.setIcon(R.drawable.ic_report);
+                alertDialog.setMessage("Erro ao tentar adicionar uma roupa ao seu guarda-roupas.");
+                alertDialog.setPositiveButton("Ok", null);
+                AlertDialog alert = alertDialog.create();
+                alert.show();
+            }
+
+            if (idTagRoupa != -1){
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
+                alertDialog.setTitle("Sucesso !");
+                alertDialog.setIcon(R.drawable.ic_check);
+                alertDialog.setMessage("Roupa adicionada ao seu guarda-roupas.");
+                alertDialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ZerarTela();
+                    }
+                });
+                AlertDialog alert = alertDialog.create();
+                alert.show();
+            } else {
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
+                alertDialog.setTitle("Erro !");
+                alertDialog.setIcon(R.drawable.ic_report);
+                alertDialog.setMessage("Erro ao tentar adicionar as tags de uma roupa");
+                alertDialog.setPositiveButton("Ok", null);
+                AlertDialog alert = alertDialog.create();
+                alert.show();
+            }
+        }
     }
 }
