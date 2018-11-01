@@ -6,13 +6,16 @@ import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,8 +33,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.InputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import yuku.ambilwarna.AmbilWarnaDialog;
@@ -134,30 +139,30 @@ public class CadastroRoupaFragment extends Fragment {
                 AbrirGaleria1();
             }
         });
-        img_foto2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AbrirGaleria2();
-            }
-        });
-        img_foto3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AbrirGaleria3();
-            }
-        });
-        img_foto4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AbrirGaleria4();
-            }
-        });
-        img_foto5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AbrirGaleria5();
-            }
-        });
+//        img_foto2.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                AbrirGaleria2();
+//            }
+//        });
+//        img_foto3.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                AbrirGaleria3();
+//            }
+//        });
+//        img_foto4.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                AbrirGaleria4();
+//            }
+//        });
+//        img_foto5.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                AbrirGaleria5();
+//            }
+//        });
 
         //puxar status do banco e carregando no spinner
         List<Status> lstStatus = daoStatus.selecioanrTodos(getContext());
@@ -305,117 +310,226 @@ public class CadastroRoupaFragment extends Fragment {
         return isValid;
     }
 
-    public void AbrirGaleria1(){
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("image/*");
-
-        startActivityForResult(intent, COD_GALERIA);
-    }
-
-    public void AbrirGaleria2(){
-        COD_GALERIA = 2;
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("image/*");
-
-        startActivityForResult(intent, COD_GALERIA);
-    }
-
-    public void AbrirGaleria3(){
-        COD_GALERIA = 3;
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("image/*");
-
-        startActivityForResult(intent, COD_GALERIA);
-    }
-
-    public void AbrirGaleria4(){
-        COD_GALERIA = 4;
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("image/*");
-
-        startActivityForResult(intent, COD_GALERIA);
-    }
-
-    public void AbrirGaleria5(){
-        COD_GALERIA = 5;
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("image/*");
-
-        startActivityForResult(intent, COD_GALERIA);
+    private void AbrirGaleria1() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Ensure that there's a camera activity to handle the intent
+        if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+            // Create the File where the photo should go
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+                galleryAddPic();
+                setPic();
+            } catch (IOException ex) {
+                Toast.makeText(getContext(), "Erro: "+ex.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+            if (photoFile != null) {
+                Uri photoURI = FileProvider.getUriForFile(getContext(),
+                        "br.com.senaijandira.android.fileprovider",
+                        photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(takePictureIntent, COD_GALERIA);
+            }
+        }
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == COD_GALERIA && resultCode == getActivity().RESULT_OK) {
+            Bundle extras = data.getExtras();
+            if (extras != null){
+                Bitmap imageBitmap = (Bitmap) extras.get("data");
+                img_foto1.setImageBitmap(imageBitmap);
+            } else {
+                Toast.makeText(getContext(), extras+"", Toast.LENGTH_SHORT).show();
+            }
 
-        switch (COD_GALERIA){
-            case 1:
-                if (resultCode == getActivity().RESULT_OK){
-                    try {
-                        InputStream inp = getContext().getContentResolver().openInputStream(data.getData());
-
-                        foto1 = BitmapFactory.decodeStream(inp);
-
-                        img_foto1.setImageBitmap(foto1);
-                    } catch (Exception ex){
-                        ex.printStackTrace();
-                    }
-                }
-                break;
-            case 2:
-                if (resultCode == getActivity().RESULT_OK){
-                    try {
-                        InputStream inp = getContext().getContentResolver().openInputStream(data.getData());
-
-                        foto2 = BitmapFactory.decodeStream(inp);
-
-                        img_foto2.setImageBitmap(foto2);
-                    } catch (Exception ex){
-                        ex.printStackTrace();
-                    }
-                }
-                break;
-            case 3:
-                if (resultCode == getActivity().RESULT_OK){
-                    try {
-                        InputStream inp = getContext().getContentResolver().openInputStream(data.getData());
-
-                        foto3 = BitmapFactory.decodeStream(inp);
-
-                        img_foto3.setImageBitmap(foto3);
-                    } catch (Exception ex){
-                        ex.printStackTrace();
-                    }
-                }
-                break;
-            case 4:
-                if (resultCode == getActivity().RESULT_OK){
-                    try {
-                        InputStream inp = getContext().getContentResolver().openInputStream(data.getData());
-
-                        foto4 = BitmapFactory.decodeStream(inp);
-
-                        img_foto4.setImageBitmap(foto4);
-                    } catch (Exception ex){
-                        ex.printStackTrace();
-                    }
-                }
-                break;
-            case 5:
-                if (resultCode == getActivity().RESULT_OK){
-                    try {
-                        InputStream inp = getContext().getContentResolver().openInputStream(data.getData());
-
-                        foto5 = BitmapFactory.decodeStream(inp);
-
-                        img_foto5.setImageBitmap(foto5);
-                    } catch (Exception ex){
-                        ex.printStackTrace();
-                    }
-                }
-                break;
         }
     }
+
+    String mCurrentPhotoPath;
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "BB_" + timeStamp + "_";
+        File storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        mCurrentPhotoPath = image.getAbsolutePath();
+        return image;
+    }
+
+    private void galleryAddPic() {
+        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        File f = new File(mCurrentPhotoPath);
+        Uri contentUri = Uri.fromFile(f);
+        mediaScanIntent.setData(contentUri);
+        getContext().sendBroadcast(mediaScanIntent);
+    }
+
+    private void setPic() {
+        // Get the dimensions of the View
+        int targetW = img_foto1.getWidth();
+        int targetH = img_foto1.getHeight();
+
+        // Get the dimensions of the bitmap
+        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+        bmOptions.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+        int photoW = bmOptions.outWidth;
+        int photoH = bmOptions.outHeight;
+
+        // Determine how much to scale down the image
+        int scaleFactor = Math.min(photoW/targetW, photoH/targetH);
+
+        // Decode the image file into a Bitmap sized to fill the View
+        bmOptions.inJustDecodeBounds = false;
+        bmOptions.inSampleSize = scaleFactor;
+        bmOptions.inPurgeable = true;
+
+        Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+        img_foto1.setImageBitmap(bitmap);
+    }
+
+//    public void AbrirGaleria2(){
+//        COD_GALERIA = 2;
+//        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+//        intent.setType("image/*");
+//
+//        startActivityForResult(intent, COD_GALERIA);
+//    }
+//
+//    public void AbrirGaleria3(){
+//        COD_GALERIA = 3;
+//        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+//        intent.setType("image/*");
+//
+//        startActivityForResult(intent, COD_GALERIA);
+//    }
+//
+//    public void AbrirGaleria4(){
+//        COD_GALERIA = 4;
+//        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+//        intent.setType("image/*");
+//
+//        startActivityForResult(intent, COD_GALERIA);
+//    }
+//
+//    public void AbrirGaleria5(){
+//        COD_GALERIA = 5;
+//        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+//        intent.setType("image/*");
+//
+//        startActivityForResult(intent, COD_GALERIA);
+//    }
+
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        System.gc(); // garbage colector
+//        if (requestCode == COD_GALERIA) {
+//            if (resultCode == getActivity().RESULT_OK) {
+//                try {
+//                    BitmapFactory.Options options = new BitmapFactory.Options();
+//                    options.inSampleSize = 3;
+//                    Bitmap imageBitmap = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory() + "/arquivo.jpg", options);
+//
+//                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+//                    boolean validaCompressao = imageBitmap.compress(Bitmap.CompressFormat.JPEG, 50, outputStream);
+//                    byte[] fotoBinario = outputStream.toByteArray();
+//
+//                    String encodedImage = Base64.encodeToString(fotoBinario, Base64.DEFAULT);
+//
+//                    img_foto1.setImageBitmap(imageBitmap); // ImageButton, seto a foto como imagem do botão
+//
+//                    boolean isImageTaken = true;
+//                } catch (Exception e) {
+//                    Toast.makeText(getContext(), "Picture Not taken",Toast.LENGTH_LONG).show();e.printStackTrace();
+//                }
+//            } else if (resultCode == getActivity().RESULT_CANCELED) {
+//                Toast.makeText(getContext(), "Picture was not taken 1 ", Toast.LENGTH_SHORT);
+//            } else {
+//                Toast.makeText(getContext(), "Picture was not taken 2 ", Toast.LENGTH_SHORT);
+//            }
+//        }
+//    }
+
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//
+//        switch (COD_GALERIA){
+//            case 1:
+//                if (resultCode == getActivity().RESULT_OK){
+//                    try {
+//                        InputStream inp = getContext().getContentResolver().openInputStream(data.getData());
+//
+//                        foto1 = BitmapFactory.decodeStream(inp);
+//
+//                        img_foto1.setImageBitmap(foto1);
+//                    } catch (Exception ex){
+//                        ex.printStackTrace();
+//                    }
+//                }
+//                break;
+//            case 2:
+//                if (resultCode == getActivity().RESULT_OK){
+//                    try {
+//                        InputStream inp = getContext().getContentResolver().openInputStream(data.getData());
+//
+//                        foto2 = BitmapFactory.decodeStream(inp);
+//
+//                        img_foto2.setImageBitmap(foto2);
+//                    } catch (Exception ex){
+//                        ex.printStackTrace();
+//                    }
+//                }
+//                break;
+//            case 3:
+//                if (resultCode == getActivity().RESULT_OK){
+//                    try {
+//                        InputStream inp = getContext().getContentResolver().openInputStream(data.getData());
+//
+//                        foto3 = BitmapFactory.decodeStream(inp);
+//
+//                        img_foto3.setImageBitmap(foto3);
+//                    } catch (Exception ex){
+//                        ex.printStackTrace();
+//                    }
+//                }
+//                break;
+//            case 4:
+//                if (resultCode == getActivity().RESULT_OK){
+//                    try {
+//                        InputStream inp = getContext().getContentResolver().openInputStream(data.getData());
+//
+//                        foto4 = BitmapFactory.decodeStream(inp);
+//
+//                        img_foto4.setImageBitmap(foto4);
+//                    } catch (Exception ex){
+//                        ex.printStackTrace();
+//                    }
+//                }
+//                break;
+//            case 5:
+//                if (resultCode == getActivity().RESULT_OK){
+//                    try {
+//                        InputStream inp = getContext().getContentResolver().openInputStream(data.getData());
+//
+//                        foto5 = BitmapFactory.decodeStream(inp);
+//
+//                        img_foto5.setImageBitmap(foto5);
+//                    } catch (Exception ex){
+//                        ex.printStackTrace();
+//                    }
+//                }
+//                break;
+//        }
+//    }
 
     private File getDirFromSDCard() {
         if (Environment.getExternalStorageState().equals(
@@ -444,7 +558,8 @@ public class CadastroRoupaFragment extends Fragment {
     public void SalvarRoupa(){
 
         String retorno = String.valueOf(getDirFromSDCard());
-        Toast.makeText(getContext(), retorno+"", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), retorno+"/"+foto1, Toast.LENGTH_SHORT).show();
+
 //        if (ValidarCampos()){
 //            Roupas r = new Roupas();
 //            r.setNome(txt_nome.getText().toString());
