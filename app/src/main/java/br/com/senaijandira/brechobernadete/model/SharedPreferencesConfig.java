@@ -1,7 +1,9 @@
-package br.com.senaijandira.brechobernadete;
+package br.com.senaijandira.brechobernadete.model;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+
+import br.com.senaijandira.brechobernadete.R;
 
 public class SharedPreferencesConfig {
 

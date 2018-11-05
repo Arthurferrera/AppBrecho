@@ -8,9 +8,9 @@ import android.os.AsyncTask;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import br.com.senaijandira.brechobernadete.HttpConnection;
+import br.com.senaijandira.brechobernadete.model.HttpConnection;
 import br.com.senaijandira.brechobernadete.MainActivity;
-import br.com.senaijandira.brechobernadete.SharedPreferencesConfig;
+import br.com.senaijandira.brechobernadete.model.SharedPreferencesConfig;
 
 public class LoginApi extends AsyncTask<Void, Void, String> {
 

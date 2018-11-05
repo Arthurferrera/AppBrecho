@@ -1,8 +1,10 @@
-package br.com.senaijandira.brechobernadete;
+package br.com.senaijandira.brechobernadete.fragments;
 
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -12,9 +14,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -39,6 +44,17 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import br.com.senaijandira.brechobernadete.model.Categoria;
+import br.com.senaijandira.brechobernadete.dao.CategoriaDAO;
+import br.com.senaijandira.brechobernadete.model.HttpConnection;
+import br.com.senaijandira.brechobernadete.Manifest;
+import br.com.senaijandira.brechobernadete.R;
+import br.com.senaijandira.brechobernadete.model.Roupas;
+import br.com.senaijandira.brechobernadete.dao.RoupasDAO;
+import br.com.senaijandira.brechobernadete.model.Status;
+import br.com.senaijandira.brechobernadete.dao.StatusDAO;
+import br.com.senaijandira.brechobernadete.model.Tag;
+import br.com.senaijandira.brechobernadete.dao.TagDAO;
 import yuku.ambilwarna.AmbilWarnaDialog;
 
 
@@ -62,6 +78,10 @@ public class CadastroRoupaFragment extends Fragment {
     int idCategoria, idStatus;
     Long idTag, idTagRoupa, idRoupa;
     int COD_GALERIA = 1;
+    int PERMISSAO_REQUEST = 2;
+    int TIRAR_FOTO = 3;
+    int CAMERA = 4;
+    File fotoArquivo = null;
     ImageView img_foto1, img_foto2, img_foto3, img_foto4, img_foto5;
     Bitmap foto1, foto2, foto3, foto4, foto5;
     ArrayAdapter<Status> adapterStatus;
@@ -111,13 +131,13 @@ public class CadastroRoupaFragment extends Fragment {
         rd_medida.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BuscarTamanho(1);
+          //      BuscarTamanho(1);
             }
         });
         rd_tamanho.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BuscarTamanho(2);
+        //        BuscarTamanho(2);
             }
         });
         btn_salvar_roupa.setOnClickListener(new View.OnClickListener() {
@@ -187,7 +207,22 @@ public class CadastroRoupaFragment extends Fragment {
 
 
         API_URL = getString(R.string.API_URL);
-        BuscarTamanho(1);
+        //BuscarTamanho(1);
+
+        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+            if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)){
+
+            } else {
+                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSAO_REQUEST);
+            }
+        }
+        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+            if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)){
+
+            } else {
+                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSAO_REQUEST);
+            }
+        }
 
         return view;
     }
@@ -311,24 +346,21 @@ public class CadastroRoupaFragment extends Fragment {
     }
 
     private void AbrirGaleria1() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        Intent tirarFoto = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Ensure that there's a camera activity to handle the intent
-        if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+        if (tirarFoto.resolveActivity(getActivity().getPackageManager()) != null) {
             // Create the File where the photo should go
-            File photoFile = null;
             try {
-                photoFile = createImageFile();
-                galleryAddPic();
-                setPic();
+                fotoArquivo = criarArquivoFoto();
             } catch (IOException ex) {
                 Toast.makeText(getContext(), "Erro: "+ex.getMessage(), Toast.LENGTH_SHORT).show();
             }
-            if (photoFile != null) {
+            if (fotoArquivo != null) {
                 Uri photoURI = FileProvider.getUriForFile(getContext(),
-                        "br.com.senaijandira.android.fileprovider",
-                        photoFile);
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                startActivityForResult(takePictureIntent, COD_GALERIA);
+                        "br.com.senaijandira.asd.fileprovider",
+                        fotoArquivo);
+                tirarFoto.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(tirarFoto, COD_GALERIA);
             }
         }
     }
@@ -336,28 +368,40 @@ public class CadastroRoupaFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == COD_GALERIA && resultCode == getActivity().RESULT_OK) {
+            Uri selectImagem = data.getData();
+            String[] caminhoArquivo = {MediaStore.Images.Media.DATA};
+            Cursor c =  getActivity().getContentResolver().query(selectImagem, caminhoArquivo, null, null, null);
+            c.moveToFirst();
+            int colunaIndex = c.getColumnIndex(caminhoArquivo[0]);
+            String caminhoFoto = c.getString(colunaIndex);
+            c.close();
+            Bitmap imagemGaleria = (BitmapFactory.decodeFile(caminhoFoto));
+            img_foto1.setImageBitmap(imagemGaleria);
+        }
+        if (requestCode == TIRAR_FOTO && resultCode == getActivity().RESULT_OK){
             Bundle extras = data.getExtras();
             if (extras != null){
                 Bitmap imageBitmap = (Bitmap) extras.get("data");
                 img_foto1.setImageBitmap(imageBitmap);
-            } else {
-                Toast.makeText(getContext(), extras+"", Toast.LENGTH_SHORT).show();
             }
-
+        }
+        if (requestCode == CAMERA && resultCode == getActivity().RESULT_OK){
+            getActivity().sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(fotoArquivo)));
+            exibirImagem();
         }
     }
 
     String mCurrentPhotoPath;
 
-    private File createImageFile() throws IOException {
+    private File criarArquivoFoto() throws IOException {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "BB_" + timeStamp + "_";
-        File storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File pasta = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
                 imageFileName,  /* prefix */
                 ".jpg",         /* suffix */
-                storageDir      /* directory */
+                pasta      /* directory */
         );
 
         // Save a file: path for use with ACTION_VIEW intents
@@ -373,7 +417,7 @@ public class CadastroRoupaFragment extends Fragment {
         getContext().sendBroadcast(mediaScanIntent);
     }
 
-    private void setPic() {
+    private void exibirImagem() {
         // Get the dimensions of the View
         int targetW = img_foto1.getWidth();
         int targetH = img_foto1.getHeight();
@@ -391,13 +435,27 @@ public class CadastroRoupaFragment extends Fragment {
         // Decode the image file into a Bitmap sized to fill the View
         bmOptions.inJustDecodeBounds = false;
         bmOptions.inSampleSize = scaleFactor;
-        bmOptions.inPurgeable = true;
+//        bmOptions.inPurgeable = true;
 
         Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
         img_foto1.setImageBitmap(bitmap);
     }
 
-//    public void AbrirGaleria2(){
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+        if (requestCode == PERMISSAO_REQUEST){
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+
+            } else {
+
+            }
+            return;
+        }
+
+    }
+
+    //    public void AbrirGaleria2(){
 //        COD_GALERIA = 2;
 //        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
 //        intent.setType("image/*");

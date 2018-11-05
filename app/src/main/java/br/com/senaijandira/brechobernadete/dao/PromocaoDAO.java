@@ -1,8 +1,10 @@
-package br.com.senaijandira.brechobernadete;
+package br.com.senaijandira.brechobernadete.dao;
 
 import android.content.Context;
 
 import java.util.ArrayList;
+
+import br.com.senaijandira.brechobernadete.model.Promocao;
 
 public class PromocaoDAO {
 

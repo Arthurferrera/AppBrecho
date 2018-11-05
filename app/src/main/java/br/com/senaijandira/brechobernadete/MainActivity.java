@@ -12,6 +12,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import br.com.senaijandira.brechobernadete.fragments.CadastroRoupaFragment;
+import br.com.senaijandira.brechobernadete.fragments.ComprasFragment;
+import br.com.senaijandira.brechobernadete.fragments.HomeFragment;
+import br.com.senaijandira.brechobernadete.fragments.LookFragment;
+import br.com.senaijandira.brechobernadete.fragments.NotificacoesFragment;
+import br.com.senaijandira.brechobernadete.fragments.PromocoesFragment;
+import br.com.senaijandira.brechobernadete.fragments.RoupasFragment;
+import br.com.senaijandira.brechobernadete.fragments.TagsFragment;
+import br.com.senaijandira.brechobernadete.model.SharedPreferencesConfig;
+
 //TODO: Sempre Importar o Fragment do pacote import android.support.v4.app.Fragment; quando criar um novo fragment
 //TODO: https://pt.stackoverflow.com/questions/137644/slideshow-de-imagens-com-android
 

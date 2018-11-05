@@ -6,6 +6,10 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
+import br.com.senaijandira.brechobernadete.adapter.ViewPagerAdapter;
+import br.com.senaijandira.brechobernadete.dao.RoupasDAO;
+import br.com.senaijandira.brechobernadete.model.Roupas;
+
 public class VisualizarActivity extends AppCompatActivity {
 
 //    declarando as variaveis, elementos...

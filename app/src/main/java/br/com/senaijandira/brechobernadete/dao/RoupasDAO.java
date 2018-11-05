@@ -1,4 +1,4 @@
-package br.com.senaijandira.brechobernadete;
+package br.com.senaijandira.brechobernadete.dao;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -7,6 +7,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import java.util.ArrayList;
+
+import br.com.senaijandira.brechobernadete.model.DbHelper;
+import br.com.senaijandira.brechobernadete.model.Roupas;
 
 public class RoupasDAO {
 

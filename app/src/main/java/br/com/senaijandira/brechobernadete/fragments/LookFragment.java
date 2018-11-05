@@ -1,4 +1,4 @@
-package br.com.senaijandira.brechobernadete;
+package br.com.senaijandira.brechobernadete.fragments;
 
 
 import android.os.Bundle;
@@ -7,14 +7,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import br.com.senaijandira.brechobernadete.R;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class NotificacoesFragment extends Fragment {
+public class LookFragment extends Fragment {
 
 
-    public NotificacoesFragment() {
+    public LookFragment() {
         // Required empty public constructor
     }
 
@@ -23,9 +25,9 @@ public class NotificacoesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View notificacaoView = inflater.inflate(R.layout.fragment_notificacoes, container, false);
+        View lookView = inflater.inflate(R.layout.fragment_look, container, false);
 
-        return notificacaoView;
+        return lookView;
     }
 
 }

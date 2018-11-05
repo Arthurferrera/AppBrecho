@@ -1,4 +1,4 @@
-package br.com.senaijandira.brechobernadete;
+package br.com.senaijandira.brechobernadete.fragments;
 
 
 import android.os.Bundle;
@@ -11,6 +11,11 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+
+import br.com.senaijandira.brechobernadete.model.Categoria;
+import br.com.senaijandira.brechobernadete.adapter.CategoriaAdapter;
+import br.com.senaijandira.brechobernadete.dao.CategoriaDAO;
+import br.com.senaijandira.brechobernadete.R;
 
 /**
  * A simple {@link Fragment} subclass.

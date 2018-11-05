@@ -1,4 +1,4 @@
-package br.com.senaijandira.brechobernadete;
+package br.com.senaijandira.brechobernadete.model;
 
 public class Tag {
 

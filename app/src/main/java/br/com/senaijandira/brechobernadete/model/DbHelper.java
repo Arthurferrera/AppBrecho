@@ -1,4 +1,4 @@
-package br.com.senaijandira.brechobernadete;
+package br.com.senaijandira.brechobernadete.model;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

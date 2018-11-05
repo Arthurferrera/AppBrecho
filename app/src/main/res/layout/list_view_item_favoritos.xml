@@ -6,84 +6,97 @@
     android:orientation="horizontal"
     android:padding="16dp">
 
-    <ImageView
-        android:id="@+id/img_favorito"
-        android:layout_width="150dp"
-        android:layout_height="match_parent"
-        android:backgroundTint="@color/colorCinza2"
-        android:src="@mipmap/ic_launcher_round" />
-
-    <LinearLayout
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="165dp"
-        android:backgroundTint="@color/colorCinzaClaro"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/lbl_titulo_favorito"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:gravity="center"
-            android:paddingLeft="7dp"
-            android:textAlignment="center"
-            android:textSize="18sp" />
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="10dp"
-            android:gravity="left"
-            android:paddingLeft="10dp"
-            android:text="Estado"
-            android:textAlignment="gravity"
-            android:textSize="16sp" />
+            <ImageView
+                android:id="@+id/img_favorito"
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
+                android:backgroundTint="@color/colorCinza2"
+                android:src="@mipmap/ic_launcher_round" />
 
-        <TextView
-            android:id="@+id/lbl_status_roupa_favorito"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingLeft="10dp"
-            android:textAlignment="center"
-            android:textSize="16sp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:backgroundTint="@color/colorCinzaClaro"
+                android:orientation="vertical">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="10dp"
-            android:gravity="bottom|left"
-            android:paddingLeft="10dp"
-            android:text="Cor"
-            android:textAlignment="gravity"
-            android:textSize="17sp" />
+                <TextView
+                    android:id="@+id/lbl_titulo_favorito"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
+                    android:paddingLeft="7dp"
+                    android:textAlignment="center"
+                    android:textSize="18sp" />
 
-        <!--<android.support.design.widget.FloatingActionButton-->
-        <!--android:id="@+id/fab_favorito"-->
-        <!--android:layout_width="35dp"-->
-        <!--android:layout_height="35dp"-->
-        <!--android:layout_gravity="center_horizontal"-->
-        <!--android:backgroundTint="@color/colorBlack"-->
-        <!--android:focusable="false"-->
-        <!--android:focusableInTouchMode="false"/>-->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="left"
+                    android:paddingLeft="10dp"
+                    android:text="Estado"
+                    android:textAlignment="gravity"
+                    android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/lbl_cor_favorito"
-            android:layout_width="38dp"
-            android:layout_height="39dp"
-            android:layout_marginLeft="70dp"
-            android:background="@drawable/bg_cor" />
+                <TextView
+                    android:id="@+id/lbl_status_roupa_favorito"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingLeft="10dp"
+                    android:textAlignment="center"
+                    android:textSize="16sp" />
 
-        <ImageView
-            android:id="@+id/img_favorito_like"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="bottom|right"
-            android:layout_marginTop="-30dp"
-            android:src="@drawable/ic_favoritos" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="bottom|left"
+                    android:paddingLeft="10dp"
+                    android:text="Cor"
+                    android:textAlignment="gravity"
+                    android:textSize="17sp" />
 
-    </LinearLayout>
+                <!--<android.support.design.widget.FloatingActionButton-->
+                <!--android:id="@+id/fab_favorito"-->
+                <!--android:layout_width="35dp"-->
+                <!--android:layout_height="35dp"-->
+                <!--android:layout_gravity="center_horizontal"-->
+                <!--android:backgroundTint="@color/colorBlack"-->
+                <!--android:focusable="false"-->
+                <!--android:focusableInTouchMode="false"/>-->
+
+                <TextView
+                    android:id="@+id/lbl_cor_favorito"
+                    android:layout_width="38dp"
+                    android:layout_height="39dp"
+                    android:layout_marginLeft="70dp"
+                    android:background="@drawable/bg_cor" />
+
+                <ImageView
+                    android:id="@+id/img_favorito_like"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="bottom|right"
+                    android:layout_marginTop="-30dp"
+                    android:src="@drawable/ic_favoritos" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
 
 </LinearLayout>

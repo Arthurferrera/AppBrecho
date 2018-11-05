@@ -1,10 +1,13 @@
-package br.com.senaijandira.brechobernadete;
+package br.com.senaijandira.brechobernadete.dao;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
+
+import br.com.senaijandira.brechobernadete.model.Categoria;
+import br.com.senaijandira.brechobernadete.model.DbHelper;
 
 public class CategoriaDAO {
 

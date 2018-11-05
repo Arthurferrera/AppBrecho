@@ -1,4 +1,4 @@
-package br.com.senaijandira.brechobernadete;
+package br.com.senaijandira.brechobernadete.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +9,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+
+import br.com.senaijandira.brechobernadete.R;
+import br.com.senaijandira.brechobernadete.model.Roupas;
 
 public class RoupasAdapter extends ArrayAdapter<Roupas> {
 

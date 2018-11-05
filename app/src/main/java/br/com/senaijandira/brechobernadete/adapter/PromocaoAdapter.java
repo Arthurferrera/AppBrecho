@@ -1,4 +1,4 @@
-package br.com.senaijandira.brechobernadete;
+package br.com.senaijandira.brechobernadete.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +13,9 @@ import android.widget.TextView;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Locale;
+
+import br.com.senaijandira.brechobernadete.R;
+import br.com.senaijandira.brechobernadete.model.Promocao;
 
 public class PromocaoAdapter extends ArrayAdapter<Promocao> {
 

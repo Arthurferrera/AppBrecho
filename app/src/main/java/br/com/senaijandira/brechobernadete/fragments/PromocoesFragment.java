@@ -1,4 +1,4 @@
-package br.com.senaijandira.brechobernadete;
+package br.com.senaijandira.brechobernadete.fragments;
 
 
 import android.os.AsyncTask;
@@ -15,6 +15,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+
+import br.com.senaijandira.brechobernadete.model.HttpConnection;
+import br.com.senaijandira.brechobernadete.model.Promocao;
+import br.com.senaijandira.brechobernadete.adapter.PromocaoAdapter;
+import br.com.senaijandira.brechobernadete.R;
 
 
 /**

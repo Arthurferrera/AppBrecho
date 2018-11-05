@@ -1,4 +1,4 @@
-package br.com.senaijandira.brechobernadete;
+package br.com.senaijandira.brechobernadete.fragments;
 
 
 import android.content.Intent;
@@ -12,6 +12,12 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+
+import br.com.senaijandira.brechobernadete.R;
+import br.com.senaijandira.brechobernadete.model.Roupas;
+import br.com.senaijandira.brechobernadete.adapter.RoupasAdapter;
+import br.com.senaijandira.brechobernadete.dao.RoupasDAO;
+import br.com.senaijandira.brechobernadete.VisualizarActivity;
 
 
 /**

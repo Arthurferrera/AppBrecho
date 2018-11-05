@@ -13,6 +13,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 import br.com.senaijandira.brechobernadete.api.LoginApi;
+import br.com.senaijandira.brechobernadete.model.SharedPreferencesConfig;
 
 public class LoginActivity extends AppCompatActivity {
 

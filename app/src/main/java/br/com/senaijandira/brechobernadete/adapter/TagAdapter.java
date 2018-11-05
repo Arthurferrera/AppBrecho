@@ -1,4 +1,4 @@
-package br.com.senaijandira.brechobernadete;
+package br.com.senaijandira.brechobernadete.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -10,6 +10,9 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+
+import br.com.senaijandira.brechobernadete.R;
+import br.com.senaijandira.brechobernadete.model.Tag;
 
 public class TagAdapter extends ArrayAdapter<Tag> {
 
