@@ -6,7 +6,7 @@
     <color name="colorBlack">#000000</color>
     <color name="colorCinza">#696969</color>
     <color name="colorCinzaClaro">#cccccc</color>
-    <color name="colorCinza2">#cdcdcd</color>
+    <color name="colorCinza2">#e0e0e0</color>
     <color name="colorVermelho">#ff0000</color>
     <color name="colorVerde">#006400</color>
 </resources>

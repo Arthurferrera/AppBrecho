@@ -1,6 +1,7 @@
 package br.com.senaijandira.brechobernadete.fragments;
 
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
@@ -44,17 +45,16 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import br.com.senaijandira.brechobernadete.model.Categoria;
-import br.com.senaijandira.brechobernadete.dao.CategoriaDAO;
-import br.com.senaijandira.brechobernadete.model.HttpConnection;
-import br.com.senaijandira.brechobernadete.Manifest;
 import br.com.senaijandira.brechobernadete.R;
-import br.com.senaijandira.brechobernadete.model.Roupas;
+import br.com.senaijandira.brechobernadete.dao.CategoriaDAO;
 import br.com.senaijandira.brechobernadete.dao.RoupasDAO;
-import br.com.senaijandira.brechobernadete.model.Status;
 import br.com.senaijandira.brechobernadete.dao.StatusDAO;
-import br.com.senaijandira.brechobernadete.model.Tag;
 import br.com.senaijandira.brechobernadete.dao.TagDAO;
+import br.com.senaijandira.brechobernadete.model.Categoria;
+import br.com.senaijandira.brechobernadete.model.HttpConnection;
+import br.com.senaijandira.brechobernadete.model.Roupas;
+import br.com.senaijandira.brechobernadete.model.Status;
+import br.com.senaijandira.brechobernadete.model.Tag;
 import yuku.ambilwarna.AmbilWarnaDialog;
 
 
@@ -345,6 +345,7 @@ public class CadastroRoupaFragment extends Fragment {
         return isValid;
     }
 
+//    método que abre a camera do celular, e resgata ela
     private void AbrirGaleria1() {
         Intent tirarFoto = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Ensure that there's a camera activity to handle the intent
@@ -365,6 +366,7 @@ public class CadastroRoupaFragment extends Fragment {
         }
     }
 
+//    método que pega o retorno da camera e trabalha esses dados
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == COD_GALERIA && resultCode == getActivity().RESULT_OK) {
@@ -389,6 +391,7 @@ public class CadastroRoupaFragment extends Fragment {
             getActivity().sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(fotoArquivo)));
             exibirImagem();
         }
+        Toast.makeText(getContext(), "", Toast.LENGTH_SHORT).show();
     }
 
     String mCurrentPhotoPath;

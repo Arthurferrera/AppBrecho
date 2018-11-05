@@ -7,10 +7,10 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        app:srcCompat="@drawable/ic_loyalty"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        app:srcCompat="@drawable/ic_tags" />
 
     <TextView
         android:id="@+id/lbl_tag_item"
