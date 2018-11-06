@@ -1,13 +1,11 @@
 package br.com.senaijandira.brechobernadete.fragments;
 
-
-import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -34,6 +32,8 @@ import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -52,11 +52,11 @@ import br.com.senaijandira.brechobernadete.dao.StatusDAO;
 import br.com.senaijandira.brechobernadete.dao.TagDAO;
 import br.com.senaijandira.brechobernadete.model.Categoria;
 import br.com.senaijandira.brechobernadete.model.HttpConnection;
+import br.com.senaijandira.brechobernadete.model.ImageFilePath;
 import br.com.senaijandira.brechobernadete.model.Roupas;
 import br.com.senaijandira.brechobernadete.model.Status;
 import br.com.senaijandira.brechobernadete.model.Tag;
 import yuku.ambilwarna.AmbilWarnaDialog;
-
 
 /**
  * A simple {@link Fragment} subclass.
@@ -82,12 +82,32 @@ public class CadastroRoupaFragment extends Fragment {
     int TIRAR_FOTO = 3;
     int CAMERA = 4;
     File fotoArquivo = null;
-    ImageView img_foto1, img_foto2, img_foto3, img_foto4, img_foto5;
     Bitmap foto1, foto2, foto3, foto4, foto5;
     ArrayAdapter<Status> adapterStatus;
     ArrayAdapter<Categoria> adapterCategoria;
     ArrayAdapter<Tag> adapterTag;
-    StringBuffer nomeFoto;
+
+
+    final int REQUEST_PERMISSION = 101;
+    final int SELECT_PICTURE = 1;
+    String caminhoFoto = "";
+
+    ImageView img_foto1, img_foto2, img_foto3, img_foto4, img_foto5;
+
+    ImageView[] vetorImg;
+    int posicaoImg = 0;
+
+    View.OnClickListener clickImageView = new View.OnClickListener(){
+        @Override
+        public void onClick(View v) {
+            if(verificarPermissoes()) {
+                posicaoImg = Integer.parseInt (v.getTag().toString());
+                capturarImagem();
+            } else {
+                solicitarPermissoes();
+            }
+        }
+    };
 
     public CadastroRoupaFragment() {
         // Required empty public constructor
@@ -96,15 +116,14 @@ public class CadastroRoupaFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+//         inflando o layout do fragment
+        View view = inflater.inflate(R.layout.fragment_cadastro_roupa, container, false);
 
 //        instancias dos daos
         daoStatus = StatusDAO.getInstance();
         daoCategoria = CategoriaDAO.getInstance();
         daoRoupa = RoupasDAO.getInstance();
         daoTag = TagDAO.getInstance();
-
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_cadastro_roupa, container, false);
 
 //        find's dos elementos
         txt_nome = view.findViewById(R.id.txt_nome);
@@ -127,17 +146,19 @@ public class CadastroRoupaFragment extends Fragment {
         img_foto4 = view.findViewById(R.id.foto4);
         img_foto5 = view.findViewById(R.id.foto5);
 
+        vetorImg = new ImageView[] {img_foto1, img_foto2, img_foto3, img_foto4, img_foto5};
+
 //        setando o click dos elementos
         rd_medida.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-          //      BuscarTamanho(1);
+                BuscarTamanho(1);
             }
         });
         rd_tamanho.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-        //        BuscarTamanho(2);
+                BuscarTamanho(2);
             }
         });
         btn_salvar_roupa.setOnClickListener(new View.OnClickListener() {
@@ -149,82 +170,96 @@ public class CadastroRoupaFragment extends Fragment {
         fb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                chama método que abre o dialog da cor
                 abrirCor();
             }
         });
-        img_foto1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AbrirGaleria1();
-            }
-        });
-//        img_foto2.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                AbrirGaleria2();
-//            }
-//        });
-//        img_foto3.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                AbrirGaleria3();
-//            }
-//        });
-//        img_foto4.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                AbrirGaleria4();
-//            }
-//        });
-//        img_foto5.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                AbrirGaleria5();
-//            }
-//        });
 
-        //puxar status do banco e carregando no spinner
+//        click dos image view
+        img_foto1.setOnClickListener(clickImageView);
+        img_foto2.setOnClickListener(clickImageView);
+        img_foto3.setOnClickListener(clickImageView);
+        img_foto4.setOnClickListener(clickImageView);
+        img_foto5.setOnClickListener(clickImageView);
+
+//        puxar status do banco e carregando no spinner
         List<Status> lstStatus = daoStatus.selecioanrTodos(getContext());
         adapterStatus = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, lstStatus );
         adapterStatus.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sp_status.setAdapter(adapterStatus);
 
-        //puxar categoria do banco, e carregando as no spinner
+//        puxar categoria do banco, e carregando as no spinner
         ArrayList<Categoria> categoriaList = new ArrayList<>();
         categoriaList = daoCategoria.selecioanrTodos(getContext());
         adapterCategoria = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, categoriaList );
         adapterCategoria.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sp_categoria.setAdapter(adapterCategoria);
 
-        //puxar categoria do banco, e carregando as no spinner
-//        ArrayList<Tag> tagList = new ArrayList<>();
-//        tagList = daoTag.selecionatTodas(getContext());
-//        adapterTag = new ArrayAdapter<>(getContext(), android.R.layout.simple_dropdown_item_1line, tagList );
-//        adapterTag.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-//        autoCompleteTags.setThreshold(3);
-//        autoCompleteTags.setAdapter(adapterTag);
-
-
         API_URL = getString(R.string.API_URL);
-        //BuscarTamanho(1);
-
-        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
-            if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)){
-
-            } else {
-                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSAO_REQUEST);
-            }
-        }
-        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
-            if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)){
-
-            } else {
-                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSAO_REQUEST);
-            }
-        }
+        BuscarTamanho(1);
 
         return view;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if(requestCode == REQUEST_PERMISSION){
+//            verificar se a pesmissao foi dada
+            if(grantResults.length>0 && grantResults[0] ==
+                    PackageManager.PERMISSION_GRANTED) {
+                capturarImagem();
+            }else{
+//                permissao negada
+            }
+
+        }
+    }
+
+    void solicitarPermissoes(){
+        String[] permissoes = new String[1];
+        permissoes[0] = android.Manifest.permission.READ_EXTERNAL_STORAGE;
+        ActivityCompat.requestPermissions(getActivity(),
+                permissoes, REQUEST_PERMISSION);
+    }
+
+    boolean verificarPermissoes(){
+        if (ContextCompat.checkSelfPermission(getContext(),
+                android.Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED){
+            return false;
+        }
+        return true;
+    }
+
+    private void capturarImagem(){
+
+        Intent pickGaleryIntent = new Intent(Intent.ACTION_PICK,
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
+        String pickTitle = "Selecione uma imagem";
+
+        Intent chosserIntent = Intent.
+                createChooser(pickGaleryIntent, pickTitle);
+
+        if(chosserIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+            startActivityForResult(chosserIntent, SELECT_PICTURE);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode == getActivity().RESULT_OK){
+            if(requestCode == SELECT_PICTURE ){
+                Uri imgUri = data.getData();
+                String realPath = ImageFilePath.getPath(getContext(),
+                        data.getData());
+                Picasso.get().load(new File(realPath))
+                        .into(vetorImg[posicaoImg]);
+            }
+        }
     }
 
 //    método que traz os tamanhos de acordo com o radio selecionado, Medida ou Tamanho
@@ -348,9 +383,8 @@ public class CadastroRoupaFragment extends Fragment {
 //    método que abre a camera do celular, e resgata ela
     private void AbrirGaleria1() {
         Intent tirarFoto = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        // Ensure that there's a camera activity to handle the intent
         if (tirarFoto.resolveActivity(getActivity().getPackageManager()) != null) {
-            // Create the File where the photo should go
+//            CRIANDO O ARQUIVO DA FOTO
             try {
                 fotoArquivo = criarArquivoFoto();
             } catch (IOException ex) {
@@ -366,232 +400,23 @@ public class CadastroRoupaFragment extends Fragment {
         }
     }
 
-//    método que pega o retorno da camera e trabalha esses dados
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == COD_GALERIA && resultCode == getActivity().RESULT_OK) {
-            Uri selectImagem = data.getData();
-            String[] caminhoArquivo = {MediaStore.Images.Media.DATA};
-            Cursor c =  getActivity().getContentResolver().query(selectImagem, caminhoArquivo, null, null, null);
-            c.moveToFirst();
-            int colunaIndex = c.getColumnIndex(caminhoArquivo[0]);
-            String caminhoFoto = c.getString(colunaIndex);
-            c.close();
-            Bitmap imagemGaleria = (BitmapFactory.decodeFile(caminhoFoto));
-            img_foto1.setImageBitmap(imagemGaleria);
-        }
-        if (requestCode == TIRAR_FOTO && resultCode == getActivity().RESULT_OK){
-            Bundle extras = data.getExtras();
-            if (extras != null){
-                Bitmap imageBitmap = (Bitmap) extras.get("data");
-                img_foto1.setImageBitmap(imageBitmap);
-            }
-        }
-        if (requestCode == CAMERA && resultCode == getActivity().RESULT_OK){
-            getActivity().sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(fotoArquivo)));
-            exibirImagem();
-        }
-        Toast.makeText(getContext(), "", Toast.LENGTH_SHORT).show();
-    }
-
-    String mCurrentPhotoPath;
-
     private File criarArquivoFoto() throws IOException {
-        // Create an image file name
+        // Cria o nome do arquivo da imagem
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "BB_" + timeStamp + "_";
         File pasta = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                pasta      /* directory */
+                imageFileName,
+                ".jpg",
+                pasta
         );
 
-        // Save a file: path for use with ACTION_VIEW intents
-        mCurrentPhotoPath = image.getAbsolutePath();
+        // SALVANDO O PATH DA FOTO
+        caminhoFoto = image.getAbsolutePath();
         return image;
     }
 
-    private void galleryAddPic() {
-        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-        File f = new File(mCurrentPhotoPath);
-        Uri contentUri = Uri.fromFile(f);
-        mediaScanIntent.setData(contentUri);
-        getContext().sendBroadcast(mediaScanIntent);
-    }
-
-    private void exibirImagem() {
-        // Get the dimensions of the View
-        int targetW = img_foto1.getWidth();
-        int targetH = img_foto1.getHeight();
-
-        // Get the dimensions of the bitmap
-        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-        bmOptions.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
-        int photoW = bmOptions.outWidth;
-        int photoH = bmOptions.outHeight;
-
-        // Determine how much to scale down the image
-        int scaleFactor = Math.min(photoW/targetW, photoH/targetH);
-
-        // Decode the image file into a Bitmap sized to fill the View
-        bmOptions.inJustDecodeBounds = false;
-        bmOptions.inSampleSize = scaleFactor;
-//        bmOptions.inPurgeable = true;
-
-        Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
-        img_foto1.setImageBitmap(bitmap);
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-
-        if (requestCode == PERMISSAO_REQUEST){
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-
-            } else {
-
-            }
-            return;
-        }
-
-    }
-
-    //    public void AbrirGaleria2(){
-//        COD_GALERIA = 2;
-//        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-//        intent.setType("image/*");
-//
-//        startActivityForResult(intent, COD_GALERIA);
-//    }
-//
-//    public void AbrirGaleria3(){
-//        COD_GALERIA = 3;
-//        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-//        intent.setType("image/*");
-//
-//        startActivityForResult(intent, COD_GALERIA);
-//    }
-//
-//    public void AbrirGaleria4(){
-//        COD_GALERIA = 4;
-//        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-//        intent.setType("image/*");
-//
-//        startActivityForResult(intent, COD_GALERIA);
-//    }
-//
-//    public void AbrirGaleria5(){
-//        COD_GALERIA = 5;
-//        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-//        intent.setType("image/*");
-//
-//        startActivityForResult(intent, COD_GALERIA);
-//    }
-
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        System.gc(); // garbage colector
-//        if (requestCode == COD_GALERIA) {
-//            if (resultCode == getActivity().RESULT_OK) {
-//                try {
-//                    BitmapFactory.Options options = new BitmapFactory.Options();
-//                    options.inSampleSize = 3;
-//                    Bitmap imageBitmap = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory() + "/arquivo.jpg", options);
-//
-//                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-//                    boolean validaCompressao = imageBitmap.compress(Bitmap.CompressFormat.JPEG, 50, outputStream);
-//                    byte[] fotoBinario = outputStream.toByteArray();
-//
-//                    String encodedImage = Base64.encodeToString(fotoBinario, Base64.DEFAULT);
-//
-//                    img_foto1.setImageBitmap(imageBitmap); // ImageButton, seto a foto como imagem do botão
-//
-//                    boolean isImageTaken = true;
-//                } catch (Exception e) {
-//                    Toast.makeText(getContext(), "Picture Not taken",Toast.LENGTH_LONG).show();e.printStackTrace();
-//                }
-//            } else if (resultCode == getActivity().RESULT_CANCELED) {
-//                Toast.makeText(getContext(), "Picture was not taken 1 ", Toast.LENGTH_SHORT);
-//            } else {
-//                Toast.makeText(getContext(), "Picture was not taken 2 ", Toast.LENGTH_SHORT);
-//            }
-//        }
-//    }
-
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//
-//        switch (COD_GALERIA){
-//            case 1:
-//                if (resultCode == getActivity().RESULT_OK){
-//                    try {
-//                        InputStream inp = getContext().getContentResolver().openInputStream(data.getData());
-//
-//                        foto1 = BitmapFactory.decodeStream(inp);
-//
-//                        img_foto1.setImageBitmap(foto1);
-//                    } catch (Exception ex){
-//                        ex.printStackTrace();
-//                    }
-//                }
-//                break;
-//            case 2:
-//                if (resultCode == getActivity().RESULT_OK){
-//                    try {
-//                        InputStream inp = getContext().getContentResolver().openInputStream(data.getData());
-//
-//                        foto2 = BitmapFactory.decodeStream(inp);
-//
-//                        img_foto2.setImageBitmap(foto2);
-//                    } catch (Exception ex){
-//                        ex.printStackTrace();
-//                    }
-//                }
-//                break;
-//            case 3:
-//                if (resultCode == getActivity().RESULT_OK){
-//                    try {
-//                        InputStream inp = getContext().getContentResolver().openInputStream(data.getData());
-//
-//                        foto3 = BitmapFactory.decodeStream(inp);
-//
-//                        img_foto3.setImageBitmap(foto3);
-//                    } catch (Exception ex){
-//                        ex.printStackTrace();
-//                    }
-//                }
-//                break;
-//            case 4:
-//                if (resultCode == getActivity().RESULT_OK){
-//                    try {
-//                        InputStream inp = getContext().getContentResolver().openInputStream(data.getData());
-//
-//                        foto4 = BitmapFactory.decodeStream(inp);
-//
-//                        img_foto4.setImageBitmap(foto4);
-//                    } catch (Exception ex){
-//                        ex.printStackTrace();
-//                    }
-//                }
-//                break;
-//            case 5:
-//                if (resultCode == getActivity().RESULT_OK){
-//                    try {
-//                        InputStream inp = getContext().getContentResolver().openInputStream(data.getData());
-//
-//                        foto5 = BitmapFactory.decodeStream(inp);
-//
-//                        img_foto5.setImageBitmap(foto5);
-//                    } catch (Exception ex){
-//                        ex.printStackTrace();
-//                    }
-//                }
-//                break;
-//        }
-//    }
-
+//    VERIFICA SE O SDCARD ESTÁ DISPONIVEL
     private File getDirFromSDCard() {
         if (Environment.getExternalStorageState().equals(
                 Environment.MEDIA_MOUNTED)) {
@@ -606,6 +431,7 @@ public class CadastroRoupaFragment extends Fragment {
         }
     }
 
+//    SALVA A IMAGEM EM UMA PASTA
 //    private void SalvarImagens() throws IOException {
 //        String FILENAME = "foto";
 //        String string = "foto teste salvar foto";
@@ -615,89 +441,89 @@ public class CadastroRoupaFragment extends Fragment {
 //        fos.close();
 //    }
 
-    //    MÉTODO QUE RESGATA AS INFORMAÇÕES DOS CAMPOS PARA SALVAR A ROUPA NO BANCO
+//    MÉTODO QUE RESGATA AS INFORMAÇÕES DOS CAMPOS PARA SALVAR A ROUPA NO BANCO
     public void SalvarRoupa(){
 
         String retorno = String.valueOf(getDirFromSDCard());
         Toast.makeText(getContext(), retorno+"/"+foto1, Toast.LENGTH_SHORT).show();
 
-//        if (ValidarCampos()){
-//            Roupas r = new Roupas();
-//            r.setNome(txt_nome.getText().toString());
-//            r.setDescricao(txt_descricao.getText().toString());
-//            r.setTamanho(String.valueOf(sp_tamanho.getSelectedItem()));
-//            //TODO: GRAVAR COR
-//            r.setMarca(txt_marca.getText().toString());
-//
-////            Resgatando as tags do editText
-//            String tags = txt_tag1.getText().toString();
-//            String[] listaTags = tags.split(" ");
-//
-////        PEGANDO O ID DO ITEM SELECIONADO
-//            Categoria catSelecionada = adapterCategoria.getItem(sp_categoria.getSelectedItemPosition());
-//            idCategoria = catSelecionada.getId();
-//            r.setIdCategoria(idCategoria);
-////        PEGANDO O ID DO ITEM SELECIONADO
-//            Status stSelecionado = adapterStatus.getItem(sp_status.getSelectedItemPosition());
-//            idStatus = stSelecionado.getId();
-//            r.setIdStatus(idStatus);
-//
-//            if (rd_class_a.isChecked()){
-//                classificacao = "A";
-//            } else if (rd_class_b.isChecked()){
-//                classificacao = "B";
-//            } else if (rd_class_c.isChecked()){
-//                classificacao = "C";
-//            }
-//            r.setClassificacao(classificacao);
-////            TODO: SALVAR A FOTO
-//
-////        CHAMANDO O MÉTODO DE SALVAR NO DAO, E CASO SALVE, mostra-se uma mensagem
-//            idRoupa = daoRoupa.cadastrarRoupa(getContext(), r);
-//            if (idRoupa != -1){
-//                for(int i = 0; i < listaTags.length; i++){
-//                    int idTagE = daoTag.verificarTag(getContext(), listaTags[i]);
-//                    if (idTagE != 0){
-//                        idTag = Long.valueOf(idTagE);
-//                    } else {
-//                        idTag = daoTag.inserirTag(getContext(), listaTags[i]);
-//                    }
-//                    if (idTag != -1){
-//                        idTagRoupa = daoTag.inserirTagRoupa(getContext(), idTag, idRoupa);
-//                    }
-//                }
-//            } else {
-//                AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
-//                alertDialog.setTitle("Erro !");
-//                alertDialog.setIcon(R.drawable.ic_report);
-//                alertDialog.setMessage("Erro ao tentar adicionar uma roupa ao seu guarda-roupas.");
-//                alertDialog.setPositiveButton("Ok", null);
-//                AlertDialog alert = alertDialog.create();
-//                alert.show();
-//            }
-//
-//            if (idTagRoupa != -1){
-//                AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
-//                alertDialog.setTitle("Sucesso !");
-//                alertDialog.setIcon(R.drawable.ic_check);
-//                alertDialog.setMessage("Roupa adicionada ao seu guarda-roupas.");
-//                alertDialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        ZerarTela();
-//                    }
-//                });
-//                AlertDialog alert = alertDialog.create();
-//                alert.show();
-//            } else {
-//                AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
-//                alertDialog.setTitle("Erro !");
-//                alertDialog.setIcon(R.drawable.ic_report);
-//                alertDialog.setMessage("Erro ao tentar adicionar as tags de uma roupa");
-//                alertDialog.setPositiveButton("Ok", null);
-//                AlertDialog alert = alertDialog.create();
-//                alert.show();
-//            }
-//        }
+        if (ValidarCampos()){
+            Roupas r = new Roupas();
+            r.setNome(txt_nome.getText().toString());
+            r.setDescricao(txt_descricao.getText().toString());
+            r.setTamanho(String.valueOf(sp_tamanho.getSelectedItem()));
+            //TODO: GRAVAR COR
+            r.setMarca(txt_marca.getText().toString());
+
+//            Resgatando as tags do editText
+            String tags = txt_tag1.getText().toString();
+            String[] listaTags = tags.split(" ");
+
+//        PEGANDO O ID DO ITEM SELECIONADO
+            Categoria catSelecionada = adapterCategoria.getItem(sp_categoria.getSelectedItemPosition());
+            idCategoria = catSelecionada.getId();
+            r.setIdCategoria(idCategoria);
+//        PEGANDO O ID DO ITEM SELECIONADO
+            Status stSelecionado = adapterStatus.getItem(sp_status.getSelectedItemPosition());
+            idStatus = stSelecionado.getId();
+            r.setIdStatus(idStatus);
+
+            if (rd_class_a.isChecked()){
+                classificacao = "A";
+            } else if (rd_class_b.isChecked()){
+                classificacao = "B";
+            } else if (rd_class_c.isChecked()){
+                classificacao = "C";
+            }
+            r.setClassificacao(classificacao);
+//            TODO: SALVAR A FOTO
+
+//        CHAMANDO O MÉTODO DE SALVAR NO DAO, E CASO SALVE, mostra-se uma mensagem
+            idRoupa = daoRoupa.cadastrarRoupa(getContext(), r);
+            if (idRoupa != -1){
+                for(int i = 0; i < listaTags.length; i++){
+                    int idTagE = daoTag.verificarTag(getContext(), listaTags[i]);
+                    if (idTagE != 0){
+                        idTag = Long.valueOf(idTagE);
+                    } else {
+                        idTag = daoTag.inserirTag(getContext(), listaTags[i]);
+                    }
+                    if (idTag != -1){
+                        idTagRoupa = daoTag.inserirTagRoupa(getContext(), idTag, idRoupa);
+                    }
+                }
+            } else {
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
+                alertDialog.setTitle("Erro !");
+                alertDialog.setIcon(R.drawable.ic_report);
+                alertDialog.setMessage("Erro ao tentar adicionar uma roupa ao seu guarda-roupas.");
+                alertDialog.setPositiveButton("Ok", null);
+                AlertDialog alert = alertDialog.create();
+                alert.show();
+            }
+
+            if (idTagRoupa != -1){
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
+                alertDialog.setTitle("Sucesso !");
+                alertDialog.setIcon(R.drawable.ic_check);
+                alertDialog.setMessage("Roupa adicionada ao seu guarda-roupas.");
+                alertDialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ZerarTela();
+                    }
+                });
+                AlertDialog alert = alertDialog.create();
+                alert.show();
+            } else {
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
+                alertDialog.setTitle("Erro !");
+                alertDialog.setIcon(R.drawable.ic_report);
+                alertDialog.setMessage("Erro ao tentar adicionar as tags de uma roupa");
+                alertDialog.setPositiveButton("Ok", null);
+                AlertDialog alert = alertDialog.create();
+                alert.show();
+            }
+        }
     }
 }

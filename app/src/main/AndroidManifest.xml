@@ -30,12 +30,12 @@
         </provider>
 
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
 
-        <activity android:name=".LoginActivity">
+        <activity android:name=".activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -44,21 +44,21 @@
         </activity>
 
         <activity
-            android:name=".VisualizarActivity"
+            android:name=".activity.VisualizarActivity"
             android:label="@string/title_activity_visualizar"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".activity.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="br.com.senaijandira.brechobernadete.MainActivity" />
+                android:value="br.com.senaijandira.brechobernadete.activity.MainActivity" />
         </activity>
 
         <activity
-            android:name=".SobreActivity"
+            android:name=".activity.SobreActivity"
             android:label="@string/title_sobre_activity"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".activity.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="br.com.senaijandira.brechobernadete.MainActivity" />
+                android:value="br.com.senaijandira.brechobernadete.activity.MainActivity" />
         </activity>
 
     </application>

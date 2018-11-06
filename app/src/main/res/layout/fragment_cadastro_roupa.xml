@@ -6,8 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".fragments.CadastroRoupaFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -43,7 +41,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginRight="2dp"
                     android:background="@drawable/bg_upload_foto"
-                    android:onClick="AbrirGaleria" />
+                    android:tag="0"/>
 
                 <LinearLayout
                     android:layout_width="80dp"
@@ -59,7 +57,7 @@
                         android:layout_marginLeft="2dp"
                         android:layout_marginRight="2dp"
                         android:background="@drawable/bg_upload_foto"
-                        android:onClick="AbrirGaleria" />
+                        android:tag="1"/>
 
                     <ImageView
                         android:id="@+id/foto3"
@@ -69,7 +67,7 @@
                         android:layout_marginRight="2dp"
                         android:layout_marginTop="2dp"
                         android:background="@drawable/bg_upload_foto"
-                        android:onClick="AbrirGaleria" />
+                        android:tag="2"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -85,7 +83,7 @@
                         android:layout_marginBottom="2dp"
                         android:layout_marginLeft="2dp"
                         android:background="@drawable/bg_upload_foto"
-                        android:onClick="AbrirGaleria" />
+                        android:tag="3"/>
 
                     <ImageView
                         android:id="@+id/foto5"
@@ -94,7 +92,8 @@
                         android:layout_marginLeft="2dp"
                         android:layout_marginTop="2dp"
                         android:background="@drawable/bg_upload_foto"
-                        android:onClick="AbrirGaleria" />
+                        android:tag="4"/>
+
                 </LinearLayout>
             </LinearLayout>
 

@@ -1,4 +1,4 @@
-package br.com.senaijandira.brechobernadete;
+package br.com.senaijandira.brechobernadete.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +12,7 @@ import android.widget.TextView;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
+import br.com.senaijandira.brechobernadete.R;
 import br.com.senaijandira.brechobernadete.api.LoginApi;
 import br.com.senaijandira.brechobernadete.model.SharedPreferencesConfig;
 

@@ -17,7 +17,7 @@ import br.com.senaijandira.brechobernadete.R;
 import br.com.senaijandira.brechobernadete.model.Roupas;
 import br.com.senaijandira.brechobernadete.adapter.RoupasAdapter;
 import br.com.senaijandira.brechobernadete.dao.RoupasDAO;
-import br.com.senaijandira.brechobernadete.VisualizarActivity;
+import br.com.senaijandira.brechobernadete.activity.VisualizarActivity;
 
 
 /**

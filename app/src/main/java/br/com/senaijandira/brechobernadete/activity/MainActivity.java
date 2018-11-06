@@ -1,4 +1,4 @@
-package br.com.senaijandira.brechobernadete;
+package br.com.senaijandira.brechobernadete.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import br.com.senaijandira.brechobernadete.R;
 import br.com.senaijandira.brechobernadete.fragments.CadastroRoupaFragment;
 import br.com.senaijandira.brechobernadete.fragments.ComprasFragment;
 import br.com.senaijandira.brechobernadete.fragments.HomeFragment;
