@@ -11,6 +11,8 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import br.com.senaijandira.brechobernadete.R;
 import br.com.senaijandira.brechobernadete.fragments.CadastroRoupaFragment;
@@ -48,11 +50,17 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-
 //        instância do SharedPreferencesConfig
         preferencesConfig = new SharedPreferencesConfig(getApplicationContext());
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        View viewHeader = navigationView.inflateHeaderView(R.layout.nav_header_main);
+        TextView lbl_nomeUsuario_menu = viewHeader.findViewById(R.id.lbl_nomeUsuario_menu);
+        TextView lbl_emailUsuario_menu = viewHeader.findViewById(R.id.lbl_emailUsuario_menu);
+        lbl_nomeUsuario_menu.setText(preferencesConfig.readUsuarioNome());
+        lbl_emailUsuario_menu.setText(preferencesConfig.readUsuarioEmail());
+
 
 //        adicionando um fragment
         if (savedInstanceState == null){
