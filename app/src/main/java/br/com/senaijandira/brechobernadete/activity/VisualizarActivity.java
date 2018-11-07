@@ -1,10 +1,15 @@
 package br.com.senaijandira.brechobernadete.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import br.com.senaijandira.brechobernadete.R;
 import br.com.senaijandira.brechobernadete.adapter.ViewPagerAdapter;
@@ -21,7 +26,7 @@ public class VisualizarActivity extends AppCompatActivity {
     Roupas r = new Roupas();
     int id;
     ViewPager viewPager;
-
+    private  AlertDialog alerta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,4 +71,33 @@ public class VisualizarActivity extends AppCompatActivity {
         lbl_classificacao.setText(r.getClassificacao());
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.visualizar, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.action_editar:
+//                TODO: REDIRECIONAR PARA A PAGINA DE CADASTRO PASSANDO AS INFORMAÇÕES DA ROUPA
+                Toast.makeText(this, "Editar", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.action_excluir:
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Excluir");
+                builder.setMessage("Deseja realmente excluir esta roupa?");
+                builder.setNegativeButton("Não", null);
+                builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(VisualizarActivity.this, "Excluiu", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                alerta = builder.create();
+                alerta.show();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

@@ -11,7 +11,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
@@ -19,7 +18,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,7 +28,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -39,10 +36,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import br.com.senaijandira.brechobernadete.R;
@@ -140,6 +134,7 @@ public class CadastroRoupaFragment extends Fragment {
         rd_class_b = view.findViewById(R.id.rd_b);
         rd_class_c = view.findViewById(R.id.rd_c);
         txt_tag1 = view.findViewById(R.id.txt_tag1);
+
         img_foto1 = view.findViewById(R.id.foto1);
         img_foto2 = view.findViewById(R.id.foto2);
         img_foto3 = view.findViewById(R.id.foto3);
@@ -148,7 +143,14 @@ public class CadastroRoupaFragment extends Fragment {
 
         vetorImg = new ImageView[] {img_foto1, img_foto2, img_foto3, img_foto4, img_foto5};
 
-//        setando o click dos elementos
+//        click dos image view
+        img_foto1.setOnClickListener(clickImageView);
+        img_foto2.setOnClickListener(clickImageView);
+        img_foto3.setOnClickListener(clickImageView);
+        img_foto4.setOnClickListener(clickImageView);
+        img_foto5.setOnClickListener(clickImageView);
+
+        //        setando o click dos elementos
         rd_medida.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -174,12 +176,6 @@ public class CadastroRoupaFragment extends Fragment {
             }
         });
 
-//        click dos image view
-        img_foto1.setOnClickListener(clickImageView);
-        img_foto2.setOnClickListener(clickImageView);
-        img_foto3.setOnClickListener(clickImageView);
-        img_foto4.setOnClickListener(clickImageView);
-        img_foto5.setOnClickListener(clickImageView);
 
 //        puxar status do banco e carregando no spinner
         List<Status> lstStatus = daoStatus.selecioanrTodos(getContext());
@@ -209,7 +205,7 @@ public class CadastroRoupaFragment extends Fragment {
             if(grantResults.length>0 && grantResults[0] ==
                     PackageManager.PERMISSION_GRANTED) {
                 capturarImagem();
-            }else{
+            } else {
 //                permissao negada
             }
 
@@ -254,7 +250,7 @@ public class CadastroRoupaFragment extends Fragment {
         if(resultCode == getActivity().RESULT_OK){
             if(requestCode == SELECT_PICTURE ){
                 Uri imgUri = data.getData();
-                String realPath = ImageFilePath.getPath(getContext(),
+                String realPath = ImageFilePath.getPath(getActivity(),
                         data.getData());
                 Picasso.get().load(new File(realPath))
                         .into(vetorImg[posicaoImg]);
@@ -380,72 +376,11 @@ public class CadastroRoupaFragment extends Fragment {
         return isValid;
     }
 
-//    método que abre a camera do celular, e resgata ela
-    private void AbrirGaleria1() {
-        Intent tirarFoto = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (tirarFoto.resolveActivity(getActivity().getPackageManager()) != null) {
-//            CRIANDO O ARQUIVO DA FOTO
-            try {
-                fotoArquivo = criarArquivoFoto();
-            } catch (IOException ex) {
-                Toast.makeText(getContext(), "Erro: "+ex.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-            if (fotoArquivo != null) {
-                Uri photoURI = FileProvider.getUriForFile(getContext(),
-                        "br.com.senaijandira.asd.fileprovider",
-                        fotoArquivo);
-                tirarFoto.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                startActivityForResult(tirarFoto, COD_GALERIA);
-            }
-        }
-    }
-
-    private File criarArquivoFoto() throws IOException {
-        // Cria o nome do arquivo da imagem
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "BB_" + timeStamp + "_";
-        File pasta = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
-                imageFileName,
-                ".jpg",
-                pasta
-        );
-
-        // SALVANDO O PATH DA FOTO
-        caminhoFoto = image.getAbsolutePath();
-        return image;
-    }
-
-//    VERIFICA SE O SDCARD ESTÁ DISPONIVEL
-    private File getDirFromSDCard() {
-        if (Environment.getExternalStorageState().equals(
-                Environment.MEDIA_MOUNTED)) {
-            File sdcard = Environment.getExternalStorageDirectory()
-                    .getAbsoluteFile();
-            File dir = new File(sdcard, "BrechoBernadete" + File.separator + "imagens");
-            if (!dir.exists())
-                dir.mkdirs();
-            return dir;
-        } else {
-            return null;
-        }
-    }
-
-//    SALVA A IMAGEM EM UMA PASTA
-//    private void SalvarImagens() throws IOException {
-//        String FILENAME = "foto";
-//        String string = "foto teste salvar foto";
-//
-//        FileOutputStream fos = openFileOutput(FILENAME, Context.MODE_PRIVATE);
-//        fos.write(string.getBytes());
-//        fos.close();
-//    }
-
 //    MÉTODO QUE RESGATA AS INFORMAÇÕES DOS CAMPOS PARA SALVAR A ROUPA NO BANCO
     public void SalvarRoupa(){
 
-        String retorno = String.valueOf(getDirFromSDCard());
-        Toast.makeText(getContext(), retorno+"/"+foto1, Toast.LENGTH_SHORT).show();
+//        String retorno = String.valueOf(getDirFromSDCard());
+//        Toast.makeText(getContext(), retorno+"/"+foto1, Toast.LENGTH_SHORT).show();
 
         if (ValidarCampos()){
             Roupas r = new Roupas();
@@ -526,4 +461,65 @@ public class CadastroRoupaFragment extends Fragment {
             }
         }
     }
+
+//    método que abre a camera do celular, e resgata ela
+//    private void AbrirGaleria1() {
+//        Intent tirarFoto = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//        if (tirarFoto.resolveActivity(getActivity().getPackageManager()) != null) {
+////            CRIANDO O ARQUIVO DA FOTO
+//            try {
+//                fotoArquivo = criarArquivoFoto();
+//            } catch (IOException ex) {
+//                Toast.makeText(getContext(), "Erro: "+ex.getMessage(), Toast.LENGTH_SHORT).show();
+//            }
+//            if (fotoArquivo != null) {
+//                Uri photoURI = FileProvider.getUriForFile(getContext(),
+//                        "br.com.senaijandira.asd.fileprovider",
+//                        fotoArquivo);
+//                tirarFoto.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+//                startActivityForResult(tirarFoto, COD_GALERIA);
+//            }
+//        }
+//    }
+
+//    private File criarArquivoFoto() throws IOException {
+//        // Cria o nome do arquivo da imagem
+//        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+//        String imageFileName = "BB_" + timeStamp + "_";
+//        File pasta = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+//        File image = File.createTempFile(
+//                imageFileName,
+//                ".jpg",
+//                pasta
+//        );
+//
+//        // SALVANDO O PATH DA FOTO
+//        caminhoFoto = image.getAbsolutePath();
+//        return image;
+//    }
+
+//    VERIFICA SE O SDCARD ESTÁ DISPONIVEL
+//    private File getDirFromSDCard() {
+//        if (Environment.getExternalStorageState().equals(
+//                Environment.MEDIA_MOUNTED)) {
+//            File sdcard = Environment.getExternalStorageDirectory()
+//                    .getAbsoluteFile();
+//            File dir = new File(sdcard, "BrechoBernadete" + File.separator + "imagens");
+//            if (!dir.exists())
+//                dir.mkdirs();
+//            return dir;
+//        } else {
+//            return null;
+//        }
+//    }
+
+//    SALVA A IMAGEM EM UMA PASTA
+//    private void SalvarImagens() throws IOException {
+//        String FILENAME = "foto";
+//        String string = "foto teste salvar foto";
+//
+//        FileOutputStream fos = openFileOutput(FILENAME, Context.MODE_PRIVATE);
+//        fos.write(string.getBytes());
+//        fos.close();
+//    }
 }

@@ -15,7 +15,15 @@
         android:elevation="30dp"
         android:stateListAnimator="@drawable/button_style_custom"
         app:cardCornerRadius="7dp"
-        app:cardElevation="20dp">
+        app:cardElevation="0dp"
+        app:cardMaxElevation="0dp"
+        >
+        
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:scaleType="fitXY"
+            android:id="@+id/img_bg_card"/>
 
         <LinearLayout
             android:layout_width="320dp"
@@ -29,7 +37,9 @@
                 android:gravity="center_vertical|center"
                 android:paddingStart="10dp"
                 android:text="Calça"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:textColor="@color/colorWhite"
+                android:textStyle="bold"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -45,7 +55,9 @@
                     android:gravity="center_vertical|center"
                     android:paddingStart="10dp"
                     android:text="10"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    android:textColor="@color/colorWhite"
+                    android:textStyle="bold"/>
             </LinearLayout>
         </LinearLayout>
 

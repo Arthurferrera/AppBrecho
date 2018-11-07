@@ -55,6 +55,8 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+//        infla o header do menu lateral, e seta os valores dos texts views com as informações do usuário
         View viewHeader = navigationView.inflateHeaderView(R.layout.nav_header_main);
         TextView lbl_nomeUsuario_menu = viewHeader.findViewById(R.id.lbl_nomeUsuario_menu);
         TextView lbl_emailUsuario_menu = viewHeader.findViewById(R.id.lbl_emailUsuario_menu);
