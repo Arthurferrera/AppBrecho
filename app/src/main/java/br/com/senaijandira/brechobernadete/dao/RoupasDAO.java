@@ -206,4 +206,28 @@ public class RoupasDAO {
             return id;
         }
     }
+
+    public Boolean excluirRoupa(Context context, int id){
+
+        SQLiteDatabase db = new DbHelper(context).getReadableDatabase();
+
+        String sql = "DELETE FROM roupa WHERE _idRoupa = "+id;
+
+        db.execSQL(sql);
+
+        return true;
+    }
+
+    public Long cadastrarFotos(Context context, Long idRoupa, String pathImagem){
+
+        SQLiteDatabase db = new DbHelper(context).getWritableDatabase();
+
+        ContentValues valores = new ContentValues();
+        valores.put("caminho", pathImagem);
+        valores.put("_idRoupa", idRoupa);
+
+        Long id = db.insert("imagem", null, valores);
+
+        return id;
+    }
 }

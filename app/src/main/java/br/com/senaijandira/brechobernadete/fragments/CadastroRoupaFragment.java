@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -68,7 +67,7 @@ public class CadastroRoupaFragment extends Fragment {
     RoupasDAO daoRoupa;
     CategoriaDAO daoCategoria;
     StatusDAO daoStatus;
-    String API_URL, nome, descricao, tamanho, marca, classificacao;
+    String API_URL, nome, descricao, tamanho, marca, classificacao, foto1, foto2, foto3, foto4, foto5;
     int idCategoria, idStatus;
     Long idTag, idTagRoupa, idRoupa;
     int COD_GALERIA = 1;
@@ -76,19 +75,16 @@ public class CadastroRoupaFragment extends Fragment {
     int TIRAR_FOTO = 3;
     int CAMERA = 4;
     File fotoArquivo = null;
-    Bitmap foto1, foto2, foto3, foto4, foto5;
     ArrayAdapter<Status> adapterStatus;
     ArrayAdapter<Categoria> adapterCategoria;
     ArrayAdapter<Tag> adapterTag;
 
-
     final int REQUEST_PERMISSION = 101;
     final int SELECT_PICTURE = 1;
-    String caminhoFoto = "";
 
     ImageView img_foto1, img_foto2, img_foto3, img_foto4, img_foto5;
-
     ImageView[] vetorImg;
+    String[] listaPathsImages;
     int posicaoImg = 0;
 
     View.OnClickListener clickImageView = new View.OnClickListener(){
@@ -149,6 +145,12 @@ public class CadastroRoupaFragment extends Fragment {
         img_foto3.setOnClickListener(clickImageView);
         img_foto4.setOnClickListener(clickImageView);
         img_foto5.setOnClickListener(clickImageView);
+
+        foto1 = "";
+        foto2 = "";
+        foto3 = "";
+        foto4 = "";
+        foto5 = "";
 
         //        setando o click dos elementos
         rd_medida.setOnClickListener(new View.OnClickListener() {
@@ -254,6 +256,25 @@ public class CadastroRoupaFragment extends Fragment {
                         data.getData());
                 Picasso.get().load(new File(realPath))
                         .into(vetorImg[posicaoImg]);
+                switch (posicaoImg){
+                    case 0:
+                        foto1 = realPath;
+                        break;
+                    case 1:
+                        foto2 = realPath;
+                        break;
+                    case 2:
+                        foto3 = realPath;
+                        break;
+                    case 3:
+                        foto4 = realPath;
+                        break;
+                    case 4:
+                        foto5= realPath;
+                        break;
+                }
+                listaPathsImages = new String[]{foto1,foto2,foto3,foto4,foto5};
+
             }
         }
     }
@@ -369,6 +390,17 @@ public class CadastroRoupaFragment extends Fragment {
             isValid = false;
         }
 
+        if (foto1.equals("") && foto2.equals("") && foto3.equals("") && foto4.equals("") && foto5.equals("")){
+            AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
+            alertDialog.setTitle("Erro !");
+            alertDialog.setIcon(R.drawable.ic_report);
+            alertDialog.setMessage("Adicione ao menos uma imagem");
+            alertDialog.setPositiveButton("Ok", null);
+            AlertDialog alert = alertDialog.create();
+            alert.show();
+            isValid = false;
+        }
+
         if (campoComFoco != null){
             campoComFoco.requestFocus();
         }
@@ -379,15 +411,11 @@ public class CadastroRoupaFragment extends Fragment {
 //    MÉTODO QUE RESGATA AS INFORMAÇÕES DOS CAMPOS PARA SALVAR A ROUPA NO BANCO
     public void SalvarRoupa(){
 
-//        String retorno = String.valueOf(getDirFromSDCard());
-//        Toast.makeText(getContext(), retorno+"/"+foto1, Toast.LENGTH_SHORT).show();
-
         if (ValidarCampos()){
             Roupas r = new Roupas();
             r.setNome(txt_nome.getText().toString());
             r.setDescricao(txt_descricao.getText().toString());
             r.setTamanho(String.valueOf(sp_tamanho.getSelectedItem()));
-            //TODO: GRAVAR COR
             r.setMarca(txt_marca.getText().toString());
 
 //            Resgatando as tags do editText
@@ -425,6 +453,19 @@ public class CadastroRoupaFragment extends Fragment {
                     }
                     if (idTag != -1){
                         idTagRoupa = daoTag.inserirTagRoupa(getContext(), idTag, idRoupa);
+                    }
+                    Long idFotoSalva;
+                    if (!listaPathsImages[i].equals("")){
+                        idFotoSalva = daoRoupa.cadastrarFotos(getContext(), idRoupa, listaPathsImages[i]);
+                    }
+                    if (idFotoSalva == -1){
+                        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
+                        alertDialog.setTitle("Erro !");
+                        alertDialog.setIcon(R.drawable.ic_report);
+                        alertDialog.setMessage("Erro ao tentar adicionar a(s) foto(s) da roupa.");
+                        alertDialog.setPositiveButton("Ok", null);
+                        AlertDialog alert = alertDialog.create();
+                        alert.show();
                     }
                 }
             } else {
