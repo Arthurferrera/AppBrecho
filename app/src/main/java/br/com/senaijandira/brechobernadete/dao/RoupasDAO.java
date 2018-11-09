@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import br.com.senaijandira.brechobernadete.model.DbHelper;
 import br.com.senaijandira.brechobernadete.model.Roupas;
+import br.com.senaijandira.brechobernadete.model.Tag;
 
 public class RoupasDAO {
 
@@ -140,10 +141,6 @@ public class RoupasDAO {
         String sql = "SELECT * FROM roupa r " +
                 "INNER JOIN status s " +
                 "ON s._id = r._idStatus " +
-//                "INNER JOIN tag_roupa tr " +
-//                "ON tr._idRoupa = r._id " +
-//                "INNER JOIN tag t " +
-//                "ON t._id = tr._idTag " +
                 "INNER JOIN categoria c " +
                 "ON c._id = r._idCategoria " +
                 "WHERE r._id = "+id;
@@ -229,5 +226,48 @@ public class RoupasDAO {
         Long id = db.insert("imagem", null, valores);
 
         return id;
+    }
+
+    public ArrayList<String> selecionarFotosByIdRoupa(Context context, int idRoupa){
+        ArrayList<String> listaImagens = new ArrayList<>();
+
+        SQLiteDatabase db = new DbHelper(context).getReadableDatabase();
+
+        String sql = "SELECT * FROM imagem WHERE _idRoupa = "+idRoupa;
+        Cursor cursor = db.rawQuery(sql, null);
+
+        int cont = 0;
+        while(cursor.moveToNext()){
+            listaImagens.add(cursor.getString(1));
+        }
+
+        cursor.close();
+        db.close();
+
+        return listaImagens;
+    }
+
+    public ArrayList<String> selecionarTagsByIdRoupa(Context context, int idRoupa){
+        ArrayList<String> listaTags = new ArrayList<>();
+
+        SQLiteDatabase db = new DbHelper(context).getReadableDatabase();
+
+        String sql = "SELECT * FROM tag t " +
+                "INNER JOIN tag_roupa tr " +
+                "ON tr._idTag = t._id " +
+                "WHERE tr._idRoupa = "+idRoupa;
+        Cursor cursor = db.rawQuery(sql, null);
+
+        Tag tag = new Tag();
+
+        while(cursor.moveToNext()){
+//            tag.setNomeTag();
+            listaTags.add(cursor.getString(1));
+        }
+
+        cursor.close();
+        db.close();
+
+        return listaTags;
     }
 }

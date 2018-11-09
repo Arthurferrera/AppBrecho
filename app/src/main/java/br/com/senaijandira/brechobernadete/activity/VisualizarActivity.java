@@ -11,6 +11,8 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import br.com.senaijandira.brechobernadete.R;
 import br.com.senaijandira.brechobernadete.adapter.ViewPagerAdapter;
 import br.com.senaijandira.brechobernadete.dao.RoupasDAO;
@@ -24,6 +26,7 @@ public class VisualizarActivity extends AppCompatActivity {
     //TODO: cor da roupa
     RoupasDAO dao;
     Roupas r = new Roupas();
+    ArrayList<String> tag = new ArrayList<>();
     int id;
     ViewPager viewPager;
     private  AlertDialog alerta;
@@ -34,9 +37,6 @@ public class VisualizarActivity extends AppCompatActivity {
         setContentView(R.layout.activity_visualizar);
 
         viewPager = findViewById(R.id.viewPager);
-
-        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(this);
-        viewPager.setAdapter(viewPagerAdapter);
 
 //        pegando os parametros passado pelo intent na chamada da tela
         Intent intent = getIntent();
@@ -59,6 +59,8 @@ public class VisualizarActivity extends AppCompatActivity {
 //        chamando o método que traz todas as informações da roupa
         r = dao.selecionarUmaRoupa(this, id);
 
+        tag = dao.selecionarTagsByIdRoupa(this, id);
+
 //        setando os valores dos elementos com as informações vindas do banco
         lbl_titulo.setText(r.getNome());
         lbl_descricao.setText(r.getDescricao());
@@ -69,6 +71,16 @@ public class VisualizarActivity extends AppCompatActivity {
         lbl_status.setText(r.getStatus());
         lbl_marca.setText(r.getMarca());
         lbl_classificacao.setText(r.getClassificacao());
+        StringBuilder TAGS = new StringBuilder();
+        for(String tags : tag){
+            TAGS.append(tags);
+            TAGS.append(" - ");
+        }
+        lbl_tags.setText(TAGS.toString().trim());
+
+
+        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(this, id);
+        viewPager.setAdapter(viewPagerAdapter);
     }
 
     @Override

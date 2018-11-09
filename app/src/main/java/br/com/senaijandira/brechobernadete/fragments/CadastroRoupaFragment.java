@@ -354,7 +354,7 @@ public class CadastroRoupaFragment extends Fragment {
         rd_medida.setChecked(true);
         rd_class_a.setChecked(true);
         txt_tag1.setText("");
-        //TODO: ZERAR COR DO BOTAO DE COR
+        onResume();
     }
 
     public Boolean ValidarCampos(){
@@ -454,7 +454,7 @@ public class CadastroRoupaFragment extends Fragment {
                     if (idTag != -1){
                         idTagRoupa = daoTag.inserirTagRoupa(getContext(), idTag, idRoupa);
                     }
-                    Long idFotoSalva;
+                    Long idFotoSalva = null;
                     if (!listaPathsImages[i].equals("")){
                         idFotoSalva = daoRoupa.cadastrarFotos(getContext(), idRoupa, listaPathsImages[i]);
                     }
