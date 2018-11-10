@@ -55,16 +55,16 @@ public class DbHelper extends SQLiteOpenHelper {
 
 //        tabela roupa
         db.execSQL("CREATE TABLE roupa (" +
-                "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "nome TEXT NOT NULL," +
-                "descricao TEXT NOT NULL," +
-                "cor TEXT NOT NULL," +
-                "tamanho TEXT NOT NULL," +
-                "marca TEXT NOT NULL," +
-                "classificacao TEXT NOT NULL," +
-                "favorito BOOLEAN NOT NULL," +
-                "_idStatus INTEGER NOT NULL," +
-                "_idCategoria INTEGER NOT NULL," +
+                "_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "nome TEXT NOT NULL, " +
+                "descricao TEXT NOT NULL, " +
+                "cor TEXT NOT NULL, " +
+                "tamanho TEXT NOT NULL, " +
+                "marca TEXT NOT NULL, " +
+                "classificacao TEXT NOT NULL, " +
+                "favorito TINYINT, " +
+                "_idStatus INTEGER NOT NULL, " +
+                "_idCategoria INTEGER NOT NULL, " +
                 "CONSTRAINT fk_status_roupa" +
                 "   FOREIGN KEY (_idStatus)" +
                 "   REFERENCES status(_id)," +

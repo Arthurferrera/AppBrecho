@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import br.com.senaijandira.brechobernadete.model.DbHelper;
 import br.com.senaijandira.brechobernadete.model.Roupas;
+import br.com.senaijandira.brechobernadete.model.Tag;
 
 public class RoupasDAO {
 
@@ -67,7 +68,7 @@ public class RoupasDAO {
             Roupas r = new Roupas();
             r.setId(cursor.getInt(0));
             r.setNome(cursor.getString(1));
-            r.setStatus(cursor.getString(13));
+            r.setStatus(cursor.getString(12));
             Log.d("selecionarPorCategoria", cursor.getInt(0)+"");
             retorno.add(r);
         }
@@ -93,7 +94,7 @@ public class RoupasDAO {
             Roupas r = new Roupas();
             r.setId(cursor.getInt(0));
             r.setNome(cursor.getString(1));
-            r.setStatus(cursor.getString(11));
+            r.setStatus(cursor.getString(10));
             retorno.add(r);
         }
         cursor.close();
@@ -123,7 +124,7 @@ public class RoupasDAO {
             Roupas r = new Roupas();
             r.setId(cursor.getInt(0));
             r.setNome(cursor.getString(1));
-            r.setStatus(cursor.getString(16));
+            r.setStatus(cursor.getString(15));
             retorno.add(r);
         }
         cursor.close();
@@ -140,10 +141,6 @@ public class RoupasDAO {
         String sql = "SELECT * FROM roupa r " +
                 "INNER JOIN status s " +
                 "ON s._id = r._idStatus " +
-//                "INNER JOIN tag_roupa tr " +
-//                "ON tr._idRoupa = r._id " +
-//                "INNER JOIN tag t " +
-//                "ON t._id = tr._idTag " +
                 "INNER JOIN categoria c " +
                 "ON c._id = r._idCategoria " +
                 "WHERE r._id = "+id;
@@ -193,7 +190,7 @@ public class RoupasDAO {
         valores.put("tamanho", r.getTamanho());
         valores.put("marca", r.getMarca());
         valores.put("classificacao", r.getClassificacao());
-        valores.put("favorito", false);
+        //valores.put("favorito", 0);
         valores.put("_idStatus", r.getIdStatus());
         valores.put("_idCategoria", r.getIdCategoria());
 //        TODO: GRAVAR A ROUPA S/ FOTO E COR E TAG
@@ -207,14 +204,15 @@ public class RoupasDAO {
         }
     }
 
-    public Boolean excluirRoupa(Context context, int id){
+    public Boolean excluirRoupa(Context context, Integer id){
 
         SQLiteDatabase db = new DbHelper(context).getReadableDatabase();
 
-        String sql = "DELETE FROM roupa WHERE _idRoupa = "+id;
+        //String sql = "DELETE FROM roupa WHERE _idRoupa = "+id;
 
-        db.execSQL(sql);
-
+        db.delete("imagem", "_idRoupa=?", new String[]{id.toString()});
+        db.delete("tag_roupa", "_idRoupa=?", new String[]{id.toString()});
+        db.delete("roupa", "_id=?", new String[]{id.toString()});
         return true;
     }
 
@@ -229,5 +227,48 @@ public class RoupasDAO {
         Long id = db.insert("imagem", null, valores);
 
         return id;
+    }
+
+    public ArrayList<String> selecionarFotosByIdRoupa(Context context, int idRoupa){
+        ArrayList<String> listaImagens = new ArrayList<>();
+
+        SQLiteDatabase db = new DbHelper(context).getReadableDatabase();
+
+        String sql = "SELECT * FROM imagem WHERE _idRoupa = "+idRoupa;
+        Cursor cursor = db.rawQuery(sql, null);
+
+        int cont = 0;
+        while(cursor.moveToNext()){
+            listaImagens.add(cursor.getString(1));
+        }
+
+        cursor.close();
+        db.close();
+
+        return listaImagens;
+    }
+
+    public ArrayList<String> selecionarTagsByIdRoupa(Context context, int idRoupa){
+        ArrayList<String> listaTags = new ArrayList<>();
+
+        SQLiteDatabase db = new DbHelper(context).getReadableDatabase();
+
+        String sql = "SELECT * FROM tag t " +
+                "INNER JOIN tag_roupa tr " +
+                "ON tr._idTag = t._id " +
+                "WHERE tr._idRoupa = "+idRoupa;
+        Cursor cursor = db.rawQuery(sql, null);
+
+        Tag tag = new Tag();
+
+        while(cursor.moveToNext()){
+//            tag.setNomeTag();
+            listaTags.add(cursor.getString(1));
+        }
+
+        cursor.close();
+        db.close();
+
+        return listaTags;
     }
 }
