@@ -2,15 +2,14 @@ package br.com.senaijandira.brechobernadete.api;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import br.com.senaijandira.brechobernadete.model.HttpConnection;
 import br.com.senaijandira.brechobernadete.activity.MainActivity;
+import br.com.senaijandira.brechobernadete.model.HttpConnection;
 import br.com.senaijandira.brechobernadete.model.SharedPreferencesConfig;
 
 public class LoginApi extends AsyncTask<Void, Void, String> {
@@ -19,7 +18,7 @@ public class LoginApi extends AsyncTask<Void, Void, String> {
     private Activity activity;
     private SharedPreferencesConfig preferencesConfig;
     private AlertDialog alertDialog;
-    private ProgressDialog progess;
+//    private ProgressDialog progess;
 
     public LoginApi(String url, Activity activity){
         this.url = url;
@@ -34,19 +33,19 @@ public class LoginApi extends AsyncTask<Void, Void, String> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        progess = new ProgressDialog(activity);
-        progess.setMessage("Entrando...");
-        progess.setCancelable(false);
-        progess.show();
+//        progess = new ProgressDialog(activity);
+//        progess.setMessage("Entrando...");
+//        progess.setCancelable(false);
+//        progess.show();
     }
 
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
 
-        if (progess.isShowing()){
-            progess.dismiss();
-        }
+//        if (progess.isShowing()){
+//            progess.dismiss();
+//        }
 
         preferencesConfig = new SharedPreferencesConfig(activity.getApplicationContext());
 

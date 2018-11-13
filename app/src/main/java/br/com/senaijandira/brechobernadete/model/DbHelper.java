@@ -65,6 +65,7 @@ public class DbHelper extends SQLiteOpenHelper {
                 "favorito TINYINT, " +
                 "_idStatus INTEGER NOT NULL, " +
                 "_idCategoria INTEGER NOT NULL, " +
+                "_idSite INTEGER, " +
                 "CONSTRAINT fk_status_roupa" +
                 "   FOREIGN KEY (_idStatus)" +
                 "   REFERENCES status(_id)," +

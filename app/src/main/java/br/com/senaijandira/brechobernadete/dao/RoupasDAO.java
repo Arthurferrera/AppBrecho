@@ -27,7 +27,7 @@ public class RoupasDAO {
     }
 
 //    MÉTODO QUE RETORNA TODAS AS ROUPAS
-    public ArrayList<Roupas> selecionarTodos(Context context){
+    public ArrayList<Roupas> selecionarTodas(Context context){
         ArrayList<Roupas> retorno = new ArrayList<>();
 
         SQLiteDatabase db = new DbHelper(context).getReadableDatabase();
@@ -190,10 +190,9 @@ public class RoupasDAO {
         valores.put("tamanho", r.getTamanho());
         valores.put("marca", r.getMarca());
         valores.put("classificacao", r.getClassificacao());
-        //valores.put("favorito", 0);
+        valores.put("favorito", 0);
         valores.put("_idStatus", r.getIdStatus());
         valores.put("_idCategoria", r.getIdCategoria());
-//        TODO: GRAVAR A ROUPA S/ FOTO E COR E TAG
 
         Long id = db.insert("roupa", null, valores);
 
@@ -270,5 +269,20 @@ public class RoupasDAO {
         db.close();
 
         return listaTags;
+    }
+
+    public int VerificarMinhaCompra(Context context, int idSite){
+
+        SQLiteDatabase db = new DbHelper(context).getWritableDatabase();
+
+        String sql = "SELECT _idSite FROM roupa WHERE _idSite = "+idSite;
+
+        Cursor cursor  = db.rawQuery(sql, null);
+
+        int idSiteRetorno = 0;
+        if (cursor.moveToNext()){
+            idSiteRetorno = cursor.getInt(0);
+        }
+        return idSiteRetorno;
     }
 }

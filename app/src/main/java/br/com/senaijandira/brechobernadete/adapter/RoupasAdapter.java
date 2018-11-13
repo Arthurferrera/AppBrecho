@@ -1,10 +1,12 @@
 package br.com.senaijandira.brechobernadete.adapter;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,6 +16,9 @@ import br.com.senaijandira.brechobernadete.R;
 import br.com.senaijandira.brechobernadete.model.Roupas;
 
 public class RoupasAdapter extends ArrayAdapter<Roupas> {
+
+    ArrayList<Roupas> itens;
+    ArrayList<Roupas> itens_exibicao;
 
 //    construtor do adapter
     public RoupasAdapter(Context context, ArrayList<Roupas> lstRoupas) {
@@ -52,5 +57,47 @@ public class RoupasAdapter extends ArrayAdapter<Roupas> {
 //        lbl_cor.setBackgroundColor();
 
         return v;
+    }
+
+    @NonNull
+    @Override
+    public Filter getFilter() {
+        Filter filter = new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                Filter filtro = new Filter() {
+
+                    @Override
+                    protected FilterResults performFiltering(CharSequence filtro) {
+                        FilterResults results = new FilterResults();
+
+                        if (filtro == null || filtro.length() == 0){
+                            results.count = itens.size();
+                            results.values = itens;
+                        } else {
+
+                        }
+
+                        return null;
+                    }
+
+                    @Override
+                    protected void publishResults(CharSequence constraint, FilterResults results) {
+
+                    }
+                };
+
+
+                return null;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+
+            }
+        };
+
+
+        return super.getFilter();
     }
 }
