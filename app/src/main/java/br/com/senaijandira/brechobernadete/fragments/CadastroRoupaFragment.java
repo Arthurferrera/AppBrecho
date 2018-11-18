@@ -27,6 +27,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -65,10 +66,12 @@ public class CadastroRoupaFragment extends Fragment {
     Button btn_salvar;
     TagDAO daoTag;
     RoupasDAO daoRoupa;
+    Roupas roupa;
     CategoriaDAO daoCategoria;
     StatusDAO daoStatus;
     String API_URL, nome, descricao, tamanho, marca, classificacao, foto1, foto2, foto3, foto4, foto5;
     int idCategoria, idStatus;
+    Integer idRoupaEdicao = null;
     Long idTag, idTagRoupa, idRoupa;
     int COD_GALERIA = 1;
     int PERMISSAO_REQUEST = 2;
@@ -86,6 +89,8 @@ public class CadastroRoupaFragment extends Fragment {
     ImageView[] vetorImg;
     String[] listaPathsImages;
     int posicaoImg = 0;
+
+    Boolean modoEdicao = false;
 
     View.OnClickListener clickImageView = new View.OnClickListener(){
         @Override
@@ -152,7 +157,40 @@ public class CadastroRoupaFragment extends Fragment {
         foto4 = "";
         foto5 = "";
 
-        //        setando o click dos elementos
+        Bundle bundle = getArguments();
+        if (bundle != null){
+            idRoupaEdicao = bundle.getInt("id");
+        }
+
+        if (idRoupaEdicao != null){
+            modoEdicao = true;
+
+            roupa = daoRoupa.selecionarUmaRoupa(getContext(), idRoupaEdicao);
+
+            txt_nome.setText(roupa.getNome());
+            txt_descricao.setText(roupa.getDescricao());
+            int idCategoriaS = roupa.getIdCategoria() - 1;
+            sp_categoria.setSelection(idCategoriaS);
+            if (Character.isDigit(Integer.parseInt(roupa.getTamanho()))){
+                Toast.makeText(getContext(), "Numero", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getContext(), "Letra", Toast.LENGTH_SHORT).show();
+            }
+//            TODO: cor
+            int idStatusC = roupa.getIdStatus() - 1;
+            sp_categoria.setSelection(idStatusC);
+            txt_marca.setText(roupa.getMarca());
+            if (roupa.getClassificacao().equals("A")){
+                rd_class_a.setChecked(true);
+            } else if (roupa.getClassificacao().equals("B")){
+                rd_class_b.setChecked(true);
+            } else {
+                rd_medida.setChecked(true);
+            }
+//            TODO: TAGS
+        }
+
+//        setando o click dos elementos
         rd_medida.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -410,7 +448,6 @@ public class CadastroRoupaFragment extends Fragment {
 
 //    MÉTODO QUE RESGATA AS INFORMAÇÕES DOS CAMPOS PARA SALVAR A ROUPA NO BANCO
     public void SalvarRoupa(){
-
         if (ValidarCampos()){
             Roupas r = new Roupas();
             r.setNome(txt_nome.getText().toString());
@@ -439,10 +476,14 @@ public class CadastroRoupaFragment extends Fragment {
                 classificacao = "C";
             }
             r.setClassificacao(classificacao);
-//            TODO: SALVAR A FOTO
 
 //        CHAMANDO O MÉTODO DE SALVAR NO DAO, E CASO SALVE, mostra-se uma mensagem
-            idRoupa = daoRoupa.cadastrarRoupa(getContext(), r);
+            if (modoEdicao){
+                daoRoupa.editarRoupa(getContext(), r);
+//                TODO: EDITAR A ROUPA, TAGS, IMAGEM
+            } else {
+                idRoupa = daoRoupa.cadastrarRoupa(getContext(), r);
+            }
             if (idRoupa != -1){
                 for(int i = 0; i < listaTags.length; i++){
                     int idTagE = daoTag.verificarTag(getContext(), listaTags[i]);
