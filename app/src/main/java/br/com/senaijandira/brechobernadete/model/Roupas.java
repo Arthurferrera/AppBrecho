@@ -6,7 +6,7 @@ public class Roupas {
     private int id;
     private String nome;
     private String descricao;
-    private int cor;
+    private String cor;
     private String tamanho;
     private String marca;
     private String classificacao;
@@ -16,6 +16,7 @@ public class Roupas {
     private String categoria;
     private String status;
     private String tag;
+    private int idSite;
 
 //    MÉTODOS GETTERS E SETTERS
     public int getId() { return id;}
@@ -30,9 +31,9 @@ public class Roupas {
 
     public void setDescricao(String descricao) {this.descricao = descricao;}
 
-    public int getCor() {return cor;}
+    public String getCor() {return cor;}
 
-    public void setCor(int cor) {this.cor = cor;}
+    public void setCor(String cor) {this.cor = cor;}
 
     public String getTamanho() {return tamanho;}
 
@@ -74,4 +75,8 @@ public class Roupas {
     public String toString() {
         return this.tamanho;
     }
+
+    public int getIdSite() { return idSite; }
+
+    public void setIdSite(int idSite) { this.idSite = idSite; }
 }

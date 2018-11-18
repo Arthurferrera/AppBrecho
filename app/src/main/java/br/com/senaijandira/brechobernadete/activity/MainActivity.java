@@ -130,6 +130,10 @@ public class MainActivity extends AppCompatActivity
             startActivity(intencao);
         } else if (id == R.id.nav_sair) {
             preferencesConfig.writeLoginStatus(false);
+            preferencesConfig.writeUsuarioId(0);
+            preferencesConfig.writeUsuarioTipo("");
+            preferencesConfig.writeUsuarioNome("");
+            preferencesConfig.writeUsuarioEmail("");
             Intent intencao = new Intent(this, LoginActivity.class);
             startActivity(intencao);
             finish();

@@ -57,4 +57,32 @@ public class SharedPreferencesConfig {
         email = sharedPreferences.getString(context.getResources().getString(R.string.usuario_email), "");
         return email;
     }
+
+    //    MÉTODO QUE GRAVA O E-MAIL DO USUARIO
+    public void writeUsuarioId(int id){
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(context.getResources().getString(R.string.usuario_id), id);
+        editor.commit();
+    }
+
+    //    MÉTODO QUE LÊ O E-MAIL DO USUÁRIO
+    public int readUsuarioId(){
+        int id = 0;
+        id = sharedPreferences.getInt(context.getResources().getString(R.string.usuario_id), 0);
+        return id;
+    }
+
+    //    MÉTODO QUE GRAVA O E-MAIL DO USUARIO
+    public void writeUsuarioTipo(String tipo){
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(context.getResources().getString(R.string.usuario_tipo), tipo);
+        editor.commit();
+    }
+
+    //    MÉTODO QUE LÊ O E-MAIL DO USUÁRIO
+    public String readUsuarioTipo(){
+        String tipo= "";
+        tipo = sharedPreferences.getString(context.getResources().getString(R.string.usuario_tipo), "");
+        return tipo;
+    }
 }

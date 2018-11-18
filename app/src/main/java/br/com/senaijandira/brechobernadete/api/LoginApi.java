@@ -57,10 +57,14 @@ public class LoginApi extends AsyncTask<Void, Void, String> {
                     JSONObject usuarioJson = jsonObject.getJSONObject("usuario");
                     String nomeUsuario = usuarioJson.getString("nome");
                     String email = usuarioJson.getString("email");
+                    int idUsuario = usuarioJson.getInt("idCliente");
+                    String tipoCliente = jsonObject.getString("tipo");
 
                     preferencesConfig.writeUsuarioNome(nomeUsuario);
                     preferencesConfig.writeUsuarioEmail(email);
                     preferencesConfig.writeLoginStatus(true);
+                    preferencesConfig.writeUsuarioId(idUsuario);
+                    preferencesConfig.writeUsuarioTipo(tipoCliente);
 
                     activity.startActivity(new Intent(activity, MainActivity.class));
                     activity.finish();

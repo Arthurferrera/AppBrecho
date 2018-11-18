@@ -66,7 +66,7 @@ public class VisualizarActivity extends AppCompatActivity {
         lbl_descricao.setText(r.getDescricao());
         lbl_categoria.setText(r.getCategoria());
         lbl_tamanho.setText(r.getTamanho());
-        lbl_cor.setBackgroundColor(r.getCor());
+//        lbl_cor.setBackgroundColor(Integer.parseInt(r.getCor()));
         lbl_tags.setText(r.getTag());
         lbl_status.setText(r.getStatus());
         lbl_marca.setText(r.getMarca());
@@ -92,6 +92,9 @@ public class VisualizarActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
+            case R.id.action_notificacao:
+
+                break;
             case R.id.action_editar:
 //                TODO: REDIRECIONAR PARA A PAGINA DE CADASTRO PASSANDO AS INFORMAÇÕES DA ROUPA
                 Toast.makeText(this, "Editar", Toast.LENGTH_SHORT).show();

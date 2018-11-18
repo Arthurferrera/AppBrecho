@@ -85,6 +85,7 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO categoria (nome) VALUES ('Vestidos');");
         db.execSQL("INSERT INTO categoria (nome) VALUES ('Acessórios');");
         db.execSQL("INSERT INTO categoria (nome) VALUES ('Roupas íntimas');");
+        db.execSQL("INSERT INTO categoria (nome) VALUES ('Outros');");
 
 //        INSERTS TABELA STATUS
         db.execSQL("INSERT INTO status (nome) VALUES ('No Guarda-roupas');");
