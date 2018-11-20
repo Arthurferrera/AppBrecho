@@ -5,15 +5,15 @@
     <string name="nav_header_title">Arthur Ferreira</string>
     <string name="nav_header_subtitle">arthur.ferreira@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
-    <string name="action_filtro">Pesquisar</string>
+    <string name="action_settings">Sobre</string>
     <string name="action_editar">Editar</string>
     <string name="action_excluir">Excluir</string>
 
     <string name="title_activity_visualizar">Detalhes da roupa</string>
     <string name="title_activity_visualizar_roupa">VisualizarRoupaActivity</string>
 
-    <!--<string name="API_URL">http://192.168.1.39/aulas/apiBrecho/</string>-->
-    <string name="API_URL">http://10.0.2.2/INF4T20182/ProCode/apiBrecho/</string>
+    <string name="API_URL">http://192.168.1.39/aulas/apiBrecho/</string>
+    <!--<string name="API_URL">http://10.0.2.2/INF4T20182/ProCode/apiBrecho/</string>-->
 
     <!--Strings de sharedPreferences-->
     <string name="login_preferences">br.com.senaijandira.brechobernadete_login_preferences</string>
@@ -21,6 +21,5 @@
     <string name="usuario_email">br.com.senaijandira.brechobernadete_usuario_email</string>
     <string name="usuario_nome">br.com.senaijandira.brechobernadete_usuario_nome</string>
     <string name="title_sobre_activity">Sobre o Aplicativo</string>
-    <string name="title_activity_pesquisa">PesquisaActivity</string>
 
 </resources>
