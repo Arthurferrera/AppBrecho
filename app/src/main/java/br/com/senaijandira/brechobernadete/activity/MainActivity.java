@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setNavigationIcon(R.drawable.ic_menu_black);
         setSupportActionBar(toolbar);
 
 //        find's dos elementos
@@ -130,6 +131,10 @@ public class MainActivity extends AppCompatActivity
             startActivity(intencao);
         } else if (id == R.id.nav_sair) {
             preferencesConfig.writeLoginStatus(false);
+            preferencesConfig.writeUsuarioId(0);
+            preferencesConfig.writeUsuarioTipo("");
+            preferencesConfig.writeUsuarioNome("");
+            preferencesConfig.writeUsuarioEmail("");
             Intent intencao = new Intent(this, LoginActivity.class);
             startActivity(intencao);
             finish();

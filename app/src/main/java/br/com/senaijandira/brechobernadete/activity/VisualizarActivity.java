@@ -2,7 +2,10 @@ package br.com.senaijandira.brechobernadete.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +19,7 @@ import java.util.ArrayList;
 import br.com.senaijandira.brechobernadete.R;
 import br.com.senaijandira.brechobernadete.adapter.ViewPagerAdapter;
 import br.com.senaijandira.brechobernadete.dao.RoupasDAO;
+import br.com.senaijandira.brechobernadete.fragments.CadastroRoupaFragment;
 import br.com.senaijandira.brechobernadete.model.Roupas;
 
 public class VisualizarActivity extends AppCompatActivity {
@@ -66,7 +70,7 @@ public class VisualizarActivity extends AppCompatActivity {
         lbl_descricao.setText(r.getDescricao());
         lbl_categoria.setText(r.getCategoria());
         lbl_tamanho.setText(r.getTamanho());
-        lbl_cor.setBackgroundColor(r.getCor());
+        lbl_cor.setBackgroundTintList(ColorStateList.valueOf(r.getCor()));
         lbl_tags.setText(r.getTag());
         lbl_status.setText(r.getStatus());
         lbl_marca.setText(r.getMarca());
@@ -92,9 +96,18 @@ public class VisualizarActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
+            case R.id.action_notificacao:
+
+                break;
             case R.id.action_editar:
-//                TODO: REDIRECIONAR PARA A PAGINA DE CADASTRO PASSANDO AS INFORMAÇÕES DA ROUPA
-                Toast.makeText(this, "Editar", Toast.LENGTH_SHORT).show();
+                FragmentManager fragmentManager = this.getSupportFragmentManager();
+                Fragment fragment = new CadastroRoupaFragment();
+                Bundle bundle = new Bundle();
+
+                //Passando o id para cadastro para efetuar a edição
+                bundle.putInt("id", id);
+                fragment.setArguments(bundle);
+                fragmentManager.beginTransaction().replace(R.id.frame_content, fragment).commit();
                 break;
             case R.id.action_excluir:
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);

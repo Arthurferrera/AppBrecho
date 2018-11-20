@@ -1,6 +1,7 @@
 package br.com.senaijandira.brechobernadete.adapter;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,8 +35,6 @@ public class RoupasAdapter extends ArrayAdapter<Roupas> {
             v = LayoutInflater.from(getContext()).inflate(R.layout.list_view_item_favoritos, null);
         }
 
-
-
 //        Pegando o item que será carregado
         Roupas item = getItem(position);
 
@@ -48,13 +47,13 @@ public class RoupasAdapter extends ArrayAdapter<Roupas> {
 //        setando os valores de cada elemento
         lbl_titulo_favorito.setText(item.getNome());
         lbl_status_roupas_favorito.setText(item.getStatus());
+        lbl_cor.setBackgroundTintList(ColorStateList.valueOf(item.getCor()));
 //        if (item.getFavorito()){
 //            fav.setImageDrawable(R.drawable.ic_favoritos);
 //        } else {
 //            fav.setImageDrawable(R.drawable.ic_no_favorito);
 //        }
 //        todo: revisar a imagem do favorito
-//        lbl_cor.setBackgroundColor();
 
         return v;
     }

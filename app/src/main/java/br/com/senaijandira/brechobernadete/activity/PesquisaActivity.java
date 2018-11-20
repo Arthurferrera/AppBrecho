@@ -61,7 +61,7 @@ public class PesquisaActivity extends Activity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 FiltrarLista(s.toString().toLowerCase());
-                Toast.makeText(PesquisaActivity.this, s, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(PesquisaActivity.this, s, Toast.LENGTH_SHORT).show();
 
             }
 

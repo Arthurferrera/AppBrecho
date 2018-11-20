@@ -16,6 +16,7 @@ public class Roupas {
     private String categoria;
     private String status;
     private String tag;
+    private int idSite;
 
 //    MÉTODOS GETTERS E SETTERS
     public int getId() { return id;}
@@ -74,4 +75,8 @@ public class Roupas {
     public String toString() {
         return this.tamanho;
     }
+
+    public int getIdSite() { return idSite; }
+
+    public void setIdSite(int idSite) { this.idSite = idSite; }
 }

@@ -53,12 +53,12 @@ public class PromocoesFragment extends Fragment {
 //        criando o adapter, setando na lista e setando click do item da lista
         adapter = new PromocaoAdapter(getActivity());
         listView_promocao.setAdapter(adapter);
-        listView_promocao.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                ItemClickPromo();
-            }
-        });
+//        listView_promocao.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+////                ItemClickPromo();
+//            }
+//        });
         return promoView;
     }
 
@@ -115,10 +115,6 @@ public class PromocoesFragment extends Fragment {
             }
         }.execute();
     }
-
-//    public void ItemClickPromo(){
-//        Toast.makeText(getContext(), "funcionou", Toast.LENGTH_SHORT).show();
-//    }
 
 
 }

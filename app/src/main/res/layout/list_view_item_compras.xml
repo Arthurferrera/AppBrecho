@@ -30,7 +30,7 @@
         <TextView
             android:id="@+id/lbl_descricao_compra"
             android:layout_width="match_parent"
-            android:layout_height="66dp"
+            android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:paddingLeft="10dp"
             android:text="Essa blusa é top, muito boa, confortavel"
@@ -42,25 +42,6 @@
             android:layout_height="56dp"
             android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="Data da compra"
-                android:textAlignment="center"
-                android:textSize="15sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/lbl_data_compra"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="20/08/2018"
-                android:textAlignment="center"
-                android:textSize="15sp" />
         </LinearLayout>
 
     </LinearLayout>

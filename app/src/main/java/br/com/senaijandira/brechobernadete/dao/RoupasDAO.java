@@ -186,7 +186,7 @@ public class RoupasDAO {
         ContentValues valores = new ContentValues();
         valores.put("nome", r.getNome());
         valores.put("descricao", r.getDescricao());
-        valores.put("cor", "#000000");
+        valores.put("cor", r.getCor());
         valores.put("tamanho", r.getTamanho());
         valores.put("marca", r.getMarca());
         valores.put("classificacao", r.getClassificacao());
@@ -271,7 +271,7 @@ public class RoupasDAO {
         return listaTags;
     }
 
-    public int VerificarMinhaCompra(Context context, int idSite){
+    public Boolean VerificarMinhaCompra(Context context, int idSite){
 
         SQLiteDatabase db = new DbHelper(context).getWritableDatabase();
 
@@ -279,10 +279,18 @@ public class RoupasDAO {
 
         Cursor cursor  = db.rawQuery(sql, null);
 
-        int idSiteRetorno = 0;
         if (cursor.moveToNext()){
-            idSiteRetorno = cursor.getInt(0);
+            cursor.close();
+            db.close();
+            return true;
+        } else {
+            cursor.close();
+            db.close();
+            return false;
         }
-        return idSiteRetorno;
+    }
+
+    public Boolean editarRoupa(Context context, Roupas roupa){
+        return true;
     }
 }
