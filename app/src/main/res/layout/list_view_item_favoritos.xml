@@ -84,10 +84,11 @@
 
                 <ImageView
                     android:id="@+id/img_favorito_like"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="45dp"
+                    android:layout_height="35dp"
                     android:layout_gravity="bottom|right"
-                    android:src="@drawable/ic_favoritos" />
+                    android:src="@drawable/ic_favoritos"
+                    android:clickable="true"/>
 
             </LinearLayout>
         </RelativeLayout>

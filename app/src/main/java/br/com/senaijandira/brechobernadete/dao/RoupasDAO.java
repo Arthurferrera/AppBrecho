@@ -293,4 +293,26 @@ public class RoupasDAO {
     public Boolean editarRoupa(Context context, Roupas roupa){
         return true;
     }
+
+    public Boolean atualizarFavorito(Context context, int idRoupa, Boolean favoritoAtual){
+        SQLiteDatabase db = new DbHelper(context).getWritableDatabase();
+        String sql;
+        if (favoritoAtual){
+            sql = "UPDATE SET favorito = 0 FROM roupa WHERE _id = "+idRoupa;
+        } else {
+            sql = "UPDATE SET favorito = 1 FROM roupa WHERE _id = "+idRoupa;
+        }
+
+        Cursor cursor  = db.rawQuery(sql, null);
+
+        if (cursor.moveToNext()){
+            cursor.close();
+            db.close();
+            return true;
+        } else {
+            cursor.close();
+            db.close();
+            return false;
+        }
+    }
 }

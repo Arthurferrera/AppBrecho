@@ -3,6 +3,7 @@ package br.com.senaijandira.brechobernadete.adapter;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,16 +11,20 @@ import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import br.com.senaijandira.brechobernadete.R;
+import br.com.senaijandira.brechobernadete.dao.RoupasDAO;
 import br.com.senaijandira.brechobernadete.model.Roupas;
 
 public class RoupasAdapter extends ArrayAdapter<Roupas> {
 
     ArrayList<Roupas> itens;
     ArrayList<Roupas> itens_exibicao;
+    ImageView fav;
+    RoupasDAO dao;
 
 //    construtor do adapter
     public RoupasAdapter(Context context, ArrayList<Roupas> lstRoupas) {
@@ -35,14 +40,29 @@ public class RoupasAdapter extends ArrayAdapter<Roupas> {
             v = LayoutInflater.from(getContext()).inflate(R.layout.list_view_item_favoritos, null);
         }
 
+        dao = RoupasDAO.getInstance();
+
 //        Pegando o item que será carregado
-        Roupas item = getItem(position);
+        final Roupas item = getItem(position);
 
 //        finds dos elementos do layout inflado
         TextView lbl_titulo_favorito = v.findViewById(R.id.lbl_titulo_favorito);
         TextView lbl_status_roupas_favorito = v.findViewById(R.id.lbl_status_roupa_favorito);
         TextView lbl_cor = v.findViewById(R.id.lbl_cor_favorito);
-        ImageView fav = v.findViewById(R.id.img_favorito_like);
+        fav = v.findViewById(R.id.img_favorito_like);
+        fav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //fav.setBackground(R.drawable.ic_no_favorito);
+                //Toast.makeText(getContext(), item.getId()+"", Toast.LENGTH_SHORT).show();
+               // Boolean sucesso = setarFavorito(item);
+                //if (sucesso){
+                  //  Toast.makeText(getContext(), "opaopa", Toast.LENGTH_SHORT).show();
+                //
+                // }
+                //fav.setVisibility(View.GONE);
+            }
+        });
 
 //        setando os valores de cada elemento
         lbl_titulo_favorito.setText(item.getNome());
@@ -58,45 +78,9 @@ public class RoupasAdapter extends ArrayAdapter<Roupas> {
         return v;
     }
 
-    @NonNull
-    @Override
-    public Filter getFilter() {
-        Filter filter = new Filter() {
-            @Override
-            protected FilterResults performFiltering(CharSequence constraint) {
-                Filter filtro = new Filter() {
-
-                    @Override
-                    protected FilterResults performFiltering(CharSequence filtro) {
-                        FilterResults results = new FilterResults();
-
-                        if (filtro == null || filtro.length() == 0){
-                            results.count = itens.size();
-                            results.values = itens;
-                        } else {
-
-                        }
-
-                        return null;
-                    }
-
-                    @Override
-                    protected void publishResults(CharSequence constraint, FilterResults results) {
-
-                    }
-                };
-
-
-                return null;
-            }
-
-            @Override
-            protected void publishResults(CharSequence constraint, FilterResults results) {
-
-            }
-        };
-
-
-        return super.getFilter();
+    public boolean setarFavorito(Roupas roupa){
+        dao.atualizarFavorito(getContext(), roupa.getId(), roupa.getFavorito());
+        Log.d("teste", roupa.getId()+"");
+        return true;
     }
 }

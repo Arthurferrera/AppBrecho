@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import br.com.senaijandira.brechobernadete.R;
 import br.com.senaijandira.brechobernadete.fragments.CadastroRoupaFragment;
@@ -65,7 +66,6 @@ public class MainActivity extends AppCompatActivity
         lbl_nomeUsuario_menu.setText(preferencesConfig.readUsuarioNome());
         lbl_emailUsuario_menu.setText(preferencesConfig.readUsuarioEmail());
 
-
 //        adicionando um fragment
         if (savedInstanceState == null){
             getSupportFragmentManager().beginTransaction().replace(R.id.frame_content, new HomeFragment()).commit();
@@ -82,8 +82,6 @@ public class MainActivity extends AppCompatActivity
             super.onBackPressed();
         }
     }
-
-
 
 //    método que define e executa a ação de cada item do menu lateral
     @SuppressWarnings("StatementWithEmptyBody")

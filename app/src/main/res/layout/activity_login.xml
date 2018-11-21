@@ -101,10 +101,7 @@
                         android:textColor="@color/cardview_light_background"
                         android:textColorLink="@color/colorBlack" />
                 </LinearLayout>
-
             </LinearLayout>
-
         </LinearLayout>
-
     </ScrollView>
 </LinearLayout>
