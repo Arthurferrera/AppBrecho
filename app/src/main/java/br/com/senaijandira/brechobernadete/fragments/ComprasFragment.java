@@ -9,10 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -157,7 +154,7 @@ public class ComprasFragment extends Fragment {
                                 roupa.setTamanho(compraJson.getString("tamanho"));
                                 roupa.setMarca(compraJson.getString("marca"));
                                 roupa.setClassificacao(compraJson.getString("classificacao"));
-                                roupa.setFavorito(false);
+                                roupa.setFavorito(0);
                                 roupa.setIdStatus(0);
                                 roupa.setIdSite(compraJson.getInt("idProduto"));
                                 dao.cadastrarRoupa(getContext(), roupa);

@@ -2,13 +2,11 @@ package br.com.senaijandira.brechobernadete.adapter;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
-import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -53,14 +51,20 @@ public class RoupasAdapter extends ArrayAdapter<Roupas> {
         fav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //fav.setBackground(R.drawable.ic_no_favorito);
-                //Toast.makeText(getContext(), item.getId()+"", Toast.LENGTH_SHORT).show();
-               // Boolean sucesso = setarFavorito(item);
-                //if (sucesso){
-                  //  Toast.makeText(getContext(), "opaopa", Toast.LENGTH_SHORT).show();
-                //
-                // }
-                //fav.setVisibility(View.GONE);
+                if (item.getFavorito() == 1){
+                    fav.setImageResource(R.drawable.ic_no_favorito);
+//                    Toast.makeText(getContext(), "favorito", Toast.LENGTH_SHORT).show();
+                } else {
+                    fav.setImageResource(R.drawable.ic_favoritos);
+//                    Toast.makeText(getContext(), "não favorito", Toast.LENGTH_SHORT).show();
+                }
+//                Toast.makeText(getContext(), item.getId()+" - "+item.getCor()+" - "+item.getFavorito(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), item.getCor()+"", Toast.LENGTH_SHORT).show();
+                Boolean sucesso = setarFavorito(item);
+                if (sucesso){
+                    Toast.makeText(getContext(), "opaopa", Toast.LENGTH_SHORT).show();
+                 }
+//                fav.setVisibility(View.GONE);
             }
         });
 
@@ -68,19 +72,19 @@ public class RoupasAdapter extends ArrayAdapter<Roupas> {
         lbl_titulo_favorito.setText(item.getNome());
         lbl_status_roupas_favorito.setText(item.getStatus());
         lbl_cor.setBackgroundTintList(ColorStateList.valueOf(item.getCor()));
-//        if (item.getFavorito()){
-//            fav.setImageDrawable(R.drawable.ic_favoritos);
-//        } else {
-//            fav.setImageDrawable(R.drawable.ic_no_favorito);
-//        }
+        if (item.getFavorito() == 0){
+            fav.setImageResource(R.drawable.ic_no_favorito);
+        } else {
+            fav.setImageResource(R.drawable.ic_favoritos);
+        }
 //        todo: revisar a imagem do favorito
 
         return v;
     }
 
     public boolean setarFavorito(Roupas roupa){
-        dao.atualizarFavorito(getContext(), roupa.getId(), roupa.getFavorito());
+        Boolean teste = dao.atualizarFavorito(getContext(), roupa.getId(), roupa.getFavorito());
         Log.d("teste", roupa.getId()+"");
-        return true;
+        return teste;
     }
 }

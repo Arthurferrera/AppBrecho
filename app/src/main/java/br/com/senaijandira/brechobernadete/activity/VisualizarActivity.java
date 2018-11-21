@@ -71,6 +71,7 @@ public class VisualizarActivity extends AppCompatActivity {
         lbl_categoria.setText(r.getCategoria());
         lbl_tamanho.setText(r.getTamanho());
         lbl_cor.setBackgroundTintList(ColorStateList.valueOf(r.getCor()));
+        Toast.makeText(this, r.getCor()+"", Toast.LENGTH_SHORT).show();
         lbl_tags.setText(r.getTag());
         lbl_status.setText(r.getStatus());
         lbl_marca.setText(r.getMarca());
