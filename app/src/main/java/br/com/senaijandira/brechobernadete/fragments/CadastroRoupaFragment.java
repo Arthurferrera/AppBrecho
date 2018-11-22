@@ -48,6 +48,7 @@ import br.com.senaijandira.brechobernadete.model.Categoria;
 import br.com.senaijandira.brechobernadete.model.HttpConnection;
 import br.com.senaijandira.brechobernadete.model.ImageFilePath;
 import br.com.senaijandira.brechobernadete.model.Roupas;
+import br.com.senaijandira.brechobernadete.model.SharedPreferencesConfig;
 import br.com.senaijandira.brechobernadete.model.Status;
 import br.com.senaijandira.brechobernadete.model.Tag;
 import yuku.ambilwarna.AmbilWarnaDialog;
@@ -58,6 +59,7 @@ import yuku.ambilwarna.AmbilWarnaDialog;
 public class CadastroRoupaFragment extends Fragment {
 
 //    declarando as variaveis, elementos...
+    SharedPreferencesConfig preferencesConfig;
     FloatingActionButton fb;
     Button btn_salvar_roupa;
     Spinner sp_status, sp_categoria, sp_tamanho;
@@ -69,8 +71,8 @@ public class CadastroRoupaFragment extends Fragment {
     Roupas roupa;
     CategoriaDAO daoCategoria;
     StatusDAO daoStatus;
-    String API_URL, nome, descricao, tamanho, marca, classificacao, foto1, foto2, foto3, foto4, foto5;
-    int idCategoria, idStatus, cor;
+    String API_URL, nome, descricao, tamanho, marca, classificacao, foto1, foto2, foto3, foto4, foto5, tipoCliente;
+    int idCategoria, idStatus, cor, idCliente;
     Integer idRoupaEdicao = null;
     Long idTag, idTagRoupa, idRoupa;
     int COD_GALERIA = 1;
@@ -113,6 +115,9 @@ public class CadastroRoupaFragment extends Fragment {
                              Bundle savedInstanceState) {
 //         inflando o layout do fragment
         View view = inflater.inflate(R.layout.fragment_cadastro_roupa, container, false);
+
+        idCliente = preferencesConfig.readUsuarioId();
+        tipoCliente = preferencesConfig.readUsuarioTipo();
 
 //        instancias dos daos
         daoStatus = StatusDAO.getInstance();
@@ -484,7 +489,7 @@ public class CadastroRoupaFragment extends Fragment {
                 daoRoupa.editarRoupa(getContext(), r);
 //                TODO: EDITAR A ROUPA, TAGS, IMAGEM
             } else {
-                idRoupa = daoRoupa.cadastrarRoupa(getContext(), r);
+                idRoupa = daoRoupa.cadastrarRoupa(getContext(), r, idCliente, tipoCliente);
             }
             if (idRoupa != -1){
                 for(int i = 0; i < listaTags.length; i++){

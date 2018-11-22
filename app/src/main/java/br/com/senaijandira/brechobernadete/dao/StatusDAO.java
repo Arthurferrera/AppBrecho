@@ -34,8 +34,8 @@ public class StatusDAO {
 
         while (cursor.moveToNext()) {
             Status s = new Status();
-            s.setId(cursor.getInt(0));
-            s.setNome(cursor.getString(1));
+            s.setId(cursor.getInt(cursor.getColumnIndex("_id")));
+            s.setNome(cursor.getString(cursor.getColumnIndex("nome")));
             retorno.add(s);
         }
         return retorno;

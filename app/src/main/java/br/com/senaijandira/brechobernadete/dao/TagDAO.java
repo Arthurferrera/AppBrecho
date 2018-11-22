@@ -35,8 +35,8 @@ public class TagDAO {
 
         while(cursor.moveToNext()){
             Tag tg = new Tag();
-            tg.setId(cursor.getInt(0));
-            tg.setNomeTag(cursor.getString(1));
+            tg.setId(cursor.getInt(cursor.getColumnIndex("_id")));
+            tg.setNomeTag(cursor.getString(cursor.getColumnIndex("nome")));
             retorno.add(tg);
         }
         cursor.close();
@@ -49,8 +49,6 @@ public class TagDAO {
 
         ContentValues valores = new ContentValues();
         valores.put("nome", tag);
-
-//        TODO: GRAVAR A ROUPA S/ FOTO E COR E TAG
 
         Long idTag = db.insert("tag", null, valores);
 
@@ -80,7 +78,7 @@ public class TagDAO {
 
         int idTag = 0;
         if (cursor.moveToFirst()){
-            idTag = cursor.getInt(0);
+            idTag = cursor.getInt(cursor.getColumnIndex("_id"));
         }
 
         return idTag;

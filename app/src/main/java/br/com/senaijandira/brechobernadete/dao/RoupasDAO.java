@@ -10,11 +10,18 @@ import java.util.ArrayList;
 
 import br.com.senaijandira.brechobernadete.model.DbHelper;
 import br.com.senaijandira.brechobernadete.model.Roupas;
+import br.com.senaijandira.brechobernadete.model.SharedPreferencesConfig;
 import br.com.senaijandira.brechobernadete.model.Tag;
 
 public class RoupasDAO {
 
     private static RoupasDAO instance;
+    private String tipoCliente;
+    private int idCliente;
+    //private SharedPreferencesConfig preferencesConfig;
+    //preferencesConfig = new SharedPreferencesConfig();
+    //int idCliente = preferencesConfig.readUsuarioId();
+    //String tipoCliente = preferencesConfig.readUsuarioTipo();
 
 //    método que pega a instância da classe
 //    caso não exista, ele cria uma nova
@@ -22,7 +29,6 @@ public class RoupasDAO {
         if (instance == null){
             instance = new RoupasDAO();
         }
-
         return instance;
     }
 
@@ -32,7 +38,7 @@ public class RoupasDAO {
 
         SQLiteDatabase db = new DbHelper(context).getReadableDatabase();
 
-        String sql = "SELECT * " +
+        String sql = "SELECT *, r.nome AS roupa " +
                 "FROM roupa r " +
                 "INNER JOIN status s " +
                 "ON s._id = r._idStatus ";
@@ -42,7 +48,7 @@ public class RoupasDAO {
         while (cursor.moveToNext()){
             Roupas r = new Roupas();
             r.setId(cursor.getInt(cursor.getColumnIndex("_id")));
-            r.setNome(cursor.getString(1));
+            r.setNome(cursor.getString(cursor.getColumnIndex("roupa")));
             r.setStatus(cursor.getString(cursor.getColumnIndex("nome")));
             r.setFavorito(cursor.getInt(cursor.getColumnIndex("favorito")));
             r.setCor(cursor.getInt(cursor.getColumnIndex("cor")));
@@ -59,7 +65,7 @@ public class RoupasDAO {
 
         SQLiteDatabase db = new DbHelper(context).getReadableDatabase();
 
-        String sql = "SELECT * " +
+        String sql = "SELECT * r.nome AS roupa " +
                 "FROM roupa r " +
                 "INNER JOIN categoria c " +
                 "ON r._idCategoria = c._id " +
@@ -72,7 +78,7 @@ public class RoupasDAO {
         while (cursor.moveToNext()){
             Roupas r = new Roupas();
             r.setId(cursor.getInt(cursor.getColumnIndex("_id")));
-            r.setNome(cursor.getString(1));
+            r.setNome(cursor.getString(cursor.getColumnIndex("roupa")));
             r.setStatus(cursor.getString(cursor.getColumnIndex("nome")));
             r.setFavorito(cursor.getInt(cursor.getColumnIndex("favorito")));
             r.setCor(cursor.getInt(cursor.getColumnIndex("cor")));
@@ -89,7 +95,7 @@ public class RoupasDAO {
 
         SQLiteDatabase db = new DbHelper(context).getReadableDatabase();
 
-        String sql = "SELECT * FROM roupa r " +
+        String sql = "SELECT *, r._id AS idRoupa, r.nome AS roupa, s.nome AS status FROM roupa r " +
                 "INNER JOIN status s " +
                 "ON s._id = r._idStatus " +
                 "WHERE r.favorito = 1";
@@ -98,9 +104,9 @@ public class RoupasDAO {
 
         while (cursor.moveToNext()){
             Roupas r = new Roupas();
-            r.setId(cursor.getInt(0));
-            r.setNome(cursor.getString(1));
-            r.setStatus(cursor.getString(10));
+            r.setId(cursor.getInt(cursor.getColumnIndex("idRoupa")));
+            r.setNome(cursor.getString(cursor.getColumnIndex("roupa")));
+            r.setStatus(cursor.getString(cursor.getColumnIndex("status")));
             r.setFavorito(cursor.getInt(cursor.getColumnIndex("favorito")));
             r.setCor(cursor.getInt(cursor.getColumnIndex("cor")));
             retorno.add(r);
@@ -116,7 +122,7 @@ public class RoupasDAO {
 
         SQLiteDatabase db = new DbHelper(context).getReadableDatabase();
 
-        String sql = "SELECT * " +
+        String sql = "SELECT * , r._id AS idRoupa, r.nome AS roupa, s.nome AS status" +
                 "FROM roupa r " +
                 "INNER JOIN tag_roupa tr " +
                 "ON r._id = tr._idRoupa " +
@@ -130,9 +136,11 @@ public class RoupasDAO {
 
         while (cursor.moveToNext()){
             Roupas r = new Roupas();
-            r.setId(cursor.getInt(0));
-            r.setNome(cursor.getString(1));
-            r.setStatus(cursor.getString(15));
+            r.setId(cursor.getInt(cursor.getColumnIndex("idRoupa")));
+            r.setNome(cursor.getString(cursor.getColumnIndex("roupa")));
+            r.setStatus(cursor.getString(cursor.getColumnIndex("status")));
+            r.setCor(cursor.getInt(cursor.getColumnIndex("cor")));
+            r.setFavorito(cursor.getInt(cursor.getColumnIndex("favorito")));
             retorno.add(r);
         }
         cursor.close();
@@ -146,7 +154,9 @@ public class RoupasDAO {
 
         SQLiteDatabase db = new DbHelper(context).getReadableDatabase();
 
-        String sql = "SELECT * FROM roupa r " +
+        String sql = "SELECT * r._id AS idRoupa, r.nome AS roupa, r._idStatus AS idStatus, " +
+                "r._idCategoria AS idCategoria, s.nome AS status, c.nome AS categoria " +
+                "FROM roupa r " +
                 "INNER JOIN status s " +
                 "ON s._id = r._idStatus " +
                 "INNER JOIN categoria c " +
@@ -167,18 +177,18 @@ public class RoupasDAO {
         Cursor cursor = db.rawQuery(sql, null);
 
         while (cursor.moveToNext()){
-            roupa.setId(cursor.getInt(0));
-            roupa.setNome(cursor.getString(1));
-            roupa.setDescricao(cursor.getString(2));
+            roupa.setId(cursor.getInt(cursor.getColumnIndex("idRoupa")));
+            roupa.setNome(cursor.getString(cursor.getColumnIndex("roupa")));
+            roupa.setDescricao(cursor.getString(cursor.getColumnIndex("descricao")));
             roupa.setCor(cursor.getInt(cursor.getColumnIndex("cor")));
-            roupa.setTamanho(cursor.getString(4));
-            roupa.setMarca(cursor.getString(5));
-            roupa.setClassificacao(cursor.getString(6));
-            roupa.setFavorito(cursor.getInt(7));
-            roupa.setIdStatus(cursor.getInt(8));
-            roupa.setIdCategoria(cursor.getInt(9));
-            roupa.setStatus(cursor.getString(11));
-            roupa.setCategoria(cursor.getString(11));
+            roupa.setTamanho(cursor.getString(cursor.getColumnIndex("tamanho")));
+            roupa.setMarca(cursor.getString(cursor.getColumnIndex("marca")));
+            roupa.setClassificacao(cursor.getString(cursor.getColumnIndex("classificacao")));
+            roupa.setFavorito(cursor.getInt(cursor.getColumnIndex("favorito")));
+            roupa.setIdStatus(cursor.getInt(cursor.getColumnIndex("idStatus")));
+            roupa.setIdCategoria(cursor.getInt(cursor.getColumnIndex("idCategoria")));
+            roupa.setStatus(cursor.getString(cursor.getColumnIndex("status")));
+            roupa.setCategoria(cursor.getString(cursor.getColumnIndex("categoria")));
         }
         cursor.close();
         db.close();
@@ -186,7 +196,7 @@ public class RoupasDAO {
         return roupa;
     }
 
-    public Long cadastrarRoupa(Context context, Roupas r) {
+    public Long cadastrarRoupa(Context context, Roupas r, int idCliente, String tipoCliente) {
 
         SQLiteDatabase db = new DbHelper(context).getWritableDatabase();
 
@@ -200,6 +210,11 @@ public class RoupasDAO {
         valores.put("favorito", true);
         valores.put("_idStatus", r.getIdStatus());
         valores.put("_idCategoria", r.getIdCategoria());
+        if (tipoCliente == "F"){
+            valores.put("_idClienteF", idCliente);
+        } else {
+            valores.put("_idClienteJ", idCliente);
+        }
 
         Long id = db.insert("roupa", null, valores);
 
@@ -245,7 +260,7 @@ public class RoupasDAO {
 
         int cont = 0;
         while(cursor.moveToNext()){
-            listaImagens.add(cursor.getString(1));
+            listaImagens.add(cursor.getString(cursor.getColumnIndex("caminho")));
         }
 
         cursor.close();
@@ -269,7 +284,7 @@ public class RoupasDAO {
 
         while(cursor.moveToNext()){
 //            tag.setNomeTag();
-            listaTags.add(cursor.getString(1));
+            listaTags.add(cursor.getString(cursor.getColumnIndex("nome")));
         }
 
         cursor.close();
