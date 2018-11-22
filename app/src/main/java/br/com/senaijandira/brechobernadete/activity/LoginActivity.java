@@ -1,6 +1,7 @@
 package br.com.senaijandira.brechobernadete.activity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -44,19 +45,22 @@ public class LoginActivity extends AppCompatActivity {
         btn_entrar = findViewById(R.id.btn_entrar);
         lbl_cadastreSe = findViewById(R.id.lbl_cadastre_se);
 
+        lbl_cadastreSe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String endereco = "www.brechobernadete.com.br/view/cadastro_usuario.php";
+                Uri uri = Uri.parse(endereco);
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+            }
+        });
+
 //        iniciando a tela principal, caso o usuário esteja com o login ativo
         if (preferencesConfig.readLoginStatus()){
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
             finish();
         }
     }
-
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//
-//        txt_senha.setText("");
-//    }
 
 //    função que faz a validação dos campos
 //    verificando se estão vazios
@@ -109,11 +113,5 @@ public class LoginActivity extends AppCompatActivity {
         } else {
             txt_senha.setText("");
         }
-    }
-
-//    metódo que redireciona o usuário para a web
-//    permitindo a realização do cadastro
-    public void AbrirCadastroUsuario(View view) {
-
     }
 }

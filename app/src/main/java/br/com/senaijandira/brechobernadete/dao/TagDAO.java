@@ -8,13 +8,19 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 
 import br.com.senaijandira.brechobernadete.model.DbHelper;
+import br.com.senaijandira.brechobernadete.model.SharedPreferencesConfig;
 import br.com.senaijandira.brechobernadete.model.Tag;
 
 public class TagDAO {
 
     private static TagDAO instance;
+    private SharedPreferencesConfig preferencesConfig;
+    private int idCliente;
+    private String tipoCliente;
 
-//    método que pega a instância da classe
+
+
+    //    método que pega a instância da classe
 //    caso não exista, ele cria uma nova
     public static TagDAO getInstance() {
         if (instance == null){
@@ -27,9 +33,20 @@ public class TagDAO {
     public ArrayList<Tag> selecionatTodas(Context context){
         ArrayList<Tag> retorno = new ArrayList<>();
 
+        preferencesConfig = new SharedPreferencesConfig(context);
+
         SQLiteDatabase db = new DbHelper(context).getReadableDatabase();
 
-        String sql = "SELECT * FROM tag;";
+        idCliente = preferencesConfig.readUsuarioId();
+        tipoCliente = preferencesConfig.readUsuarioTipo();
+
+        String sql = "SELECT t._id, t.nome " +
+                "FROM tag t " +
+                "INNER JOIN tag_roupa tr " +
+                "ON tr._idtag = t._id " +
+                "INNER JOIN roupa r " +
+                "ON r._id = tr._idRoupa " +
+                "WHERE r._idClienteF = "+idCliente;
 
         Cursor cursor = db.rawQuery(sql, null);
 

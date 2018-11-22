@@ -116,6 +116,8 @@ public class CadastroRoupaFragment extends Fragment {
 //         inflando o layout do fragment
         View view = inflater.inflate(R.layout.fragment_cadastro_roupa, container, false);
 
+        preferencesConfig = new SharedPreferencesConfig(getContext());
+
         idCliente = preferencesConfig.readUsuarioId();
         tipoCliente = preferencesConfig.readUsuarioTipo();
 
@@ -194,7 +196,6 @@ public class CadastroRoupaFragment extends Fragment {
             } else {
                 rd_medida.setChecked(true);
             }
-//            TODO: TAGS
         }
 
 //        setando o click dos elementos

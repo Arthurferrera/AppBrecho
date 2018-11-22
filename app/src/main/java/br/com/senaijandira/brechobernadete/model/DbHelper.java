@@ -18,7 +18,7 @@ public class DbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
 //        tabela categoria
-        db.execSQL("CREATE TABLE categorgetia(" +
+        db.execSQL("CREATE TABLE categoria(" +
                 "_id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "nome TEXT NOT NULL);");
 
@@ -75,7 +75,6 @@ public class DbHelper extends SQLiteOpenHelper {
                 "   FOREIGN KEY (_idCategoria)" +
                 "   REFERENCES categoria(_id));");
 
-
 //        INSERINDO OS DADOS QUE JÁ VÃO SER PADRÕES
 //        INSERTS TABELA CATEGORIA
         db.execSQL("INSERT INTO categoria (nome) VALUES ('Camisetas');");
@@ -95,19 +94,9 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO status (nome) VALUES ('Emprestado');");
 
 //        INSERTS TABELA TAG
-        //db.execSQL("INSERT INTO tag (nome) VALUES ('Verão');");
-        //db.execSQL("INSERT INTO tag (nome) VALUES ('Inverno');");
-        //db.execSQL("INSERT INTO tag (nome) VALUES ('Festa');");
-
-//        INSERTS DA TABELA ROUPA - TEMPORÁRIO
-        //db.execSQL("INSERT INTO roupa (nome, descricao, cor, tamanho, marca, classificacao, favorito, _idStatus, _idCategoria) VALUES ('CAMISETA', 'muito bonita, novinha', -2550250, 'M', 'Riachuello', 'A', 1, 1, 1);");
-        //db.execSQL("INSERT INTO roupa (nome, descricao, cor, tamanho, marca, classificacao, favorito, _idStatus, _idCategoria) VALUES ('Calça', 'muito bonita, novinha', -16713473, 'M', 'TNG', 'C', 1, 2, 2);");
-        //db.execSQL("INSERT INTO roupa (nome, descricao, cor, tamanho, marca, classificacao, favorito, _idStatus, _idCategoria) VALUES ('Sapato', 'muito bonito, novinho', -16777216, 'M', 'Nike', 'B', 1, 3, 5);");
-
-//        INSERTS TABELA DE RELACIONAMENTO TAG_ROUPA
-        //db.execSQL("INSERT INTO tag_roupa (_idTag, _idRoupa) VALUES (1, 1);");
-        //db.execSQL("INSERT INTO tag_roupa (_idTag, _idRoupa) VALUES (2, 2);");
-        //db.execSQL("INSERT INTO tag_roupa (_idTag, _idRoupa) VALUES (3, 3);");
+        db.execSQL("INSERT INTO tag (nome) VALUES ('Verão');");
+        db.execSQL("INSERT INTO tag (nome) VALUES ('Inverno');");
+        db.execSQL("INSERT INTO tag (nome) VALUES ('Festa');");
     }
 
 //    MÉTODO DE ATUALIZAÇÃO DO BANCO

@@ -38,7 +38,7 @@ public class PromocaoAdapter extends ArrayAdapter<Promocao> {
         }
 
         //Pegando o item que será carregado
-        Promocao item = getItem(position);
+        final Promocao item = getItem(position);
 
 //        finds dos elementos do layout inflado
         TextView lbl_valorAntigo_promo = v.findViewById(R.id.lbl_valorAntigo_promo);
@@ -54,7 +54,7 @@ public class PromocaoAdapter extends ArrayAdapter<Promocao> {
         btn_conferir_promo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String endereco = "http://www.uou.com.br";
+                String endereco = "www.brechobernadete.com.br/visualizar_produto.php?id="+item.getId();
                 Uri uri = Uri.parse(endereco);
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 getContext().startActivity(intent);

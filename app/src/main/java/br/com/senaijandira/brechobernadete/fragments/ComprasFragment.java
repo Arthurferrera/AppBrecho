@@ -157,7 +157,7 @@ public class ComprasFragment extends Fragment {
                                 roupa.setFavorito(0);
                                 roupa.setIdStatus(0);
                                 roupa.setIdSite(compraJson.getInt("idProduto"));
-                                dao.cadastrarRoupa(getContext(), roupa);
+                                dao.cadastrarRoupa(getContext(), roupa, idCliente, tipoCliente);
                             }
                         }
                     } catch (JSONException e) {

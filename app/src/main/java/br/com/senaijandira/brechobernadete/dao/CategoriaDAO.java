@@ -8,10 +8,14 @@ import java.util.ArrayList;
 
 import br.com.senaijandira.brechobernadete.model.Categoria;
 import br.com.senaijandira.brechobernadete.model.DbHelper;
+import br.com.senaijandira.brechobernadete.model.SharedPreferencesConfig;
 
 public class CategoriaDAO {
 
     private static CategoriaDAO instance;
+    private SharedPreferencesConfig preferencesConfig;
+    private int idCliente;
+    private String tipoCliente;
 
 //    método que pega a instância da classe
 //    caso não exista, ele cria uma nova
@@ -26,13 +30,29 @@ public class CategoriaDAO {
     public ArrayList<Categoria> selecioanrTodos(Context context) {
         ArrayList<Categoria> retorno = new ArrayList<>();
 
+        preferencesConfig = new SharedPreferencesConfig(context);
+
         SQLiteDatabase db = new DbHelper(context).getReadableDatabase();
 
-        String sql = "SELECT c._id, c.nome, COUNT(r._idCategoria) AS totalPecas " +
-                "FROM categoria c " +
-                "LEFT JOIN roupa r " +
-                "ON c._id = r._idCategoria " +
-                "GROUP BY c._id;";
+        idCliente = preferencesConfig.readUsuarioId();
+        tipoCliente = preferencesConfig.readUsuarioTipo();
+
+        String sql;
+        if (tipoCliente.equals("F")){
+            sql = "SELECT c._id, c.nome, COUNT(r._idCategoria) AS totalPecas " +
+                    "FROM categoria c " +
+                    "LEFT JOIN roupa r " +
+                    "ON c._id = r._idCategoria " +
+                    "AND r._idClienteF = "+idCliente + " " +
+                    "GROUP BY c._id;";
+        } else {
+            sql = "SELECT c._id, c.nome, COUNT(r._idCategoria) AS totalPecas " +
+                    "FROM categoria c " +
+                    "LEFT JOIN roupa r " +
+                    "ON c._id = r._idCategoria " +
+                    "AND r._idClienteJ = "+idCliente + " " +
+                    "GROUP BY c._id;";
+        }
 
         Cursor cursor = db.rawQuery(sql, null);
 

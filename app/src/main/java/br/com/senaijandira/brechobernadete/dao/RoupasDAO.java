@@ -18,10 +18,8 @@ public class RoupasDAO {
     private static RoupasDAO instance;
     private String tipoCliente;
     private int idCliente;
-    //private SharedPreferencesConfig preferencesConfig;
-    //preferencesConfig = new SharedPreferencesConfig();
-    //int idCliente = preferencesConfig.readUsuarioId();
-    //String tipoCliente = preferencesConfig.readUsuarioTipo();
+    SharedPreferencesConfig preferencesConfig;
+
 
 //    método que pega a instância da classe
 //    caso não exista, ele cria uma nova
@@ -38,10 +36,26 @@ public class RoupasDAO {
 
         SQLiteDatabase db = new DbHelper(context).getReadableDatabase();
 
-        String sql = "SELECT *, r.nome AS roupa " +
-                "FROM roupa r " +
-                "INNER JOIN status s " +
-                "ON s._id = r._idStatus ";
+        preferencesConfig = new SharedPreferencesConfig(context);
+        idCliente = preferencesConfig.readUsuarioId();
+        tipoCliente = preferencesConfig.readUsuarioTipo();
+
+        String sql;
+        if (tipoCliente.equals("F")){
+            sql = "SELECT *, r.nome AS roupa " +
+                    "FROM roupa r " +
+                    "INNER JOIN status s " +
+                    "ON s._id = r._idStatus " +
+                    "WHERE r._idClienteF = "+idCliente;
+        } else {
+            sql = "SELECT *, r.nome AS roupa " +
+                    "FROM roupa r " +
+                    "INNER JOIN status s " +
+                    "ON s._id = r._idStatus " +
+                    "WHERE r._idClienteJ = "+idCliente;
+        }
+
+
 
         Cursor cursor = db.rawQuery(sql, null);
 
@@ -63,15 +77,34 @@ public class RoupasDAO {
     public ArrayList<Roupas> selecionarPorCategoria(Context context, int id){
         ArrayList<Roupas> retorno = new ArrayList<>();
 
+        preferencesConfig = new SharedPreferencesConfig(context);
+        idCliente = preferencesConfig.readUsuarioId();
+        tipoCliente = preferencesConfig.readUsuarioTipo();
+
         SQLiteDatabase db = new DbHelper(context).getReadableDatabase();
 
-        String sql = "SELECT * r.nome AS roupa " +
-                "FROM roupa r " +
-                "INNER JOIN categoria c " +
-                "ON r._idCategoria = c._id " +
-                "INNER JOIN status s " +
-                "ON s._id = r._idStatus " +
-                "WHERE c._id = "+id;
+        String sql;
+        if (tipoCliente.equals("F")){
+            sql = "SELECT *, r.nome AS roupa " +
+                    "FROM roupa r " +
+                    "INNER JOIN categoria c " +
+                    "ON r._idCategoria = c._id " +
+                    "INNER JOIN status s " +
+                    "ON s._id = r._idStatus " +
+                    "WHERE c._id = "+id+" " +
+                    "AND r._idClienteF = "+idCliente;
+        } else {
+            sql = "SELECT *, r.nome AS roupa " +
+                    "FROM roupa r " +
+                    "INNER JOIN categoria c " +
+                    "ON r._idCategoria = c._id " +
+                    "INNER JOIN status s " +
+                    "ON s._id = r._idStatus " +
+                    "WHERE c._id = "+id+" " +
+                    "AND r._idClienteJ = "+idCliente;
+        }
+
+
 
         Cursor cursor = db.rawQuery(sql, null);
 
@@ -93,12 +126,27 @@ public class RoupasDAO {
     public ArrayList<Roupas> selecionarFavoritos(Context context){
         ArrayList<Roupas> retorno = new ArrayList<>();
 
+        preferencesConfig = new SharedPreferencesConfig(context);
+        idCliente = preferencesConfig.readUsuarioId();
+        tipoCliente = preferencesConfig.readUsuarioTipo();
+
         SQLiteDatabase db = new DbHelper(context).getReadableDatabase();
 
-        String sql = "SELECT *, r._id AS idRoupa, r.nome AS roupa, s.nome AS status FROM roupa r " +
-                "INNER JOIN status s " +
-                "ON s._id = r._idStatus " +
-                "WHERE r.favorito = 1";
+        String sql;
+        if (tipoCliente.equals("F")){
+            sql = "SELECT *, r._id AS idRoupa, r.nome AS roupa, s.nome AS status FROM roupa r " +
+                    "INNER JOIN status s " +
+                    "ON s._id = r._idStatus " +
+                    "WHERE r.favorito = 1 " +
+                    "AND r._idClienteF = "+idCliente;
+        } else {
+            sql = "SELECT *, r._id AS idRoupa, r.nome AS roupa, s.nome AS status FROM roupa r " +
+                    "INNER JOIN status s " +
+                    "ON s._id = r._idStatus " +
+                    "WHERE r.favorito = 1 " +
+                    "AND r._idClienteJ = "+idCliente;
+        }
+
 
         Cursor cursor = db.rawQuery(sql, null);
 
@@ -120,17 +168,36 @@ public class RoupasDAO {
     public ArrayList<Roupas> selecionatPorTag(Context context, int id){
         ArrayList<Roupas> retorno = new ArrayList<>();
 
+        preferencesConfig = new SharedPreferencesConfig(context);
+        idCliente = preferencesConfig.readUsuarioId();
+        tipoCliente = preferencesConfig.readUsuarioTipo();
+
         SQLiteDatabase db = new DbHelper(context).getReadableDatabase();
 
-        String sql = "SELECT * , r._id AS idRoupa, r.nome AS roupa, s.nome AS status" +
-                "FROM roupa r " +
-                "INNER JOIN tag_roupa tr " +
-                "ON r._id = tr._idRoupa " +
-                "INNER JOIN tag t " +
-                "ON t._id = tr._idTag " +
-                "INNER JOIN status s " +
-                "ON r._idStatus = s._id " +
-                "WHERE t._id = "+id;
+        String sql;
+        if (tipoCliente.equals("F")) {
+            sql = "SELECT *, r._id AS idRoupa, r.nome AS roupa, s.nome AS status " +
+                    "FROM roupa r " +
+                    "INNER JOIN tag_roupa tr " +
+                    "ON r._id = tr._idRoupa " +
+                    "INNER JOIN tag t " +
+                    "ON t._id = tr._idTag " +
+                    "INNER JOIN status s " +
+                    "ON r._idStatus = s._id " +
+                    "WHERE t._id = " + id + " " +
+                    "AND r._idClienteF = "+idCliente;
+        } else {
+            sql = "SELECT *, r._id AS idRoupa, r.nome AS roupa, s.nome AS status " +
+                    "FROM roupa r " +
+                    "INNER JOIN tag_roupa tr " +
+                    "ON r._id = tr._idRoupa " +
+                    "INNER JOIN tag t " +
+                    "ON t._id = tr._idTag " +
+                    "INNER JOIN status s " +
+                    "ON r._idStatus = s._id " +
+                    "WHERE t._id = " + id + " " +
+                    "AND r._idClienteJ = "+idCliente;
+        }
 
         Cursor cursor = db.rawQuery(sql, null);
 
@@ -154,7 +221,7 @@ public class RoupasDAO {
 
         SQLiteDatabase db = new DbHelper(context).getReadableDatabase();
 
-        String sql = "SELECT * r._id AS idRoupa, r.nome AS roupa, r._idStatus AS idStatus, " +
+        String sql = "SELECT *, r._id AS idRoupa, r.nome AS roupa, r._idStatus AS idStatus, " +
                 "r._idCategoria AS idCategoria, s.nome AS status, c.nome AS categoria " +
                 "FROM roupa r " +
                 "INNER JOIN status s " +
@@ -228,8 +295,6 @@ public class RoupasDAO {
     public Boolean excluirRoupa(Context context, Integer id){
 
         SQLiteDatabase db = new DbHelper(context).getReadableDatabase();
-
-        //String sql = "DELETE FROM roupa WHERE _idRoupa = "+id;
 
         db.delete("imagem", "_idRoupa=?", new String[]{id.toString()});
         db.delete("tag_roupa", "_idRoupa=?", new String[]{id.toString()});
