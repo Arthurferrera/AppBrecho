@@ -52,8 +52,6 @@ public class CategoriaAdapter extends ArrayAdapter<Categoria>{
 //        setando os valores de cada elemento
         lbl_categoria_item.setText(categoria.getNome());
         lbl_quantidade_categoria_item.setText(categoria.getTotalPecas()+"");
-//        cardView.setCardBackgroundColor(Color.BLUE);
-//        cardView.setBackground(R.drawable.blusas);
         Picasso.get().load(R.drawable.blusas).into(img_bg_card);
 //        retornando a view
         return v;

@@ -83,7 +83,7 @@ public class HomeFragment extends Fragment {
         adapter.clear();
 //        adicionando a lista ao adapter
         adapter.addAll(categorias);
-
+//        SETANDO O TITULO DA TELA
         getActivity().setTitle("Guarda-roupas");
     }
 }

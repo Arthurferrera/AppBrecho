@@ -27,7 +27,6 @@ public class VisualizarActivity extends AppCompatActivity {
 //    declarando as variaveis, elementos...
     //TODO: IMAGEM DA ROUPA
     TextView lbl_titulo, lbl_descricao, lbl_categoria, lbl_tamanho, lbl_tags, lbl_status, lbl_marca, lbl_classificacao, lbl_cor;
-    //TODO: cor da roupa
     RoupasDAO dao;
     Roupas r = new Roupas();
     ArrayList<String> tag = new ArrayList<>();
@@ -39,8 +38,6 @@ public class VisualizarActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visualizar);
-
-        viewPager = findViewById(R.id.viewPager);
 
 //        pegando os parametros passado pelo intent na chamada da tela
         Intent intent = getIntent();
@@ -59,10 +56,11 @@ public class VisualizarActivity extends AppCompatActivity {
         lbl_marca = findViewById(R.id.lbl_marca_visualizar);
         lbl_classificacao = findViewById(R.id.lbl_classificacao_visualizar);
         lbl_cor = findViewById(R.id.lbl_cor_visualizar);
+        viewPager = findViewById(R.id.viewPager);
 
 //        chamando o método que traz todas as informações da roupa
         r = dao.selecionarUmaRoupa(this, id);
-
+//        chamando o método que traz todas as TAGS da roupa
         tag = dao.selecionarTagsByIdRoupa(this, id);
 
 //        setando os valores dos elementos com as informações vindas do banco
@@ -83,22 +81,23 @@ public class VisualizarActivity extends AppCompatActivity {
         }
         lbl_tags.setText(TAGS.toString().trim());
 
-
+//        adapter do view pager, elemento que mostra as imagens das roupas
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(this, id);
         viewPager.setAdapter(viewPagerAdapter);
     }
 
+//    cria o menu que fica na toolbar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.visualizar, menu);
         return true;
     }
 
+//    identifica qual botao foi seleciocnado
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.action_notificacao:
-
                 break;
             case R.id.action_editar:
                 FragmentManager fragmentManager = this.getSupportFragmentManager();

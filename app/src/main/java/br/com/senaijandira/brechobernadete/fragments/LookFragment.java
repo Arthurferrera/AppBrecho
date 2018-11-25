@@ -15,11 +15,9 @@ import br.com.senaijandira.brechobernadete.R;
  */
 public class LookFragment extends Fragment {
 
-
     public LookFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

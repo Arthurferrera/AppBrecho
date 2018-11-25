@@ -128,11 +128,14 @@ public class MainActivity extends AppCompatActivity
             Intent intencao = new Intent(this, SobreActivity.class);
             startActivity(intencao);
         } else if (id == R.id.nav_sair) {
+//            AQUI DESLOGAMOS O CARA DO APLICATIVO, E ZERAMOS TODAS AS INFORMAÇÕES
+//            DELE, QUE ESTÃO GRAVADAS NO CELULAR
             preferencesConfig.writeLoginStatus(false);
             preferencesConfig.writeUsuarioId(0);
             preferencesConfig.writeUsuarioTipo("");
             preferencesConfig.writeUsuarioNome("");
             preferencesConfig.writeUsuarioEmail("");
+//            FINALIZA A TELA ATUAL E INICIA A DE LOGIN
             Intent intencao = new Intent(this, LoginActivity.class);
             startActivity(intencao);
             finish();
@@ -142,12 +145,14 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+//    CRIA O MENU DA TOOLBAR
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
+//    IDENTIFICA O ITEM SELECIONADO E DEFINE UMA AÇÃO PARA CADA UM
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){

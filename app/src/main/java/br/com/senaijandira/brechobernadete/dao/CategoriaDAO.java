@@ -12,6 +12,7 @@ import br.com.senaijandira.brechobernadete.model.SharedPreferencesConfig;
 
 public class CategoriaDAO {
 
+//    DECLRANDO VARIAVEIS, CLASSES...
     private static CategoriaDAO instance;
     private SharedPreferencesConfig preferencesConfig;
     private int idCliente;
@@ -30,6 +31,7 @@ public class CategoriaDAO {
     public ArrayList<Categoria> selecioanrTodos(Context context) {
         ArrayList<Categoria> retorno = new ArrayList<>();
 
+//        INSTANCIA DO SharedPreferencesConfig
         preferencesConfig = new SharedPreferencesConfig(context);
 
         SQLiteDatabase db = new DbHelper(context).getReadableDatabase();

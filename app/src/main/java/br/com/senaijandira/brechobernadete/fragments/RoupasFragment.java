@@ -91,7 +91,6 @@ public class RoupasFragment extends Fragment {
 //        LIMPANDO O ADAPTER PARA NÃO DUPLICAR
         adapter.clear();
 //        ADICIONANDO A LISTA AO ADAPTER
-
        adapter.addAll(listaRoupas);
     }
 

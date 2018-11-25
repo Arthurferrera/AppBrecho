@@ -27,7 +27,6 @@ public class PromocaoAdapter extends ArrayAdapter<Promocao> {
         super(ctx, 0, new ArrayList<Promocao>());
     }
 
-
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 

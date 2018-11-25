@@ -15,6 +15,7 @@ import br.com.senaijandira.brechobernadete.model.Tag;
 
 public class RoupasDAO {
 
+//    DECLARANDO VARIAVEIS, CLASSES...
     private static RoupasDAO instance;
     private String tipoCliente;
     private int idCliente;
@@ -36,6 +37,7 @@ public class RoupasDAO {
 
         SQLiteDatabase db = new DbHelper(context).getReadableDatabase();
 
+//        INSTANCIA E RESGATE DE INFORMAÇÕES DO SharedPreferencesConfig
         preferencesConfig = new SharedPreferencesConfig(context);
         idCliente = preferencesConfig.readUsuarioId();
         tipoCliente = preferencesConfig.readUsuarioTipo();
@@ -55,10 +57,9 @@ public class RoupasDAO {
                     "WHERE r._idClienteJ = "+idCliente;
         }
 
-
-
         Cursor cursor = db.rawQuery(sql, null);
 
+//        SETANDO OS ATRIBUTOS DO OBJETO COM O RETORNO DA CONSULTA
         while (cursor.moveToNext()){
             Roupas r = new Roupas();
             r.setId(cursor.getInt(cursor.getColumnIndex("_id")));
@@ -77,6 +78,7 @@ public class RoupasDAO {
     public ArrayList<Roupas> selecionarPorCategoria(Context context, int id){
         ArrayList<Roupas> retorno = new ArrayList<>();
 
+//        INSTANCIA E RESGATE DE INFORMAÇÕES DO SHAREDPREFENCES
         preferencesConfig = new SharedPreferencesConfig(context);
         idCliente = preferencesConfig.readUsuarioId();
         tipoCliente = preferencesConfig.readUsuarioTipo();
@@ -104,10 +106,9 @@ public class RoupasDAO {
                     "AND r._idClienteJ = "+idCliente;
         }
 
-
-
         Cursor cursor = db.rawQuery(sql, null);
 
+//        SETANDO OS VALORES DOS ATRIBUTOS DO OBJETO COM O RETORNO DA CONSULTA
         while (cursor.moveToNext()){
             Roupas r = new Roupas();
             r.setId(cursor.getInt(cursor.getColumnIndex("_id")));
@@ -126,6 +127,7 @@ public class RoupasDAO {
     public ArrayList<Roupas> selecionarFavoritos(Context context){
         ArrayList<Roupas> retorno = new ArrayList<>();
 
+//        INSTANCIA E RESGATE DE INFORMAÇÕES DO SharedPreferencesConfig
         preferencesConfig = new SharedPreferencesConfig(context);
         idCliente = preferencesConfig.readUsuarioId();
         tipoCliente = preferencesConfig.readUsuarioTipo();
@@ -147,9 +149,9 @@ public class RoupasDAO {
                     "AND r._idClienteJ = "+idCliente;
         }
 
-
         Cursor cursor = db.rawQuery(sql, null);
 
+//        SETANDO OS VALORES DOS ATRIBUTOS DO OBJETO COM O RETORNO DA CONSULTA
         while (cursor.moveToNext()){
             Roupas r = new Roupas();
             r.setId(cursor.getInt(cursor.getColumnIndex("idRoupa")));
@@ -168,6 +170,7 @@ public class RoupasDAO {
     public ArrayList<Roupas> selecionatPorTag(Context context, int id){
         ArrayList<Roupas> retorno = new ArrayList<>();
 
+//        INSTANCIA E RESGATE DE INFORMAÇÕES DO SharedPreferencesConfig
         preferencesConfig = new SharedPreferencesConfig(context);
         idCliente = preferencesConfig.readUsuarioId();
         tipoCliente = preferencesConfig.readUsuarioTipo();
@@ -201,6 +204,7 @@ public class RoupasDAO {
 
         Cursor cursor = db.rawQuery(sql, null);
 
+//        SETANDO OS VALORES DOS ATRIBUTOS DO OBJETO COM O RETORNO DA CONSULTA
         while (cursor.moveToNext()){
             Roupas r = new Roupas();
             r.setId(cursor.getInt(cursor.getColumnIndex("idRoupa")));
@@ -243,6 +247,7 @@ public class RoupasDAO {
 
         Cursor cursor = db.rawQuery(sql, null);
 
+//        SETANDO OS VALORES DOS ATRIBUTOS DO OBJETO COM O RETORNO DA CONSULTA
         while (cursor.moveToNext()){
             roupa.setId(cursor.getInt(cursor.getColumnIndex("idRoupa")));
             roupa.setNome(cursor.getString(cursor.getColumnIndex("roupa")));
@@ -263,10 +268,12 @@ public class RoupasDAO {
         return roupa;
     }
 
+//    MÉTODO QUE CADASTRA A ROUPA NO BANCO DE DADOS
     public Long cadastrarRoupa(Context context, Roupas r, int idCliente, String tipoCliente) {
 
         SQLiteDatabase db = new DbHelper(context).getWritableDatabase();
 
+//        SETANDO OS VALORES QUE VÃO SER ENVIADOS NO COMANDO INSERT
         ContentValues valores = new ContentValues();
         valores.put("nome", r.getNome());
         valores.put("descricao", r.getDescricao());
@@ -285,6 +292,7 @@ public class RoupasDAO {
 
         Long id = db.insert("roupa", null, valores);
 
+//        VERIFICA SE O COMANDO FOI EXECUTADO
         if (id != -1){
             return id;
         } else {
@@ -292,6 +300,7 @@ public class RoupasDAO {
         }
     }
 
+//    MÉTODO QUE EXCLUI A ROUPA DO BANCO DE DADOS
     public Boolean excluirRoupa(Context context, Integer id){
 
         SQLiteDatabase db = new DbHelper(context).getReadableDatabase();
@@ -302,6 +311,7 @@ public class RoupasDAO {
         return true;
     }
 
+//    MÉTODO QUE CADASTRA AS FOTOS DE UMA ROUPA NO BANCO DE DADOS
     public Long cadastrarFotos(Context context, Long idRoupa, String pathImagem){
 
         SQLiteDatabase db = new DbHelper(context).getWritableDatabase();
@@ -315,6 +325,7 @@ public class RoupasDAO {
         return id;
     }
 
+//    MÉTODO QUE RETORNA AS FOTOS DE UMA ROUPA ESPECIFICA
     public ArrayList<String> selecionarFotosByIdRoupa(Context context, int idRoupa){
         ArrayList<String> listaImagens = new ArrayList<>();
 
@@ -334,6 +345,7 @@ public class RoupasDAO {
         return listaImagens;
     }
 
+//    MÉTODO QUE RETORNA AS TAFS DE UMA ROUPA ESPECIFICA
     public ArrayList<String> selecionarTagsByIdRoupa(Context context, int idRoupa){
         ArrayList<String> listaTags = new ArrayList<>();
 
@@ -343,12 +355,10 @@ public class RoupasDAO {
                 "INNER JOIN tag_roupa tr " +
                 "ON tr._idTag = t._id " +
                 "WHERE tr._idRoupa = "+idRoupa;
+
         Cursor cursor = db.rawQuery(sql, null);
 
-        Tag tag = new Tag();
-
         while(cursor.moveToNext()){
-//            tag.setNomeTag();
             listaTags.add(cursor.getString(cursor.getColumnIndex("nome")));
         }
 
@@ -358,6 +368,8 @@ public class RoupasDAO {
         return listaTags;
     }
 
+//    MÉTODO QUE VERIFICA SE UMA COMPRA FEITA NO SITE, JÁ EXISTE
+//    NO BANCO DE DADOS LOCAL DO APLICATIVO
     public Boolean VerificarMinhaCompra(Context context, int idSite){
 
         SQLiteDatabase db = new DbHelper(context).getWritableDatabase();
@@ -377,10 +389,12 @@ public class RoupasDAO {
         }
     }
 
+//    MÉTODO QUE EDITA AS INFORMAÇÕES DE UMA ROUPA
     public Boolean editarRoupa(Context context, Roupas roupa){
         return true;
     }
 
+//    MÉTODO QUE ATUALIZA O STATUS DO CAMPO "FAVORITO" DE UMA ROUPA
     public Boolean atualizarFavorito(Context context, int idRoupa, int favoritoAtual){
         SQLiteDatabase db = new DbHelper(context).getWritableDatabase();
         String sql;

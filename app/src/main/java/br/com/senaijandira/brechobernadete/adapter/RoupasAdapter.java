@@ -19,6 +19,7 @@ import br.com.senaijandira.brechobernadete.model.Roupas;
 
 public class RoupasAdapter extends ArrayAdapter<Roupas> {
 
+//    DECLARANDO VARIAVEIS, CLASSES...
     ArrayList<Roupas> itens;
     ArrayList<Roupas> itens_exibicao;
     ImageView fav;
@@ -38,6 +39,7 @@ public class RoupasAdapter extends ArrayAdapter<Roupas> {
             v = LayoutInflater.from(getContext()).inflate(R.layout.list_view_item_favoritos, null);
         }
 
+//        PEGANDO A INSTANCIA DO DAO
         dao = RoupasDAO.getInstance();
 
 //        Pegando o item que será carregado
@@ -48,23 +50,19 @@ public class RoupasAdapter extends ArrayAdapter<Roupas> {
         TextView lbl_status_roupas_favorito = v.findViewById(R.id.lbl_status_roupa_favorito);
         TextView lbl_cor = v.findViewById(R.id.lbl_cor_favorito);
         fav = v.findViewById(R.id.img_favorito_like);
+//        CLICK DO ICONE DE FAVORITO DA ROUPA
         fav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (item.getFavorito() == 1){
                     fav.setImageResource(R.drawable.ic_no_favorito);
-//                    Toast.makeText(getContext(), "favorito", Toast.LENGTH_SHORT).show();
                 } else {
                     fav.setImageResource(R.drawable.ic_favoritos);
-//                    Toast.makeText(getContext(), "não favorito", Toast.LENGTH_SHORT).show();
                 }
-//                Toast.makeText(getContext(), item.getId()+" - "+item.getCor()+" - "+item.getFavorito(), Toast.LENGTH_SHORT).show();
-//                Toast.makeText(getContext(), item.getCor()+"", Toast.LENGTH_SHORT).show();
                 Boolean sucesso = setarFavorito(item);
                 if (sucesso){
-                    Toast.makeText(getContext(), "opaopa", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Alterado com sucesso!", Toast.LENGTH_SHORT).show();
                  }
-//                fav.setVisibility(View.GONE);
             }
         });
 
@@ -72,19 +70,18 @@ public class RoupasAdapter extends ArrayAdapter<Roupas> {
         lbl_titulo_favorito.setText(item.getNome());
         lbl_status_roupas_favorito.setText(item.getStatus());
         lbl_cor.setBackgroundTintList(ColorStateList.valueOf(item.getCor()));
-        if (item.getFavorito() == 0){
-            fav.setImageResource(R.drawable.ic_no_favorito);
-        } else {
+        if (item.getFavorito() == 1){
             fav.setImageResource(R.drawable.ic_favoritos);
+        } else {
+            fav.setImageResource(R.drawable.ic_no_favorito);
         }
-//        todo: revisar a imagem do favorito
 
         return v;
     }
 
+//    MÉTODO QUE MUDA O STATUS "FAVORITO" DA ROUPA
     public boolean setarFavorito(Roupas roupa){
         Boolean teste = dao.atualizarFavorito(getContext(), roupa.getId(), roupa.getFavorito());
-        Log.d("teste", roupa.getId()+"");
         return teste;
     }
 }

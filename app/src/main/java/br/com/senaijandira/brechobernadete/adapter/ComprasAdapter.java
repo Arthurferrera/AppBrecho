@@ -30,12 +30,16 @@ public class ComprasAdapter extends ArrayAdapter<Roupas>{
             v = LayoutInflater.from(getContext()).inflate(R.layout.list_view_item_compras, null);
         }
 
+//        pegando o item
         Roupas item = getItem(position);
 
+//        find's dos elementos
         ImageView img_roupa = v.findViewById(R.id.img_compra);
         TextView lbl_titulo_roupa = v.findViewById(R.id.lbl_titulo_compra);
         TextView lbl_descricao_roupa = v.findViewById(R.id.lbl_descricao_compra);
 
+//        SETANDO OS VALORES NOS ELEMENTOS DA TELA
+        //TODO SETAR IMAGEM DA ROUPA
 //        img_roupa.setImageBitmap(item.getTag());
         lbl_titulo_roupa.setText(item.getNome());
         lbl_descricao_roupa.setText(item.getDescricao());

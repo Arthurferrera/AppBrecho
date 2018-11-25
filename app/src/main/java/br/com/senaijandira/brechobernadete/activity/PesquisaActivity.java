@@ -20,6 +20,7 @@ import br.com.senaijandira.brechobernadete.model.Roupas;
 
 public class PesquisaActivity extends Activity {
 
+//    DECLARANDO ATRIBUTOS, VARIAVEIS, ELEMENTOS...
     ListView list_view_roupas_pesquisa;
     TextView txt_pesquisa;
     RoupasDAO dao;
@@ -33,13 +34,16 @@ public class PesquisaActivity extends Activity {
         setContentView(R.layout.activity_pesquisa);
 //        getActionBar().setDisplayHomeAsUpEnabled(true);
 
+//        FIND'S DOS ELEMENTOS
         list_view_roupas_pesquisa = findViewById(R.id.list_view_roupas_filtro);
         txt_pesquisa = findViewById(R.id.txt_pesquisar);
 
+//        INSTANCIA DAO E ROUPA
         dao = RoupasDAO.getInstance();
         roupa = new Roupas();
         roupa.setId(0);
 
+//        CRIA O ADAPTER, SETA-O NA LISTA E SETA O CLICK DO ITEM DA LISTA
         adapter = new RoupasAdapter(this, new ArrayList<Roupas>());
         list_view_roupas_pesquisa.setAdapter(adapter);
         list_view_roupas_pesquisa.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -52,6 +56,8 @@ public class PesquisaActivity extends Activity {
             }
         });
 
+//        MÉTODOS QUE AO DIGITAR ALGO NO CAMPO, FAZEM ALGO
+//        NESTE CASO ELE FILTRA UMA LISTA A CADA LETRA DIGITADA NO CAMPO
         txt_pesquisa.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -77,12 +83,15 @@ public class PesquisaActivity extends Activity {
     protected void onResume() {
         super.onResume();
 
+        //CHAMA O METODO QUE LISTA TODAS AS ROUPAS DO USUARIO
         listaRoupas = dao.selecionarTodas(this);
 
+//        LIMPA O ADAPTER E ADICIONA A LISTA
         adapter.clear();
         adapter.addAll(listaRoupas);
     }
 
+//    MÉTODO QUE FAZ O FILTRO DA LISTA
     public void FiltrarLista(String s){
         ArrayList<Roupas> listaFiltrada = new ArrayList<>();
         for (int i = 0; i < listaRoupas.size(); i++){
@@ -90,6 +99,7 @@ public class PesquisaActivity extends Activity {
                 listaFiltrada.add(listaRoupas.get(i));
             }
         }
+//        LIMPA O ADAPTER E ADICIONA A LISTA
         adapter.clear();
         adapter.addAll(listaFiltrada);
     }

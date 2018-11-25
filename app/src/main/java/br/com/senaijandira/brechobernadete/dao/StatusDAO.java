@@ -11,6 +11,7 @@ import br.com.senaijandira.brechobernadete.model.Status;
 
 public class StatusDAO {
 
+//    DECLARANDO VARIAVEIS, CLASSES
     private static StatusDAO instance;
 
 //    método que pega a instância da classe

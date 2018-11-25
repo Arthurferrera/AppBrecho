@@ -94,6 +94,7 @@ public class CadastroRoupaFragment extends Fragment {
 
     Boolean modoEdicao = false;
 
+//    CLICK DO IMAGEVIEW
     View.OnClickListener clickImageView = new View.OnClickListener(){
         @Override
         public void onClick(View v) {
@@ -116,8 +117,10 @@ public class CadastroRoupaFragment extends Fragment {
 //         inflando o layout do fragment
         View view = inflater.inflate(R.layout.fragment_cadastro_roupa, container, false);
 
+//        INSTANCIA DO SharedPreferencesConfig
         preferencesConfig = new SharedPreferencesConfig(getContext());
 
+//        PEGANDO INFORMAÇÕES DO SHAREDPREFERENCES
         idCliente = preferencesConfig.readUsuarioId();
         tipoCliente = preferencesConfig.readUsuarioTipo();
 
@@ -142,9 +145,6 @@ public class CadastroRoupaFragment extends Fragment {
         rd_class_b = view.findViewById(R.id.rd_b);
         rd_class_c = view.findViewById(R.id.rd_c);
         txt_tag1 = view.findViewById(R.id.txt_tag1);
-
-//        fb.setBackgroundTintList(ColorStateList.valueOf(-16713473));
-
         img_foto1 = view.findViewById(R.id.foto1);
         img_foto2 = view.findViewById(R.id.foto2);
         img_foto3 = view.findViewById(R.id.foto3);
@@ -160,17 +160,22 @@ public class CadastroRoupaFragment extends Fragment {
         img_foto4.setOnClickListener(clickImageView);
         img_foto5.setOnClickListener(clickImageView);
 
+//        VARIAVEIS QUE RECEBERA CAMINHO DAS FOTOS
         foto1 = "";
         foto2 = "";
         foto3 = "";
         foto4 = "";
         foto5 = "";
 
+//        PEGANDO PARAMETROS PASSADOS PELO BUNDLE
+//        DA TELA ANTERIOR
         Bundle bundle = getArguments();
         if (bundle != null){
             idRoupaEdicao = bundle.getInt("id");
         }
 
+//        VERIFICANDO SE O MODO EDICAO ESTÁ VAZIO
+//        CASO NÃO, VAMOS CARREGAR OS CAMPOS COM AS INFORMAÇÕES DO OBJETO QUE VAI SER EDITADO
         if (idRoupaEdicao != null){
             modoEdicao = true;
 
@@ -238,12 +243,15 @@ public class CadastroRoupaFragment extends Fragment {
         adapterCategoria.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sp_categoria.setAdapter(adapterCategoria);
 
+//        STRING DO CAMINHO DA API
         API_URL = getString(R.string.API_URL);
+//        CHAMANDO METODO QUE RETORNA OS TAMANHOS DE ROUPA
         BuscarTamanho(1);
 
         return view;
     }
 
+//    SOLICITA A PERMISSÃO PARA ACESSAR A GALERIA
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -260,6 +268,7 @@ public class CadastroRoupaFragment extends Fragment {
         }
     }
 
+//    SOLICITA A PERMISSÃO PARA FAZER A LEITURA DOS DADOS DO ARMAZENAMENTO
     void solicitarPermissoes(){
         String[] permissoes = new String[1];
         permissoes[0] = android.Manifest.permission.READ_EXTERNAL_STORAGE;
@@ -267,6 +276,7 @@ public class CadastroRoupaFragment extends Fragment {
                 permissoes, REQUEST_PERMISSION);
     }
 
+//    VERIFICA SE A PERMISSÃO FOI CONCEDIDA
     boolean verificarPermissoes(){
         if (ContextCompat.checkSelfPermission(getContext(),
                 android.Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -276,6 +286,7 @@ public class CadastroRoupaFragment extends Fragment {
         return true;
     }
 
+//    METODO QUE ACESSA A GALERIA, O USUARIO ESCOLHE A IMAGEM
     private void capturarImagem(){
 
         Intent pickGaleryIntent = new Intent(Intent.ACTION_PICK,
@@ -291,6 +302,9 @@ public class CadastroRoupaFragment extends Fragment {
         }
     }
 
+//    MÉTODO QUE TRATA O RETORNO DA IMAGEM SELECIONADA
+//    ARMAZENA O CAMINHO DA FOTO NAS VARIAVEIS
+//    CARREGA A IMAGEM NO IMAGEVIEW
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -379,8 +393,7 @@ public class CadastroRoupaFragment extends Fragment {
                 fb.setBackgroundTintList(ColorStateList.valueOf(color));
                 cor = color;
 
-                Log.d("onOk", color+"");
-
+//                Log.d("onOk", color+"");
 //                Log.d("onOk", cor.toArgb()+"");
 //                Toast.makeText(getActivity(), color, Toast.LENGTH_SHORT).show();
             }
@@ -402,6 +415,7 @@ public class CadastroRoupaFragment extends Fragment {
         onResume();
     }
 
+//    MÉTODO QUE FAZ A VALIDAÇÃO DE CAMPOS VAZIOS
     public Boolean ValidarCampos(){
 
         EditText campoComFoco = null;

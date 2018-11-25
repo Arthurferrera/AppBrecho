@@ -13,6 +13,7 @@ import br.com.senaijandira.brechobernadete.model.Tag;
 
 public class TagDAO {
 
+//    DECLARANDO VARIAVEIS
     private static TagDAO instance;
     private SharedPreferencesConfig preferencesConfig;
     private int idCliente;
@@ -20,7 +21,7 @@ public class TagDAO {
 
 
 
-    //    método que pega a instância da classe
+//    método que pega a instância da classe
 //    caso não exista, ele cria uma nova
     public static TagDAO getInstance() {
         if (instance == null){
@@ -61,6 +62,7 @@ public class TagDAO {
         return retorno;
     }
 
+//    MÉTODO QUE INSERE AS TAGS NO BANCO
     public Long inserirTag(Context context, String tag) {
         SQLiteDatabase db = new DbHelper(context).getWritableDatabase();
 
@@ -72,6 +74,8 @@ public class TagDAO {
         return idTag;
     }
 
+//    MÉTODO QUE INSERE O ID DA ROUPA E DA TAG
+//    NA TABELA QUE RELACIONA OS DOIS
     public Long inserirTagRoupa(Context context, Long idTag, Long idRoupa){
 
         SQLiteDatabase db = new DbHelper(context).getWritableDatabase();
@@ -85,6 +89,7 @@ public class TagDAO {
         return idTagRoupa;
     }
 
+//    MÉTODO QUE VERIFICA SE A TAG JA EXISTE
     public int verificarTag(Context context, String tag){
 
         SQLiteDatabase db = new DbHelper(context).getWritableDatabase();

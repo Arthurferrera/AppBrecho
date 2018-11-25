@@ -45,6 +45,7 @@ public class LoginActivity extends AppCompatActivity {
         btn_entrar = findViewById(R.id.btn_entrar);
         lbl_cadastreSe = findViewById(R.id.lbl_cadastre_se);
 
+//        CLICK DO LINK QUE REDIRECIONA PARA A PAGINA DE CADASTRO DO SITE
         lbl_cadastreSe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

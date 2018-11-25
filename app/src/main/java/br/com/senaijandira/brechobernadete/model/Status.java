@@ -2,10 +2,12 @@ package br.com.senaijandira.brechobernadete.model;
 
 public class Status {
 
+    //declarando atributos da classe
     private int id;
     private String nome;
 
 
+    //metodos getters e setters
     public String getNome() {
         return nome;
     }

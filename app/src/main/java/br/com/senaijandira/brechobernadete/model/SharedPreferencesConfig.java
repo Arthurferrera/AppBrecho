@@ -7,6 +7,7 @@ import br.com.senaijandira.brechobernadete.R;
 
 public class SharedPreferencesConfig {
 
+    //declarando atributos necessarios
     private SharedPreferences sharedPreferences;
     private Context context;
 
@@ -58,28 +59,28 @@ public class SharedPreferencesConfig {
         return email;
     }
 
-    //    MÉTODO QUE GRAVA O E-MAIL DO USUARIO
+    //    MÉTODO QUE GRAVA O ID DO USUARIO
     public void writeUsuarioId(int id){
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(context.getResources().getString(R.string.usuario_id), id);
         editor.commit();
     }
 
-    //    MÉTODO QUE LÊ O E-MAIL DO USUÁRIO
+    //    MÉTODO QUE LÊ O ID DO USUÁRIO
     public int readUsuarioId(){
         int id = 0;
         id = sharedPreferences.getInt(context.getResources().getString(R.string.usuario_id), 0);
         return id;
     }
 
-    //    MÉTODO QUE GRAVA O E-MAIL DO USUARIO
+    //    MÉTODO QUE GRAVA O TIPO DE USUARIO
     public void writeUsuarioTipo(String tipo){
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(context.getResources().getString(R.string.usuario_tipo), tipo);
         editor.commit();
     }
 
-    //    MÉTODO QUE LÊ O E-MAIL DO USUÁRIO
+    //    MÉTODO QUE LÊ O TIPO DE USUÁRIO
     public String readUsuarioTipo(){
         String tipo= "";
         tipo = sharedPreferences.getString(context.getResources().getString(R.string.usuario_tipo), "");

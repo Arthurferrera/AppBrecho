@@ -31,6 +31,7 @@ import br.com.senaijandira.brechobernadete.model.SharedPreferencesConfig;
  */
 public class ComprasFragment extends Fragment {
 
+//    DECLARANDO ATRIBUTOS, VARIAVEIS, ELEMENTOS...
     ListView listView_compras;
     ComprasAdapter adapter;
     String API_URL;
@@ -52,8 +53,10 @@ public class ComprasFragment extends Fragment {
         // Inflate the layout for this fragment
         View comprasView = inflater.inflate(R.layout.fragment_compras, container, false);
 
+//        INSTANCIA DO SHARED PREFERENCES
         preferencesConfig = new SharedPreferencesConfig(getActivity().getApplicationContext());
 
+//        STRING DA API, E RESGATANDO INFORMAÇÕES GRAVADAS NO SHAREDPREFERENCES
         API_URL = getString(R.string.API_URL);
         idCliente = preferencesConfig.readUsuarioId();
         tipoCliente = preferencesConfig.readUsuarioTipo();
@@ -63,6 +66,7 @@ public class ComprasFragment extends Fragment {
 
         listView_compras = comprasView.findViewById(R.id.list_view_compras);
 
+//        INSTANCIA DO ADAPTER, CRIANDO LISTA, E SETANDO O ADAPTER DELA E O CLICK DOS ITENA
         adapter = new ComprasAdapter(getActivity());
         listView_compras.setAdapter(adapter);
         listView_compras.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -82,10 +86,12 @@ public class ComprasFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
+//        LIMPANDO O ADAPTER PARA NÃO DUPLICAR OS REGISTROS
         adapter.clear();
 
         new AsyncTask<Void, Void, String>(){
 
+//            CHAMADA DA API
             @Override
             protected String doInBackground(Void... voids) {
                 String json = "";
@@ -94,14 +100,17 @@ public class ComprasFragment extends Fragment {
                 return json;
             }
 
+//            RESGATANDO OS DADOS RETORNADOS DA API
             @Override
             protected void onPostExecute(String json) {
                 super.onPostExecute(json);
 
+//                VERIFICANDO SE O JSON ESTÁ VAZIO
                 if (json == null){
                     json = "Sem Dados";
                 }
 
+//                ARRAY QUE ARMAZENA OS OBJETOS RETORNADOS
                 ArrayList<Roupas> roupas = new ArrayList<>();
                 if (json != null){
                     try {
@@ -112,6 +121,8 @@ public class ComprasFragment extends Fragment {
                             Roupas roupa = new Roupas();
                             if (!existe){
                                 String cat = compraJson.getString("categoria");
+//                                VERIFICANDO QUAL A CATEGORIA RETORNADA PRA PODERMOS SETAR O ID DELA
+//                                CONFORME AS CATEGORIAS DISPONIVEIS NO APLICATIVO
                                 switch (cat){
                                     case "Camisetas":
                                         roupa.setIdCategoria(1);
@@ -148,6 +159,7 @@ public class ComprasFragment extends Fragment {
                                         break;
 
                                 }
+//                                PEGANDO O RESTANTE DAS INFORMAÇÕES DA ROUPA
                                 roupa.setNome(compraJson.getString("nomeProduto"));
                                 roupa.setDescricao(compraJson.getString("descricao"));
                                 roupa.setCor(compraJson.getInt("cor"));
@@ -163,6 +175,7 @@ public class ComprasFragment extends Fragment {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+//                    ADICIONANDO TUDO AO ADAPTER
                     adapter.addAll(roupas);
                 }
             }
