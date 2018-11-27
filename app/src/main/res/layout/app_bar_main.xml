@@ -19,6 +19,9 @@
             app:popupTheme="@style/AppTheme.PopupOverlay"
             app:titleTextColor="@color/colorAccent"
             app:subtitleTextColor="@color/colorAccent"
+            app:navigationIcon="@drawable/ic_menu_black"
+            app:itemIconTint="@color/colorAccent"
+            app:itemTextColor="@color/colorAccent"
             />
 
     </android.support.design.widget.AppBarLayout>

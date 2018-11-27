@@ -17,6 +17,7 @@ public class Roupas {
     private String status;
     private String tag;
     private int idSite;
+    private int idCliente;
 
 //    MÉTODOS GETTERS E SETTERS
     public int getId() { return id;}
@@ -79,4 +80,8 @@ public class Roupas {
     public int getIdSite() { return idSite; }
 
     public void setIdSite(int idSite) { this.idSite = idSite; }
+
+    public int getIdCliente() { return idCliente; }
+
+    public void setIdCliente(int idCliente) { this.idCliente = idCliente; }
 }

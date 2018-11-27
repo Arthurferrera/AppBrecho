@@ -45,14 +45,14 @@ public class CategoriaDAO {
                     "FROM categoria c " +
                     "LEFT JOIN roupa r " +
                     "ON c._id = r._idCategoria " +
-                    "AND r._idClienteF = "+idCliente + " " +
+//                    "AND r._idClienteF = "+idCliente+ " " +
                     "GROUP BY c._id;";
         } else {
             sql = "SELECT c._id, c.nome, COUNT(r._idCategoria) AS totalPecas " +
                     "FROM categoria c " +
                     "LEFT JOIN roupa r " +
                     "ON c._id = r._idCategoria " +
-                    "AND r._idClienteJ = "+idCliente + " " +
+//                    "AND r._idClienteJ = "+idCliente + " " +
                     "GROUP BY c._id;";
         }
 

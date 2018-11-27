@@ -14,7 +14,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import br.com.senaijandira.brechobernadete.R;
 import br.com.senaijandira.brechobernadete.fragments.CadastroRoupaFragment;
@@ -42,7 +41,6 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setNavigationIcon(R.drawable.ic_menu_black);
         setSupportActionBar(toolbar);
 
 //        find's dos elementos

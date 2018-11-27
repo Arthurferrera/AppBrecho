@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import br.com.senaijandira.brechobernadete.model.DbHelper;
 import br.com.senaijandira.brechobernadete.model.Roupas;
 import br.com.senaijandira.brechobernadete.model.SharedPreferencesConfig;
-import br.com.senaijandira.brechobernadete.model.Tag;
 
 public class RoupasDAO {
 
@@ -47,14 +46,14 @@ public class RoupasDAO {
             sql = "SELECT *, r.nome AS roupa " +
                     "FROM roupa r " +
                     "INNER JOIN status s " +
-                    "ON s._id = r._idStatus " +
-                    "WHERE r._idClienteF = "+idCliente;
+                    "ON s._id = r._idStatus ";// +
+                    //"WHERE r._idClienteF = "+idCliente;
         } else {
             sql = "SELECT *, r.nome AS roupa " +
                     "FROM roupa r " +
                     "INNER JOIN status s " +
-                    "ON s._id = r._idStatus " +
-                    "WHERE r._idClienteJ = "+idCliente;
+                    "ON s._id = r._idStatus ";// +
+                    //"WHERE r._idClienteJ = "+idCliente;
         }
 
         Cursor cursor = db.rawQuery(sql, null);
@@ -93,8 +92,8 @@ public class RoupasDAO {
                     "ON r._idCategoria = c._id " +
                     "INNER JOIN status s " +
                     "ON s._id = r._idStatus " +
-                    "WHERE c._id = "+id+" " +
-                    "AND r._idClienteF = "+idCliente;
+                    "WHERE c._id = "+id;//+" " +
+                    //"AND r._idClienteF = "+idCliente;
         } else {
             sql = "SELECT *, r.nome AS roupa " +
                     "FROM roupa r " +
@@ -102,8 +101,8 @@ public class RoupasDAO {
                     "ON r._idCategoria = c._id " +
                     "INNER JOIN status s " +
                     "ON s._id = r._idStatus " +
-                    "WHERE c._id = "+id+" " +
-                    "AND r._idClienteJ = "+idCliente;
+                    "WHERE c._id = "+id;//+" " +
+                    //"AND r._idClienteJ = "+idCliente;
         }
 
         Cursor cursor = db.rawQuery(sql, null);
@@ -139,14 +138,14 @@ public class RoupasDAO {
             sql = "SELECT *, r._id AS idRoupa, r.nome AS roupa, s.nome AS status FROM roupa r " +
                     "INNER JOIN status s " +
                     "ON s._id = r._idStatus " +
-                    "WHERE r.favorito = 1 " +
-                    "AND r._idClienteF = "+idCliente;
+                    "WHERE r.favorito = 1 ";// +
+                    //"AND r._idClienteF = "+idCliente;
         } else {
             sql = "SELECT *, r._id AS idRoupa, r.nome AS roupa, s.nome AS status FROM roupa r " +
                     "INNER JOIN status s " +
                     "ON s._id = r._idStatus " +
-                    "WHERE r.favorito = 1 " +
-                    "AND r._idClienteJ = "+idCliente;
+                    "WHERE r.favorito = 1 ";// +
+                    //"AND r._idClienteJ = "+idCliente;
         }
 
         Cursor cursor = db.rawQuery(sql, null);
@@ -187,8 +186,8 @@ public class RoupasDAO {
                     "ON t._id = tr._idTag " +
                     "INNER JOIN status s " +
                     "ON r._idStatus = s._id " +
-                    "WHERE t._id = " + id + " " +
-                    "AND r._idClienteF = "+idCliente;
+                    "WHERE t._id = " + id ;//+ " " +
+                    //"AND r._idClienteF = "+idCliente;
         } else {
             sql = "SELECT *, r._id AS idRoupa, r.nome AS roupa, s.nome AS status " +
                     "FROM roupa r " +
@@ -198,8 +197,8 @@ public class RoupasDAO {
                     "ON t._id = tr._idTag " +
                     "INNER JOIN status s " +
                     "ON r._idStatus = s._id " +
-                    "WHERE t._id = " + id + " " +
-                    "AND r._idClienteJ = "+idCliente;
+                    "WHERE t._id = " + id; //+ " " +
+                    //"AND r._idClienteJ = "+idCliente;
         }
 
         Cursor cursor = db.rawQuery(sql, null);
@@ -226,7 +225,7 @@ public class RoupasDAO {
         SQLiteDatabase db = new DbHelper(context).getReadableDatabase();
 
         String sql = "SELECT *, r._id AS idRoupa, r.nome AS roupa, r._idStatus AS idStatus, " +
-                "r._idCategoria AS idCategoria, s.nome AS status, c.nome AS categoria " +
+                "r._idCategoria AS idCategoria, s.nome AS status, c.nome AS categoria, r._idClienteF, r._idClienteJ " +
                 "FROM roupa r " +
                 "INNER JOIN status s " +
                 "ON s._id = r._idStatus " +
@@ -261,6 +260,11 @@ public class RoupasDAO {
             roupa.setIdCategoria(cursor.getInt(cursor.getColumnIndex("idCategoria")));
             roupa.setStatus(cursor.getString(cursor.getColumnIndex("status")));
             roupa.setCategoria(cursor.getString(cursor.getColumnIndex("categoria")));
+            if (preferencesConfig.readUsuarioTipo() == "F"){
+                roupa.setIdCliente(cursor.getInt(cursor.getColumnIndex("_idClienteF")));
+            } else {
+                roupa.setIdCliente(cursor.getInt(cursor.getColumnIndex("_idClienteJ")));
+            }
         }
         cursor.close();
         db.close();
@@ -281,7 +285,7 @@ public class RoupasDAO {
         valores.put("tamanho", r.getTamanho());
         valores.put("marca", r.getMarca());
         valores.put("classificacao", r.getClassificacao());
-        valores.put("favorito", true);
+        valores.put("favorito", false);
         valores.put("_idStatus", r.getIdStatus());
         valores.put("_idCategoria", r.getIdCategoria());
         if (tipoCliente == "F"){
@@ -391,7 +395,7 @@ public class RoupasDAO {
 
 //    MÉTODO QUE EDITA AS INFORMAÇÕES DE UMA ROUPA
     public Boolean editarRoupa(Context context, Roupas roupa){
-        return true;
+        return false;
     }
 
 //    MÉTODO QUE ATUALIZA O STATUS DO CAMPO "FAVORITO" DE UMA ROUPA

@@ -4,8 +4,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -19,7 +17,6 @@ import java.util.ArrayList;
 import br.com.senaijandira.brechobernadete.R;
 import br.com.senaijandira.brechobernadete.adapter.ViewPagerAdapter;
 import br.com.senaijandira.brechobernadete.dao.RoupasDAO;
-import br.com.senaijandira.brechobernadete.fragments.CadastroRoupaFragment;
 import br.com.senaijandira.brechobernadete.model.Roupas;
 
 public class VisualizarActivity extends AppCompatActivity {
@@ -69,11 +66,11 @@ public class VisualizarActivity extends AppCompatActivity {
         lbl_categoria.setText(r.getCategoria());
         lbl_tamanho.setText(r.getTamanho());
         lbl_cor.setBackgroundTintList(ColorStateList.valueOf(r.getCor()));
-        Toast.makeText(this, r.getCor()+"", Toast.LENGTH_SHORT).show();
         lbl_tags.setText(r.getTag());
         lbl_status.setText(r.getStatus());
         lbl_marca.setText(r.getMarca());
         lbl_classificacao.setText(r.getClassificacao());
+        Toast.makeText(this, r.getIdCliente()+"", Toast.LENGTH_SHORT).show();
         StringBuilder TAGS = new StringBuilder();
         for(String tags : tag){
             TAGS.append(tags);
@@ -100,14 +97,18 @@ public class VisualizarActivity extends AppCompatActivity {
             case R.id.action_notificacao:
                 break;
             case R.id.action_editar:
-                FragmentManager fragmentManager = this.getSupportFragmentManager();
-                Fragment fragment = new CadastroRoupaFragment();
-                Bundle bundle = new Bundle();
-
-                //Passando o id para cadastro para efetuar a edição
-                bundle.putInt("id", id);
-                fragment.setArguments(bundle);
-                fragmentManager.beginTransaction().replace(R.id.frame_content, fragment).commit();
+                Intent intencao = new Intent(getApplicationContext(), MainActivity.class);
+                intencao.putExtra("id", id);
+                startActivity(intencao);
+                finish();
+//                FragmentManager fragmentManager = this.getSupportFragmentManager();
+//                CadastroRoupaFragment fragment = new CadastroRoupaFragment();
+//                Bundle bundle = new Bundle();
+//
+//                //Passando o id para cadastro para efetuar a edição
+//                bundle.putInt("id", id);
+//                fragment.setArguments(bundle);
+//                fragmentManager.beginTransaction().replace(R.id.frame_content, fragment).commit();
                 break;
             case R.id.action_excluir:
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);

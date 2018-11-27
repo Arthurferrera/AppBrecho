@@ -41,13 +41,24 @@ public class TagDAO {
         idCliente = preferencesConfig.readUsuarioId();
         tipoCliente = preferencesConfig.readUsuarioTipo();
 
-        String sql = "SELECT t._id, t.nome " +
-                "FROM tag t " +
-                "INNER JOIN tag_roupa tr " +
-                "ON tr._idtag = t._id " +
-                "INNER JOIN roupa r " +
-                "ON r._id = tr._idRoupa " +
-                "WHERE r._idClienteF = "+idCliente;
+        String sql;
+        if (tipoCliente.equals("F")) {
+            sql = "SELECT t._id, t.nome " +
+                    "FROM tag t " +
+                    "INNER JOIN tag_roupa tr " +
+                    "ON tr._idtag = t._id " +
+                    "INNER JOIN roupa r " +
+                    "ON r._id = tr._idRoupa ";// +
+//                "WHERE r._idClienteF = "+idCliente;
+        } else {
+            sql = "SELECT t._id, t.nome " +
+                    "FROM tag t " +
+                    "INNER JOIN tag_roupa tr " +
+                    "ON tr._idtag = t._id " +
+                    "INNER JOIN roupa r " +
+                    "ON r._id = tr._idRoupa ";// +
+//                "WHERE r._idClienteJ = "+idCliente;
+        }
 
         Cursor cursor = db.rawQuery(sql, null);
 
