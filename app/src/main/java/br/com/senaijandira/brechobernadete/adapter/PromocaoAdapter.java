@@ -53,7 +53,8 @@ public class PromocaoAdapter extends ArrayAdapter<Promocao> {
         btn_conferir_promo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String endereco = "www.brechobernadete.com.br/visualizar_produto.php?id="+item.getId();
+//                String endereco = "www.brechobernadete.com.br/visualizar_produto.php?id="+item.getId();
+                String endereco = "http://192.168.1.34/brecho/view/visualizar_produto.php?id="+item.getId()+"&pagina=promoção";
                 Uri uri = Uri.parse(endereco);
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 getContext().startActivity(intent);

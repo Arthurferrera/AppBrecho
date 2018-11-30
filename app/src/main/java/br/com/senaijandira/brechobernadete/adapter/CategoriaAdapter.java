@@ -52,7 +52,42 @@ public class CategoriaAdapter extends ArrayAdapter<Categoria>{
 //        setando os valores de cada elemento
         lbl_categoria_item.setText(categoria.getNome());
         lbl_quantidade_categoria_item.setText(categoria.getTotalPecas()+"");
-        Picasso.get().load(R.drawable.blusas).into(img_bg_card);
+        switch(categoria.getNome()){
+            case "Camisetas":
+                Picasso.get().load(R.drawable.camisetasbg).into(img_bg_card);
+                break;
+            case "Blusas":
+                Picasso.get().load(R.drawable.blusasbgnovo).into(img_bg_card);
+                break;
+            case "Calças":
+                Picasso.get().load(R.drawable.calcasbg1).into(img_bg_card);
+                break;
+            case "Bermudas":
+                Picasso.get().load(R.drawable.bermudas1).into(img_bg_card);
+                break;
+            case "Calçados":
+                Picasso.get().load(R.drawable.calcadosbg1).into(img_bg_card);
+                break;
+            case "Social":
+//                todo: trocar o bg de roupas social
+                Picasso.get().load(R.drawable.socialbg2).into(img_bg_card);
+                break;
+            case "Vestidos":
+                Picasso.get().load(R.drawable.vestidosbg3).into(img_bg_card);
+                break;
+            case "Acessórios":
+                Picasso.get().load(R.drawable.acessoriosbg3).into(img_bg_card);
+                break;
+            case "Roupas Íntimas":
+//                todo: trocar o bg de roupas intimas
+                Picasso.get().load(R.drawable.blusas).into(img_bg_card);
+                break;
+            case "Outros":
+//                todo: trocar o bg de outros
+                Picasso.get().load(R.drawable.acessoriosbg2).into(img_bg_card);
+                break;
+
+        }
 //        retornando a view
         return v;
 

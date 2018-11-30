@@ -2,11 +2,11 @@ package br.com.senaijandira.brechobernadete.adapter;
 
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -44,23 +44,35 @@ public class ViewPagerAdapter extends PagerAdapter {
 
         imagens = dao.selecionarFotosByIdRoupa(context, idRoupa);
 
-        layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = layoutInflater.inflate(R.layout.custom_layout, null);
-        ImageView imageView = view.findViewById(R.id.imageView);
-        Picasso.get().load(imagens.get(position)).into(imageView);
+        ImageView imageView = new ImageView(context);
+        imageView.setScaleType(ImageView.ScaleType.CENTER);
+
+        String imagem = imagens.get(position);
+        Picasso.get().load(imagem).resize(350, 200).error(R.drawable.blusasbg).centerInside().into(imageView);
+
+//        layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//        View view = layoutInflater.inflate(R.layout.custom_layout, null);
+//        ImageView imageView = view.findViewById(R.id.imageView);
+//        Picasso.get().load(imagens.get(position)).resize(700, 500).error(R.drawable.acessoriosbg).centerInside().into(imageView);
+//        Picasso.get().load(imagens).resize(700, 1000).error(R.drawable.cloud_error).centerInside().into(imageView);
 
 //        imageView.setImageResource([position]);
 
-        ViewPager vp = (ViewPager) container;
-        vp.addView(view, 0);
-        return view;
+//        ViewPager vp = (ViewPager) container;
+//        vp.addView(view, 0);
+//        return view;
+        Toast.makeText(context, imagem, Toast.LENGTH_SHORT).show();
+
+        container.addView(imageView,0);
+        return imageView;
     }
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
 
-        ViewPager vp = (ViewPager) container;
-        View view = (View) object;
-        vp.removeView(view);
+        container.removeView((ImageView) object);
+//        ViewPager vp = (ViewPager) container;
+//        View view = (View) object;
+//        vp.removeView(view);
     }
 }

@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
 import org.json.JSONArray;
@@ -16,10 +15,10 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import br.com.senaijandira.brechobernadete.R;
+import br.com.senaijandira.brechobernadete.adapter.PromocaoAdapter;
 import br.com.senaijandira.brechobernadete.model.HttpConnection;
 import br.com.senaijandira.brechobernadete.model.Promocao;
-import br.com.senaijandira.brechobernadete.adapter.PromocaoAdapter;
-import br.com.senaijandira.brechobernadete.R;
 
 
 /**
@@ -113,6 +112,11 @@ public class PromocoesFragment extends Fragment {
                     adapter.addAll(promocoes);
                 }
             }
+
+
+
+
+
         }.execute();
     }
 

@@ -64,6 +64,22 @@ public class MainActivity extends AppCompatActivity
         lbl_nomeUsuario_menu.setText(preferencesConfig.readUsuarioNome());
         lbl_emailUsuario_menu.setText(preferencesConfig.readUsuarioEmail());
 
+        Intent intent = getIntent();
+        int idRoupa = intent.getIntExtra("idRoupa", 0);
+        if (idRoupa != 0){
+            FragmentManager fm = this.getSupportFragmentManager();
+//            cria o fragment
+            Fragment fragment = new CadastroRoupaFragment();
+//            chama outro fragment passando parametros
+            Bundle bundle = new Bundle();
+            bundle.putInt("id",  0);
+            fragment.setArguments(bundle);
+
+            fm.beginTransaction().replace(R.id.frame_content, fragment).addToBackStack(null).commit();
+            toolbar.setTitle("Cadastro de roupas");
+        }
+
+
 //        adicionando um fragment
         if (savedInstanceState == null){
             getSupportFragmentManager().beginTransaction().replace(R.id.frame_content, new HomeFragment()).commit();

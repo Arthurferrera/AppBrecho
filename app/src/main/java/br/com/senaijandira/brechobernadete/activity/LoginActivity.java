@@ -49,7 +49,8 @@ public class LoginActivity extends AppCompatActivity {
         lbl_cadastreSe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String endereco = "www.brechobernadete.com.br/view/cadastro_usuario.php";
+//                String endereco = "www.brechobernadete.com.br/view/cadastro_usuario.php";
+                String endereco = "http://192.168.1.34/brecho/view/cadastro_usuario.php";
                 Uri uri = Uri.parse(endereco);
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(intent);

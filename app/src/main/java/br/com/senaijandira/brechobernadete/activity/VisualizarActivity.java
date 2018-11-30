@@ -9,6 +9,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +32,7 @@ public class VisualizarActivity extends AppCompatActivity {
     int id;
     ViewPager viewPager;
     private  AlertDialog alerta;
+    LinearLayout linear_loja;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,11 +57,17 @@ public class VisualizarActivity extends AppCompatActivity {
         lbl_classificacao = findViewById(R.id.lbl_classificacao_visualizar);
         lbl_cor = findViewById(R.id.lbl_cor_visualizar);
         viewPager = findViewById(R.id.viewPager);
+        linear_loja = findViewById(R.id.linear_loja);
 
 //        chamando o método que traz todas as informações da roupa
         r = dao.selecionarUmaRoupa(this, id);
 //        chamando o método que traz todas as TAGS da roupa
         tag = dao.selecionarTagsByIdRoupa(this, id);
+
+        int idSite = r.getIdSite();
+        if (idSite == 0){
+            linear_loja.setVisibility(View.GONE);
+        }
 
 //        setando os valores dos elementos com as informações vindas do banco
         lbl_titulo.setText(r.getNome());
@@ -70,7 +79,7 @@ public class VisualizarActivity extends AppCompatActivity {
         lbl_status.setText(r.getStatus());
         lbl_marca.setText(r.getMarca());
         lbl_classificacao.setText(r.getClassificacao());
-        Toast.makeText(this, r.getIdCliente()+"", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, r.getIdSite()+"", Toast.LENGTH_SHORT).show();
         StringBuilder TAGS = new StringBuilder();
         for(String tags : tag){
             TAGS.append(tags);
