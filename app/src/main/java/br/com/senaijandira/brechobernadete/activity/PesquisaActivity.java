@@ -3,6 +3,7 @@ package br.com.senaijandira.brechobernadete.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import br.com.senaijandira.brechobernadete.R;
 import br.com.senaijandira.brechobernadete.adapter.RoupasAdapter;
@@ -33,6 +35,7 @@ public class PesquisaActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pesquisa);
 //        getActionBar().setDisplayHomeAsUpEnabled(true);
+
 
 //        FIND'S DOS ELEMENTOS
         list_view_roupas_pesquisa = findViewById(R.id.list_view_roupas_filtro);

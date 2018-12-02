@@ -1,5 +1,6 @@
 package br.com.senaijandira.brechobernadete.activity;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -7,6 +8,8 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import br.com.senaijandira.brechobernadete.R;
 import br.com.senaijandira.brechobernadete.adapter.ViewPagerAdapter;
@@ -33,11 +37,24 @@ public class VisualizarActivity extends AppCompatActivity {
     ViewPager viewPager;
     private  AlertDialog alerta;
     LinearLayout linear_loja;
+    private ArrayList<String> imagens = new ArrayList<>();
 
+
+    @SuppressLint("RestrictedApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visualizar);
+        final Toolbar toolbar = (Toolbar) Objects.requireNonNull(this).findViewById(R.id.toolbar);
+        toolbar.setNavigationIcon(null);
+        toolbar.setTitle("Detalhes da roupa");
+        toolbar.setNavigationIcon(R.drawable.ic_voltar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
 //        pegando os parametros passado pelo intent na chamada da tela
         Intent intent = getIntent();
@@ -64,6 +81,14 @@ public class VisualizarActivity extends AppCompatActivity {
 //        chamando o método que traz todas as TAGS da roupa
         tag = dao.selecionarTagsByIdRoupa(this, id);
 
+        imagens = dao.selecionarFotosByIdRoupa(this, id);
+        StringBuilder imgs = new StringBuilder();
+        for (String img : imagens) {
+            imgs.append(img);
+            imgs.append(" - ");
+        }
+            Log.d("listaImagens", String.valueOf(imgs));
+
         int idSite = r.getIdSite();
         if (idSite == 0){
             linear_loja.setVisibility(View.GONE);
@@ -79,7 +104,7 @@ public class VisualizarActivity extends AppCompatActivity {
         lbl_status.setText(r.getStatus());
         lbl_marca.setText(r.getMarca());
         lbl_classificacao.setText(r.getClassificacao());
-        Toast.makeText(this, r.getIdSite()+"", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, r.getIdSite()+"", Toast.LENGTH_SHORT).show();
         StringBuilder TAGS = new StringBuilder();
         for(String tags : tag){
             TAGS.append(tags);
@@ -103,8 +128,6 @@ public class VisualizarActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-            case R.id.action_notificacao:
-                break;
             case R.id.action_editar:
                 Intent intencao = new Intent(getApplicationContext(), MainActivity.class);
                 intencao.putExtra("id", id);

@@ -330,7 +330,7 @@ public class CadastroRoupaFragment extends Fragment {
                         foto4 = realPath;
                         break;
                     case 4:
-                        foto5= realPath;
+                        foto5 = realPath;
                         break;
                 }
                 listaPathsImages = new String[]{foto1,foto2,foto3,foto4,foto5};
@@ -517,7 +517,7 @@ public class CadastroRoupaFragment extends Fragment {
                     if (idTag != -1){
                         idTagRoupa = daoTag.inserirTagRoupa(getContext(), idTag, idRoupa);
                     }
-                    Long idFotoSalva = null;
+                    Long idFotoSalva = Long.valueOf(0);
                     if (!listaPathsImages[i].equals("")){
                         idFotoSalva = daoRoupa.cadastrarFotos(getContext(), idRoupa, listaPathsImages[i]);
                     }

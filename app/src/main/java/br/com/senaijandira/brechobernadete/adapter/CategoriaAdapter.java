@@ -80,7 +80,7 @@ public class CategoriaAdapter extends ArrayAdapter<Categoria>{
                 break;
             case "Roupas Íntimas":
 //                todo: trocar o bg de roupas intimas
-                Picasso.get().load(R.drawable.blusas).into(img_bg_card);
+                Picasso.get().load(R.drawable.blusasbgnovo).into(img_bg_card);
                 break;
             case "Outros":
 //                todo: trocar o bg de outros

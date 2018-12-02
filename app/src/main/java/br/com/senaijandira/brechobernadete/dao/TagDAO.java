@@ -48,7 +48,8 @@ public class TagDAO {
                     "INNER JOIN tag_roupa tr " +
                     "ON tr._idtag = t._id " +
                     "INNER JOIN roupa r " +
-                    "ON r._id = tr._idRoupa ";// +
+                    "ON r._id = tr._idRoupa " +
+                    "ORDER BY t.nome ASC";// +
 //                "WHERE r._idClienteF = "+idCliente;
         } else {
             sql = "SELECT t._id, t.nome " +
@@ -56,7 +57,8 @@ public class TagDAO {
                     "INNER JOIN tag_roupa tr " +
                     "ON tr._idtag = t._id " +
                     "INNER JOIN roupa r " +
-                    "ON r._id = tr._idRoupa ";// +
+                    "ON r._id = tr._idRoupa " +
+                    "ORDER BY t.nome ASC";// +
 //                "WHERE r._idClienteJ = "+idCliente;
         }
 

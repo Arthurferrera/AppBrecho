@@ -1,7 +1,10 @@
 package br.com.senaijandira.brechobernadete.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v4.view.PagerAdapter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,12 +46,15 @@ public class ViewPagerAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
 
         imagens = dao.selecionarFotosByIdRoupa(context, idRoupa);
+        Log.d("listaImagens", String.valueOf(imagens));
 
         ImageView imageView = new ImageView(context);
         imageView.setScaleType(ImageView.ScaleType.CENTER);
 
         String imagem = imagens.get(position);
-        Picasso.get().load(imagem).resize(350, 200).error(R.drawable.blusasbg).centerInside().into(imageView);
+        Bitmap imgBit = BitmapFactory.decodeFile(imagem);
+        imageView.setImageBitmap(imgBit);
+//        Picasso.get().load(imagem).resize(70, 70).error(R.drawable.blusasbg).centerInside().into(imageView);
 
 //        layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 //        View view = layoutInflater.inflate(R.layout.custom_layout, null);
@@ -61,7 +67,7 @@ public class ViewPagerAdapter extends PagerAdapter {
 //        ViewPager vp = (ViewPager) container;
 //        vp.addView(view, 0);
 //        return view;
-        Toast.makeText(context, imagem, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(context, imagem, Toast.LENGTH_SHORT).show();
 
         container.addView(imageView,0);
         return imageView;

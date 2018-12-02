@@ -4,6 +4,7 @@ package br.com.senaijandira.brechobernadete.fragments;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -86,7 +87,7 @@ public class PromocoesFragment extends Fragment {
                 super.onPostExecute(json);
 //                verificando se o json está vazio
                 if (json == null) json = "Sem Dados";
-//                Log.d("onPostExecute", json);
+                Log.d("onPostExecute", json);
 
 //                criando a lista que vai armazenar todos os registros
                 ArrayList<Promocao> promocoes = new ArrayList<>();
@@ -112,11 +113,6 @@ public class PromocoesFragment extends Fragment {
                     adapter.addAll(promocoes);
                 }
             }
-
-
-
-
-
         }.execute();
     }
 

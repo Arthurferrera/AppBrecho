@@ -6,9 +6,9 @@
     android:padding="16dp">
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/imageView_look"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="200dp"
         android:src="@mipmap/ic_launcher_round" />
 
     <LinearLayout
@@ -30,11 +30,12 @@
             android:textSize="22sp" />
 
         <TextView
-            android:id="@+id/lbl_titulo_look2"
+            android:id="@+id/lbl_descricao_look"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:layout_marginTop="10dp"
+            android:minHeight="50dp"
             android:paddingLeft="10dp"
             android:text="Essa blusa é top, muito boa, confortavel"
             android:textSize="17sp" />

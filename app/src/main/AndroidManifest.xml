@@ -47,23 +47,26 @@
         <activity
             android:name=".activity.VisualizarActivity"
             android:label="@string/title_activity_visualizar"
-            android:parentActivityName=".activity.MainActivity">
+            android:parentActivityName=".activity.LoginActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="br.com.senaijandira.brechobernadete.activity.MainActivity" />
+                android:value="br.com.senaijandira.brechobernadete.activity.LoginActivity" />
         </activity>
         <activity
             android:name=".activity.SobreActivity"
             android:label="@string/title_sobre_activity"
-            android:parentActivityName=".activity.MainActivity">
+            android:parentActivityName=".activity.LoginActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="br.com.senaijandira.brechobernadete.activity.MainActivity" />
+                android:value="br.com.senaijandira.brechobernadete.activity.LoginActivity" />
         </activity>
         <activity
             android:name=".activity.PesquisaActivity"
             android:label="@string/title_activity_pesquisa"
-            android:parentActivityName=".activity.LoginActivity">
+            android:parentActivityName=".activity.LoginActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="br.com.senaijandira.brechobernadete.activity.LoginActivity" />

@@ -5,49 +5,58 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/imageView3"
+    <include layout="@layout/toolbar"
+        android:id="@id/toolbar"/>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginTop="20dp"
-        app:srcCompat="@drawable/logo_brecho"
-        tools:layout_editor_absoluteX="39dp"
-        tools:layout_editor_absoluteY="33dp" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="305dp"
-        android:layout_height="112dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="30dp"
-        android:text="Este aplcativo foi desenvolvido pela ProCode Ltda, uma empresa com grande potência no mercado de trabalho onde produzem aplicativos para diversas plataformas, como Web, Mobile e Desktop."
-        android:textAlignment="center"
-        android:textStyle="bold"
-        tools:layout_editor_absoluteX="40dp"
-        tools:layout_editor_absoluteY="316dp" />
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="20dp"
+            app:srcCompat="@drawable/logo_brecho"
+            tools:layout_editor_absoluteX="39dp"
+            tools:layout_editor_absoluteY="33dp" />
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="315dp"
-        android:layout_height="135dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="15dp"
-        android:text="Esse software tem como objetivo ajudá-lo a organizar suas roupas e separá-las por categorias.\nEle também mostra as roupas e as combinações ideais para se usar no dia a dia, como por exemplo em um dia frio ou quente, ele irá sugerir looks de acordo com a característica do clima."
-        android:textAlignment="center"
-        android:textStyle="bold"
-        tools:layout_editor_absoluteX="35dp"
-        tools:layout_editor_absoluteY="170dp" />
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="305dp"
+            android:layout_height="112dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:text="Este aplcativo foi desenvolvido pela ProCode Ltda, uma empresa com grande potência no mercado de trabalho onde produzem aplicativos para diversas plataformas, como Web, Mobile e Desktop."
+            android:textAlignment="center"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="40dp"
+            tools:layout_editor_absoluteY="316dp" />
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:text="© COPYRIGHT 2018 - PROCODE LTDA, TODOS OS DIREITOS RESERVADOS. "
-        android:textAlignment="center"
-        android:textSize="12sp" />
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="315dp"
+            android:layout_height="135dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            android:text="Esse software tem como objetivo ajudá-lo a organizar suas roupas e separá-las por categorias.\nEle também mostra as roupas e as combinações ideais para se usar no dia a dia, como por exemplo em um dia frio ou quente, ele irá sugerir looks de acordo com a característica do clima."
+            android:textAlignment="center"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="35dp"
+            tools:layout_editor_absoluteY="170dp" />
 
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:text="© COPYRIGHT 2018 - PROCODE LTDA, TODOS OS DIREITOS RESERVADOS. "
+            android:textAlignment="center"
+            android:textSize="12sp" />
+
+    </LinearLayout>
 </LinearLayout>

@@ -338,7 +338,6 @@ public class RoupasDAO {
         String sql = "SELECT * FROM imagem WHERE _idRoupa = "+idRoupa;
         Cursor cursor = db.rawQuery(sql, null);
 
-        int cont = 0;
         while(cursor.moveToNext()){
             listaImagens.add(cursor.getString(cursor.getColumnIndex("caminho")));
         }
@@ -401,23 +400,81 @@ public class RoupasDAO {
 //    MÉTODO QUE ATUALIZA O STATUS DO CAMPO "FAVORITO" DE UMA ROUPA
     public Boolean atualizarFavorito(Context context, int idRoupa, int favoritoAtual){
         SQLiteDatabase db = new DbHelper(context).getWritableDatabase();
-        String sql;
+//        String sql;
+        ContentValues cv = new ContentValues();
         if (favoritoAtual == 1){
-            sql = "UPDATE roupa SET favorito = 0 WHERE _id = "+idRoupa;
+//            sql = "UPDATE roupa SET favorito = 0 WHERE _id = "+idRoupa;
+            cv.put("favorito", 0);
         } else {
-            sql = "UPDATE roupa SET favorito = 1 WHERE _id = "+idRoupa;
+            cv.put("favorito", 1);
+//            sql = "UPDATE roupa SET favorito = 1 WHERE _id = "+idRoupa;
+        }
+        int cursor  = db.update("roupa", cv, "_id = " + idRoupa,null);
+        Log.d("cursor", cursor+"");
+
+        return true;
+    }
+
+    public String buscarUmaFoto(Context context, int id) {
+//        ArrayList<String> listaImagens = new ArrayList<>();
+
+        SQLiteDatabase db = new DbHelper(context).getReadableDatabase();
+
+        String sql = "SELECT * FROM imagem WHERE _idRoupa = "+id+" " +
+                "ORDER BY RANDOM() LIMIT 1";
+        Cursor cursor = db.rawQuery(sql, null);
+        String imagem = "";
+        if(cursor.moveToFirst()){
+            imagem = cursor.getString(cursor.getColumnIndex("caminho"));
         }
 
-        Cursor cursor  = db.rawQuery(sql, null);
+        cursor.close();
+        db.close();
 
-        if (cursor.moveToNext()){
-            cursor.close();
-            db.close();
-            return true;
+        return imagem;
+    }
+
+    //    MÉTODO QUE RETORNA TODAS AS ROUPAS
+    public ArrayList<Roupas> selecionarLook(Context context){
+        ArrayList<Roupas> retorno = new ArrayList<>();
+
+        SQLiteDatabase db = new DbHelper(context).getReadableDatabase();
+
+//        INSTANCIA E RESGATE DE INFORMAÇÕES DO SharedPreferencesConfig
+        preferencesConfig = new SharedPreferencesConfig(context);
+        idCliente = preferencesConfig.readUsuarioId();
+        tipoCliente = preferencesConfig.readUsuarioTipo();
+
+        String sql;
+        if (tipoCliente.equals("F")){
+            sql = "SELECT *, r.nome AS roupa " +
+                    "FROM roupa r " +
+                    "INNER JOIN status s " +
+                    "ON s._id = r._idStatus " +
+                    "ORDER BY RANDOM() LIMIT 3";// +
+            //"WHERE r._idClienteF = "+idCliente;
         } else {
-            cursor.close();
-            db.close();
-            return false;
+            sql = "SELECT *, r.nome AS roupa " +
+                    "FROM roupa r " +
+                    "INNER JOIN status s " +
+                    "ON s._id = r._idStatus " +
+                    "ORDER BY RANDOM() LIMIT 3";// +
+            //"WHERE r._idClienteJ = "+idCliente;
         }
+
+        Cursor cursor = db.rawQuery(sql, null);
+
+//        SETANDO OS ATRIBUTOS DO OBJETO COM O RETORNO DA CONSULTA
+        while (cursor.moveToNext()){
+            Roupas r = new Roupas();
+            r.setId(cursor.getInt(cursor.getColumnIndex("_id")));
+            r.setNome(cursor.getString(cursor.getColumnIndex("roupa")));
+            r.setDescricao(cursor.getString(cursor.getColumnIndex("descricao")));
+
+            retorno.add(r);
+        }
+        cursor.close();
+        db.close();
+        return retorno;
     }
 }
