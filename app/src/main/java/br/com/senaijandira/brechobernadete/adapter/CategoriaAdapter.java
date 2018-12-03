@@ -78,7 +78,7 @@ public class CategoriaAdapter extends ArrayAdapter<Categoria>{
                 Picasso.get().load(R.drawable.acessoriosbg3).into(img_bg_card);
                 break;
             case "Roupas Íntimas":
-                Picasso.get().load(R.drawable.roupasintimas).into(img_bg_card);
+                Picasso.get().load(R.drawable.acessoriosbg3).into(img_bg_card);
                 break;
             case "Outros":
                 Picasso.get().load(R.drawable.outros).into(img_bg_card);

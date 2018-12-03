@@ -7,6 +7,8 @@ public class Promocao {
     private Double precoNovo;
     private Double precoAntigo;
     private String nomeProduto;
+    private String foto;
+    private int idProduto;
 
 
 //    Métodos getters e setters
@@ -40,5 +42,15 @@ public class Promocao {
 
     public void setNomeProduto(String nomeProduto) {
         this.nomeProduto = nomeProduto;
+    }
+
+    public String getFoto() { return foto; }
+
+    public void setFoto(String foto) { this.foto = foto; }
+
+    public int getIdProduto() { return idProduto; }
+
+    public void setIdProduto(int idProduto) {
+        this.idProduto = idProduto;
     }
 }

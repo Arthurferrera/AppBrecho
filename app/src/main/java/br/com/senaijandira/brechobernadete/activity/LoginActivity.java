@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -13,7 +12,6 @@ import android.widget.TextView;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.Objects;
 
 import br.com.senaijandira.brechobernadete.R;
 import br.com.senaijandira.brechobernadete.api.LoginApi;
@@ -52,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 //                String endereco = "www.brechobernadete.com.br/view/cadastro_usuario.php";
-                String endereco = "http://192.168.1.38/brecho/view/cadastro_usuario.php";
+                String endereco = "http://192.168.1.43/brecho/view/cadastro_usuario.php";
                 Uri uri = Uri.parse(endereco);
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(intent);
