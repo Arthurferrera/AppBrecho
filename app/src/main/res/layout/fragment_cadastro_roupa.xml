@@ -322,6 +322,11 @@
                         android:backgroundTint="@color/colorAccent"
                         android:hint="Tags" />
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Separe as tags por espaço... Ex: Verão Praia Calor"/>
+
                 </android.support.design.widget.TextInputLayout>
 
                 <Button

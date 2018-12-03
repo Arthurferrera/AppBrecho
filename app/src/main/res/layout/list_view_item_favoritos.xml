@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
+        android:elevation="20dp"
         android:stateListAnimator="@drawable/button_style_custom"
         app:cardBackgroundColor="@color/colorCinza2"
         app:cardCornerRadius="7dp"
@@ -18,20 +19,21 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/img_favorito"
                 android:layout_width="150dp"
                 android:layout_height="200dp"
-                android:background="@android:color/white"
-                android:elevation="20dp"
+                android:maxHeight="200dp"
                 android:src="@mipmap/ic_launcher_round" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="150dp"
+                android:gravity="center"
+                android:minHeight="200dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -62,7 +64,7 @@
                     android:gravity="center"
                     android:paddingLeft="10dp"
                     android:textAlignment="center"
-                    android:textSize="16sp" />
+                    android:textSize="15sp" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -79,16 +81,18 @@
                     android:id="@+id/lbl_cor_favorito"
                     android:layout_width="38dp"
                     android:layout_height="39dp"
-                    android:layout_marginLeft="90dp"
-                    android:background="@drawable/bg_cor" />
+                    android:background="@drawable/bg_cor"
+                    android:gravity="center_horizontal" />
 
                 <ImageView
                     android:id="@+id/img_favorito_like"
                     android:layout_width="45dp"
                     android:layout_height="35dp"
                     android:layout_gravity="bottom|right"
-                    android:src="@drawable/ic_favoritos"
-                    android:clickable="true"/>
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginRight="5dp"
+                    android:clickable="true"
+                    android:src="@drawable/ic_favoritos" />
 
             </LinearLayout>
         </RelativeLayout>

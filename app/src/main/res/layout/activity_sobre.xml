@@ -28,7 +28,7 @@
         <TextView
             android:id="@+id/textView2"
             android:layout_width="305dp"
-            android:layout_height="112dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="30dp"
             android:text="Este aplcativo foi desenvolvido pela ProCode Ltda, uma empresa com grande potência no mercado de trabalho onde produzem aplicativos para diversas plataformas, como Web, Mobile e Desktop."
@@ -40,7 +40,7 @@
         <TextView
             android:id="@+id/textView5"
             android:layout_width="315dp"
-            android:layout_height="135dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="15dp"
             android:text="Esse software tem como objetivo ajudá-lo a organizar suas roupas e separá-las por categorias.\nEle também mostra as roupas e as combinações ideais para se usar no dia a dia, como por exemplo em um dia frio ou quente, ele irá sugerir looks de acordo com a característica do clima."

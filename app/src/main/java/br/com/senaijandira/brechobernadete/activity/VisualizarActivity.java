@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
@@ -11,8 +13,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,15 +38,17 @@ public class VisualizarActivity extends AppCompatActivity {
     Roupas r = new Roupas();
     ArrayList<String> tag = new ArrayList<>();
     int id;
-    ViewPager viewPager;
+//    ViewPager viewPager;
     private  AlertDialog alerta;
     LinearLayout linear_loja;
+    ImageView img_roupa;
     private ArrayList<String> imagens = new ArrayList<>();
 
 
     @SuppressLint("RestrictedApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visualizar);
         final Toolbar toolbar = (Toolbar) Objects.requireNonNull(this).findViewById(R.id.toolbar);
@@ -73,8 +79,9 @@ public class VisualizarActivity extends AppCompatActivity {
         lbl_marca = findViewById(R.id.lbl_marca_visualizar);
         lbl_classificacao = findViewById(R.id.lbl_classificacao_visualizar);
         lbl_cor = findViewById(R.id.lbl_cor_visualizar);
-        viewPager = findViewById(R.id.viewPager);
+//        viewPager = findViewById(R.id.viewPager);
         linear_loja = findViewById(R.id.linear_loja);
+        img_roupa = findViewById(R.id.img_slide);
 
 //        chamando o método que traz todas as informações da roupa
         r = dao.selecionarUmaRoupa(this, id);
@@ -82,6 +89,7 @@ public class VisualizarActivity extends AppCompatActivity {
         tag = dao.selecionarTagsByIdRoupa(this, id);
 
         imagens = dao.selecionarFotosByIdRoupa(this, id);
+        String foto = dao.buscarUmaFoto(this, id);
         StringBuilder imgs = new StringBuilder();
         for (String img : imagens) {
             imgs.append(img);
@@ -104,6 +112,9 @@ public class VisualizarActivity extends AppCompatActivity {
         lbl_status.setText(r.getStatus());
         lbl_marca.setText(r.getMarca());
         lbl_classificacao.setText(r.getClassificacao());
+        Bitmap imgBit = BitmapFactory.decodeFile(foto);
+        img_roupa.setImageBitmap(imgBit);
+
 //        Toast.makeText(this, r.getIdSite()+"", Toast.LENGTH_SHORT).show();
         StringBuilder TAGS = new StringBuilder();
         for(String tags : tag){
@@ -114,13 +125,14 @@ public class VisualizarActivity extends AppCompatActivity {
 
 //        adapter do view pager, elemento que mostra as imagens das roupas
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(this, id);
-        viewPager.setAdapter(viewPagerAdapter);
+//        viewPager.setAdapter(viewPagerAdapter);
     }
 
 //    cria o menu que fica na toolbar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.visualizar, menu);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.visualizar, menu);
         return true;
     }
 

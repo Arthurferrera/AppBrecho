@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.text.NumberFormat;
@@ -43,7 +44,7 @@ public class PromocaoAdapter extends ArrayAdapter<Promocao> {
         TextView lbl_valorAntigo_promo = v.findViewById(R.id.lbl_valorAntigo_promo);
         TextView lbl_valorNovo_promo = v.findViewById(R.id.lbl_valorNovoPromo);
         TextView lbl_nome_produto = v.findViewById(R.id.lbl_titulo_promo);
-        Button btn_conferir_promo = v.findViewById(R.id.btn_conferir_promo);
+        LinearLayout btn_conferir_promo = v.findViewById(R.id.btn_conferir_promo);
 
 //        setando os valores de cada elemento
         lbl_nome_produto.setText(item.getNomeProduto());

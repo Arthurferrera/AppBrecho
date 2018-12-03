@@ -69,8 +69,7 @@ public class CategoriaAdapter extends ArrayAdapter<Categoria>{
                 Picasso.get().load(R.drawable.calcadosbg1).into(img_bg_card);
                 break;
             case "Social":
-//                todo: trocar o bg de roupas social
-                Picasso.get().load(R.drawable.socialbg2).into(img_bg_card);
+                Picasso.get().load(R.drawable.social).into(img_bg_card);
                 break;
             case "Vestidos":
                 Picasso.get().load(R.drawable.vestidosbg3).into(img_bg_card);
@@ -79,12 +78,10 @@ public class CategoriaAdapter extends ArrayAdapter<Categoria>{
                 Picasso.get().load(R.drawable.acessoriosbg3).into(img_bg_card);
                 break;
             case "Roupas Íntimas":
-//                todo: trocar o bg de roupas intimas
-                Picasso.get().load(R.drawable.blusasbgnovo).into(img_bg_card);
+                Picasso.get().load(R.drawable.roupasintimas).into(img_bg_card);
                 break;
             case "Outros":
-//                todo: trocar o bg de outros
-                Picasso.get().load(R.drawable.acessoriosbg2).into(img_bg_card);
+                Picasso.get().load(R.drawable.outros).into(img_bg_card);
                 break;
 
         }
