@@ -50,7 +50,8 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 //                String endereco = "www.brechobernadete.com.br/view/cadastro_usuario.php";
-                String endereco = "http://192.168.1.43/brecho/view/cadastro_usuario.php";
+                String endereco = "http://192.168.1.38/brecho/view/cadastro_usuario.php";
+//                String endereco = "http://192.168.1.43/brecho/view/cadastro_usuario.php";
                 Uri uri = Uri.parse(endereco);
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(intent);

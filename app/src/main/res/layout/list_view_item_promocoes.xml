@@ -4,7 +4,8 @@
     android:layout_height="wrap_content"
     android:layout_gravity="clip_vertical"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:clickable="false">
 
     <TextView
         android:id="@+id/lbl_titulo_promo"
@@ -12,6 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
+        android:layout_marginBottom="5dp"
         android:text="Calça"
         android:textAlignment="center"
         android:textSize="24sp" />
@@ -98,9 +100,9 @@
             <LinearLayout
                 android:id="@+id/btn_conferir_promo"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_gravity="bottom"
-                android:layout_marginTop="45dp"
+                android:layout_marginTop="30dp"
                 android:background="@color/colorCinza2"
                 android:orientation="horizontal">
 

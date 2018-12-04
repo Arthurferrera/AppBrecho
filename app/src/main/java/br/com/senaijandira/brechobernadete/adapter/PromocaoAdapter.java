@@ -2,7 +2,10 @@ package br.com.senaijandira.brechobernadete.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,7 +54,12 @@ public class PromocaoAdapter extends ArrayAdapter<Promocao> {
 
 //        setando os valores de cada elemento
 //        Picasso.get().load("http://www.brechobernadete.com.br/cms/view/arquivos/"+item.getFoto()).resize(150, 150).centerInside().into(img_promo);
-        Picasso.get().load("http://192.168.1.43/cms/view/arquivos/"+item.getFoto()).resize(150, 150).centerInside().into(img_promo);
+//        Picasso.get().load("http://192.168.1.43/cms/view/arquivos/"+item.getFoto()).resize(150, 150).centerInside().into(img_promo);
+        String fotoUrl = "http://192.168.1.38/brecho/cms/view/arquivos/"+item.getFoto();
+//        Log.d("getView", fotoUrl);
+//        Bitmap imgBit = BitmapFactory.decodeFile(fotoUrl);
+//        img_promo.setImageBitmap(imgBit);
+        Picasso.get().load(fotoUrl).resize(150, 150).centerInside().into(img_promo);
         lbl_nome_produto.setText(item.getNomeProduto());
         lbl_valorAntigo_promo.setText(nf.format(item.getPrecoAntigo()));
         lbl_valorNovo_promo.setText(nf.format(item.getPrecoNovo()));
@@ -59,7 +67,8 @@ public class PromocaoAdapter extends ArrayAdapter<Promocao> {
         btn_conferir_promo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String endereco = "http://192.168.1.43/brecho/view/visualizar_produto.php?id="+item.getIdProduto()+"&pagina=promoção";
+                String endereco = "http://192.168.1.38/brecho/view/visualizar_produto.php?id="+item.getIdProduto()+"&pagina=promoção";
+//                String endereco = "http://192.168.1.43/brecho/view/visualizar_produto.php?id="+item.getIdProduto()+"&pagina=promoção";
 //                String endereco = "http://www.brechobernadete.com.br/view/visualizar_produto.php?id="+item.getIdProduto()+"&pagina=promoção";
                 Uri uri = Uri.parse(endereco);
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);

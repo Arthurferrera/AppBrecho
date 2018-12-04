@@ -15,7 +15,10 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="16dp"
-        android:hint="Pesquisar..." />
+        android:hint="Pesquisar..."
+        android:textColor="@color/colorAccent"
+        android:textColorHint="@color/colorAccent"
+        android:backgroundTint="@color/colorAccent"/>
 
     <ListView
         android:id="@+id/list_view_roupas_filtro"
