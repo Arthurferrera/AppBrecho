@@ -36,6 +36,7 @@ public class CategoriaDAO {
 
         SQLiteDatabase db = new DbHelper(context).getReadableDatabase();
 
+//        pegando valores do sharedPreferences
         idCliente = preferencesConfig.readUsuarioId();
         tipoCliente = preferencesConfig.readUsuarioTipo();
 

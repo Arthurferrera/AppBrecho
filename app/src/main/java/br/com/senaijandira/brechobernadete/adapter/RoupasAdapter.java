@@ -93,6 +93,7 @@ public class RoupasAdapter extends ArrayAdapter<Roupas> {
         return teste;
     }
 
+//    método que busca uma foto do produto para ser mostrada na lista de roupas
     public String buscarFoto(int id){
         return dao.buscarUmaFoto(getContext(), id);
     }

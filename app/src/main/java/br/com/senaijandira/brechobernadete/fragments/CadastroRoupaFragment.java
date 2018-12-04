@@ -151,6 +151,7 @@ public class CadastroRoupaFragment extends Fragment {
         img_foto4 = view.findViewById(R.id.foto4);
         img_foto5 = view.findViewById(R.id.foto5);
 
+//        vetor que armaena os imageViews
         vetorImg = new ImageView[] {img_foto1, img_foto2, img_foto3, img_foto4, img_foto5};
 
 //        click dos image view

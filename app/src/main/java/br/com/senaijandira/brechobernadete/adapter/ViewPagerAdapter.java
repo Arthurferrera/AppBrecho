@@ -20,6 +20,7 @@ import br.com.senaijandira.brechobernadete.dao.RoupasDAO;
 
 public class ViewPagerAdapter extends PagerAdapter {
 
+//    setando atributos, elementos, variaveis
     private Context context;
     private LayoutInflater layoutInflater;
     private int idRoupa;
@@ -27,11 +28,13 @@ public class ViewPagerAdapter extends PagerAdapter {
     private RoupasDAO dao = RoupasDAO.getInstance();
     private ArrayList<String> imagens = new ArrayList<>();
 
+//    construtor
     public ViewPagerAdapter(Context context, int idRoupa) {
         this.context = context;
         this.idRoupa = idRoupa;
     }
 
+//    pega o tamanho da lista
     @Override
     public int getCount() {
         return imagens.size();
@@ -42,15 +45,19 @@ public class ViewPagerAdapter extends PagerAdapter {
         return view == o;
     }
 
+//    faz a instancia do item do viewpager
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
 
+//        pega todas as imagens da roupa
         imagens = dao.selecionarFotosByIdRoupa(context, idRoupa);
         Log.d("listaImagens", String.valueOf(imagens));
 
+//        cria e seta alguns parametros para o imageView
         ImageView imageView = new ImageView(context);
         imageView.setScaleType(ImageView.ScaleType.CENTER);
 
+//        pega uma imagem por vez e seta no imageView
         String imagem = imagens.get(position);
         Bitmap imgBit = BitmapFactory.decodeFile(imagem);
         imageView.setImageBitmap(imgBit);
@@ -69,10 +76,12 @@ public class ViewPagerAdapter extends PagerAdapter {
 //        return view;
 //        Toast.makeText(context, imagem, Toast.LENGTH_SHORT).show();
 
+//        adiciona a imageView no container
         container.addView(imageView,0);
         return imageView;
     }
 
+//    método que destrói o item ao ser passado para outro
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
 

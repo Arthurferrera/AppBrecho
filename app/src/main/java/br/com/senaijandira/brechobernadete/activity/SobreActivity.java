@@ -19,6 +19,7 @@ public class SobreActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sobre);
         //getActionBar().setDisplayHomeAsUpEnabled(false);
+//        criando a toolbar
         final Toolbar toolbar = (Toolbar) Objects.requireNonNull(this).findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(null);
         toolbar.setTitle("Sobre");

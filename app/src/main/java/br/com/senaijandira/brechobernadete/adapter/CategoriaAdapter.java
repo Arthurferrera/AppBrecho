@@ -52,6 +52,7 @@ public class CategoriaAdapter extends ArrayAdapter<Categoria>{
 //        setando os valores de cada elemento
         lbl_categoria_item.setText(categoria.getNome());
         lbl_quantidade_categoria_item.setText(categoria.getTotalPecas()+"");
+//        verifica cada categoria para setar o background correto
         switch(categoria.getNome()){
             case "Camisetas":
                 Picasso.get().load(R.drawable.camisetasbg).into(img_bg_card);

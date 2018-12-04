@@ -36,7 +36,6 @@ public class PesquisaActivity extends Activity {
         setContentView(R.layout.activity_pesquisa);
 //        getActionBar().setDisplayHomeAsUpEnabled(true);
 
-
 //        FIND'S DOS ELEMENTOS
         list_view_roupas_pesquisa = findViewById(R.id.list_view_roupas_filtro);
         txt_pesquisa = findViewById(R.id.txt_pesquisar);
@@ -96,6 +95,9 @@ public class PesquisaActivity extends Activity {
 
 //    MÉTODO QUE FAZ O FILTRO DA LISTA
     public void FiltrarLista(String s){
+//        cria a lista
+//        percorre a lista filtrando os produtos e
+//        cria uma nova com os produtos filtrados
         ArrayList<Roupas> listaFiltrada = new ArrayList<>();
         for (int i = 0; i < listaRoupas.size(); i++){
             if (listaRoupas.get(i).getNome().toLowerCase().contains(s)){

@@ -48,9 +48,9 @@ public class VisualizarActivity extends AppCompatActivity {
     @SuppressLint("RestrictedApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visualizar);
+//        criando a toolbar
         final Toolbar toolbar = (Toolbar) Objects.requireNonNull(this).findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(null);
         toolbar.setTitle("Detalhes da roupa");
@@ -88,6 +88,7 @@ public class VisualizarActivity extends AppCompatActivity {
 //        chamando o método que traz todas as TAGS da roupa
         tag = dao.selecionarTagsByIdRoupa(this, id);
 
+//        busca todas as fotos de uma roupa
         imagens = dao.selecionarFotosByIdRoupa(this, id);
         String foto = dao.buscarUmaFoto(this, id);
         StringBuilder imgs = new StringBuilder();
@@ -95,8 +96,9 @@ public class VisualizarActivity extends AppCompatActivity {
             imgs.append(img);
             imgs.append(" - ");
         }
-            Log.d("listaImagens", String.valueOf(imgs));
+        Log.d("listaImagens", String.valueOf(imgs));
 
+//        esconde o linear que indica que a roupa foi comprada na loja
         int idSite = r.getIdSite();
         if (idSite == 0){
             linear_loja.setVisibility(View.GONE);
@@ -116,6 +118,7 @@ public class VisualizarActivity extends AppCompatActivity {
         img_roupa.setImageBitmap(imgBit);
 
 //        Toast.makeText(this, r.getIdSite()+"", Toast.LENGTH_SHORT).show();
+//        busca todas as tags de uma roupa
         StringBuilder TAGS = new StringBuilder();
         for(String tags : tag){
             TAGS.append(tags);

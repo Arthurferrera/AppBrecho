@@ -62,6 +62,7 @@ public class ComprasFragment extends Fragment {
         tipoCliente = preferencesConfig.readUsuarioTipo();
         dao = RoupasDAO.getInstance();
 
+
         comprasInserir = new ArrayList<>();
 
         listView_compras = comprasView.findViewById(R.id.list_view_compras);

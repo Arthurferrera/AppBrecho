@@ -64,6 +64,8 @@ public class MainActivity extends AppCompatActivity
         lbl_nomeUsuario_menu.setText(preferencesConfig.readUsuarioNome());
         lbl_emailUsuario_menu.setText(preferencesConfig.readUsuarioEmail());
 
+//        Aqui verifica se tem algum valor no intent
+//        para resgatar ele e passar para a tela de editar
         Intent intent = getIntent();
         int idRoupa = intent.getIntExtra("idRoupa", 0);
         if (idRoupa != 0){
@@ -78,7 +80,6 @@ public class MainActivity extends AppCompatActivity
             fm.beginTransaction().replace(R.id.frame_content, fragment).addToBackStack(null).commit();
             toolbar.setTitle("Cadastro de roupas");
         }
-
 
 //        adicionando um fragment
         if (savedInstanceState == null){

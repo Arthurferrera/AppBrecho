@@ -56,9 +56,6 @@ public class PromocaoAdapter extends ArrayAdapter<Promocao> {
 //        Picasso.get().load("http://www.brechobernadete.com.br/cms/view/arquivos/"+item.getFoto()).resize(150, 150).centerInside().into(img_promo);
 //        Picasso.get().load("http://192.168.1.43/cms/view/arquivos/"+item.getFoto()).resize(150, 150).centerInside().into(img_promo);
         String fotoUrl = "http://192.168.1.38/brecho/cms/view/arquivos/"+item.getFoto();
-//        Log.d("getView", fotoUrl);
-//        Bitmap imgBit = BitmapFactory.decodeFile(fotoUrl);
-//        img_promo.setImageBitmap(imgBit);
         Picasso.get().load(fotoUrl).resize(150, 150).centerInside().into(img_promo);
         lbl_nome_produto.setText(item.getNomeProduto());
         lbl_valorAntigo_promo.setText(nf.format(item.getPrecoAntigo()));

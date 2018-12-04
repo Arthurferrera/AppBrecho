@@ -415,6 +415,7 @@ public class RoupasDAO {
         return true;
     }
 
+//    método que busca uma foto de uma roupa especifica
     public String buscarUmaFoto(Context context, int id) {
 //        ArrayList<String> listaImagens = new ArrayList<>();
 
@@ -434,7 +435,7 @@ public class RoupasDAO {
         return imagem;
     }
 
-    //    MÉTODO QUE RETORNA TODAS AS ROUPAS
+//    MÉTODO QUE RETORNA TODAS AS ROUPAS
     public ArrayList<Roupas> selecionarLook(Context context){
         ArrayList<Roupas> retorno = new ArrayList<>();
 
